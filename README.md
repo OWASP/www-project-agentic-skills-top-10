@@ -569,7 +569,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 
 1. Review this document and the [complete Top 10 detail pages](top10.md) for full risk descriptions, attack scenarios, and OWASP mappings.
 2. Conduct a skill inventory across all agent platforms in use — treat this as an immediate priority given active exploitation confirmed in 2026.
-3. Use the [Security Assessment Checklist](top10.md#appendix-b) for reviewing installed skills.
+3. Use the [Security Assessment Checklist](checklist.md) for reviewing installed skills.
 4. Implement the governance framework described in AST09: inventory, approval workflow, audit logging, and agentic identity controls.
 5. Subscribe to ClawHub, skills.sh, and platform-specific security advisories.
 
