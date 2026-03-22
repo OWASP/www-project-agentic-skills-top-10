@@ -71,6 +71,14 @@ Multi-agent pipeline means a compromised upstream skill propagates malicious ins
 - **Layer 7: Agent Ecosystem** - marketplace and registry controls for governance.
 - **Layer 5: Evaluation & Observability** - detection visibility and incident monitoring.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Governance gaps allow malicious skills to be deployed without oversight.
+- **AST02 (Supply Chain Compromise)**: Lack of governance enables supply chain attacks.
+- **AST03 (Over-Privileged Skills)**: No review processes allow excessive permissions.
+- **AST06 (Weak Isolation)**: Governance failures lead to shadow deployments.
+- **AST07 (Update Drift)**: Lack of governance allows uncontrolled updates.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

@@ -71,6 +71,14 @@ Locally-bound agent WebSocket is reachable from any browser tab; malicious site 
 - **Layer 6: Security & Compliance** - enforceable policies and access controls.
 - **Layer 3: Agent Frameworks** - per-skill sandbox orchestration and lifecycle management.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Weak isolation allows malicious skills to escape sandboxes and access host resources.
+- **AST02 (Supply Chain Compromise)**: Compromised skills can exploit isolation weaknesses to persist.
+- **AST03 (Over-Privileged Skills)**: Host-mode execution bypasses permission controls entirely.
+- **AST05 (Unsafe Deserialization)**: Isolation failures can lead to code execution from deserialized data.
+- **AST09 (No Governance)**: Lack of isolation enforcement enables shadow deployments.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

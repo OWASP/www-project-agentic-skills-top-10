@@ -68,6 +68,14 @@ A skill requesting write access to `SOUL.md` and `MEMORY.md` installs persistent
 - **Layer 3: Agent Frameworks** - permission orchestration in LangChain/AutoGen-like agents.
 - **Layer 7: Agent Ecosystem** - enterprise capability to govern and score skill permissions.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Over-privileged skills amplify the impact of malicious payloads by providing broader access vectors.
+- **AST02 (Supply Chain Compromise)**: Compromised registries may distribute skills with inflated permission requests.
+- **AST04 (Insecure Metadata)**: Misleading permission declarations in manifests can hide over-privileged access.
+- **AST06 (Weak Isolation)**: Host-mode execution removes permission boundaries entirely.
+- **AST09 (No Governance)**: Lack of permission review processes allows over-privileged skills to proliferate.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

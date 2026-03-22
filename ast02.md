@@ -73,6 +73,13 @@ Compromise a trusted skill author's account, push a backdoored version.
 - **Layer 6: Security & Compliance** - missing governance controls and policy enforcement gaps.
 - **Layer 4: Deployment & Infrastructure** - compromised deployment pipelines enabling poisoned skill updates.
 
+## Related Risks
+
+- [AST01 — Malicious Skills](ast01.md): Supply chain compromise enables delivery of malicious skills.
+- [AST07 — Update Drift](ast07.md): Lack of immutable updates exacerbates supply chain risks.
+- [AST08 — Poor Scanning](ast08.md): Inadequate scanning misses supply chain vulnerabilities.
+- [AST10 — Cross-Platform Reuse](ast10.md): Inconsistent security across platforms creates supply chain gaps.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

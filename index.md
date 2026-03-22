@@ -5,6 +5,7 @@ tags: agentic-security, ai-safety, llm-security
 level: 2
 type: documentation
 pitch: Security Risks and Mitigations for AI Agent Skills
+description: "Comprehensive guide to the top 10 security risks in AI agent skills across platforms like OpenClaw, Claude Code, Cursor, and VS Code. Includes MAESTRO framework mapping and practical mitigation strategies."
 ---
 
 [![OWASP Incubator](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://owasp.org/projects/)
@@ -15,6 +16,8 @@ pitch: Security Risks and Mitigations for AI Agent Skills
 > **Security Risks and Mitigations for AI Agent Skills**
 >
 > Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+
+**Breadcrumb:** [OWASP](https://owasp.org/) > [Projects](https://owasp.org/projects/) > Agentic Skills Top 10
 
 ---
 
@@ -171,6 +174,26 @@ Each of the 10 risks is documented in a separate file. Click on the risk name to
 
 ## MAESTRO Mapping
 
+The Cloud Security Alliance (CSA) MAESTRO framework provides a structured threat modeling approach for agentic AI systems across 7 interconnected layers. This mapping aligns each AST10 risk with relevant MAESTRO layers to enable targeted threat localization and cross-layer risk analysis.
+
+```mermaid
+graph TD
+    A[Layer 7: Agent Ecosystem] --> B[Layer 6: Security & Compliance]
+    B --> C[Layer 5: Evaluation & Observability]
+    C --> D[Layer 4: Deployment & Infrastructure]
+    D --> E[Layer 3: Agent Frameworks]
+    E --> F[Layer 2: Data Operations]
+    F --> G[Layer 1: Foundation Models]
+    
+    style A fill:#ffcccc
+    style B fill:#ffcccc
+    style C fill:#ffffcc
+    style D fill:#ccffcc
+    style E fill:#ccccff
+    style F fill:#ffccff
+    style G fill:#ccffff
+```
+
 | AST | Risk | MAESTRO Layers |
 |-----|------|----------------|
 | AST01 | Malicious Skills | 7, 3, 6, 4, 5 |
@@ -187,6 +210,35 @@ Each of the 10 risks is documented in a separate file. Click on the risk name to
 *The MAESTRO layer mapping helps teams align AST10 risks with CSA’s 7-layer threat model for agentic AI.*
 
 *For detailed descriptions, attack scenarios, preventive mitigations, and OWASP mappings, see each individual risk file.*
+
+## Contribute
+
+We welcome contributions from the community! Here's how you can help:
+
+### Ways to Contribute
+- **Report New Risks**: Found a security issue in agent skills? Submit it as a GitHub issue with evidence and impact analysis.
+- **Improve Mitigations**: Have better prevention strategies or real-world examples? Update the relevant AST file.
+- **Add Examples**: Share anonymized attack scenarios or mitigation case studies.
+- **Translate**: Help localize this guide for non-English speakers.
+- **Code**: Contribute to scanning tools, format validators, or automation scripts.
+- **Research**: Analyze skills in your environment and share findings (anonymized).
+
+### Getting Started
+1. Fork the repository on GitHub.
+2. Create a feature branch for your changes.
+3. Make your edits following our [contributing guidelines](CONTRIBUTING.md).
+4. Submit a pull request with a clear description of your changes.
+5. Join our monthly community calls to discuss proposals.
+
+### Community Guidelines
+- Be respectful and constructive in discussions.
+- Provide evidence for security claims.
+- Respect contributor privacy when sharing examples.
+- Follow OWASP's Code of Conduct.
+
+*See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.*
+
+---
 
 ## Universal Skill Format Proposal
 

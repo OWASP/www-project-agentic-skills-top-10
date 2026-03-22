@@ -71,6 +71,14 @@ Skill behaves safely in test environments; activates malicious path only when sp
 - **Layer 6: Security & Compliance** - audit compliance for scanning, model governance.
 - **Layer 3: Agent Frameworks** - built-in scanning and analysis pipelines in frameworks.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Poor scanning allows malicious skills to pass undetected.
+- **AST02 (Supply Chain Compromise)**: Compromised skills may evade scanners.
+- **AST04 (Insecure Metadata)**: Metadata attacks can bypass static analysis.
+- **AST05 (Unsafe Deserialization)**: Deserialization vulnerabilities may not be caught by scanners.
+- **AST07 (Update Drift)**: Updated skills may not be re-scanned.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

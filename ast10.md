@@ -129,6 +129,14 @@ changelog:
 - **Layer 3: Agent Frameworks** - framework-level normalization of security metadata.
 - **Layer 6: Security & Compliance** - cross-platform governance for skill attributes.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Cross-platform reuse allows malicious skills to spread across ecosystems.
+- **AST02 (Supply Chain Compromise)**: Compromised skills can be reused across platforms.
+- **AST04 (Insecure Metadata)**: Inconsistent metadata formats create confusion and exploitation.
+- **AST08 (Poor Scanning)**: Skills may pass scanning on one platform but be vulnerable on another.
+- **AST09 (No Governance)**: Lack of cross-platform governance enables skill proliferation.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

@@ -70,6 +70,14 @@ Hide malicious instructions using zero-width Unicode, base64, or ASCII smuggling
 - **Layer 3: Agent Frameworks** - how frameworks integrate and verify skill metadata.
 - **Layer 6: Security & Compliance** - enforcing schema and metadata authenticity policies.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Insecure metadata enables social engineering attacks to distribute malware.
+- **AST02 (Supply Chain Compromise)**: Metadata spoofing can hide supply chain attacks.
+- **AST03 (Over-Privileged Skills)**: Misleading permission declarations in metadata can grant excessive access.
+- **AST08 (Poor Scanning)**: Metadata-based attacks may bypass static analysis scanners.
+- **AST10 (Cross-Platform Reuse)**: Inconsistent metadata formats across platforms create confusion and exploitation opportunities.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

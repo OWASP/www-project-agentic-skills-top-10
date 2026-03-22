@@ -70,6 +70,14 @@ Alternative config formats with insufficient parsing sandboxing allow property i
 - **Layer 4: Deployment & Infrastructure** - isolation of skill ingestion pipelines.
 - **Layer 6: Security & Compliance** - mandates for safe data handling and code verification.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Unsafe deserialization enables code execution from malicious skill payloads.
+- **AST02 (Supply Chain Compromise)**: Compromised skills may contain serialized exploits.
+- **AST04 (Insecure Metadata)**: Malformed metadata can trigger deserialization vulnerabilities.
+- **AST06 (Weak Isolation)**: Host-mode execution amplifies deserialization attack impact.
+- **AST08 (Poor Scanning)**: Deserialization attacks may not be detected by pattern-matching scanners.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

@@ -70,6 +70,14 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 - **Layer 6: Security & Compliance** - requirements for signed updates, patch policy.
 - **Layer 7: Agent Ecosystem** - registry trust and cross-platform update consistency.
 
+## Cross-References
+
+- **AST01 (Malicious Skills)**: Update drift can introduce malicious code through compromised updates.
+- **AST02 (Supply Chain Compromise)**: Unverified updates are a supply chain attack vector.
+- **AST04 (Insecure Metadata)**: Update metadata may be spoofed to hide malicious changes.
+- **AST08 (Poor Scanning)**: Updated skills may not be re-scanned, allowing new vulnerabilities.
+- **AST09 (No Governance)**: Lack of update policies enables uncontrolled drift.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

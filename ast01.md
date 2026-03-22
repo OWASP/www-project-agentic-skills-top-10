@@ -58,6 +58,50 @@ Malicious skills write backdoor instructions into the agent's identity file, sur
 - **LLM01** (Prompt Injection - indirect)
 - **ASVS V14** (Configuration)
 
+## MAESTRO Framework Mapping
+
+The Cloud Security Alliance (CSA) MAESTRO framework provides a structured threat modeling approach for agentic AI systems across 7 layers:
+
+| MAESTRO Layer | Layer Name | AST01 Mapping |
+|---------------|------------|---------------|
+| **Layer 7** | Agent Ecosystem | Registry compromise, marketplace manipulation, agent impersonation |
+| **Layer 3** | Agent Frameworks | Compromised components, supply chain attacks |
+| **Layer 6** | Security & Compliance | Access controls, policy enforcement |
+| **Layer 4** | Deployment & Infrastructure | Container tampering, runtime environment security |
+| **Layer 5** | Evaluation & Observability | Detection evasion, metric manipulation |
+
+### MAESTRO Layer Details
+
+**Layer 7: Agent Ecosystem** - Primary mapping for AST01
+- Malicious skills published to registries (ClawHub, skills.sh)
+- Marketplace manipulation through typosquatting and brand impersonation
+- Agent impersonation attacks via fake "Google," "Solana wallet tracker" skills
+- Registry compromise enabling coordinated malicious skill campaigns
+
+**Layer 3: Agent Frameworks**
+- Compromised skill components within agent frameworks (OpenClaw, Claude Code, Cursor)
+- Supply chain attacks through skill dependencies
+- Prompt injection within skill instructions
+
+**Layer 6: Security & Compliance**
+- Access control failures allowing malicious skills to execute with full permissions
+- Policy enforcement gaps in skill registries
+
+**Layer 4: Deployment & Infrastructure**
+- Runtime environment security for skill execution
+- Container tampering through malicious skill payloads
+
+**Layer 5: Evaluation & Observability**
+- Detection evasion through obfuscated malicious instructions
+- Metric manipulation to bypass security scanning
+
+## Related Risks
+
+- [AST02 — Supply Chain Compromise](ast02.md): Often the delivery mechanism for malicious skills.
+- [AST03 — Over-Privileged Skills](ast03.md): Malicious skills exploit excessive permissions.
+- [AST04 — Insecure Metadata](ast04.md): Brand impersonation enables malicious skill distribution.
+- [AST08 — Poor Scanning](ast08.md): Ineffective detection allows malicious skills to proliferate.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
