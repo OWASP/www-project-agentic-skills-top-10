@@ -453,8 +453,9 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 
 ## Resources
 
-- **GitHub**: `github.com/OWASP/www-project-agentic-skills-top-10` *(planned — Q2 2026)*
-- **OWASP Project Page**: `owasp.org/projects/agentic-skills-top-10` *(planned — Q2 2026)*
+- **Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **GitHub**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
+- **OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
 - **Full Risk Documentation**: [top10.md](top10.md)
 - **Project Proposal**: [proposal.md](proposal.md)
 - **Security Assessment Checklist**: [checklist.md](checklist.md) 
