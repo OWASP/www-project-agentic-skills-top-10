@@ -56,6 +56,20 @@ Alternative config formats with insufficient parsing sandboxing allow property i
 - **CWE-502** (Deserialization of Untrusted Data)
 - **ASVS V5.5** (Deserialization)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST05 Mapping |
+|---------------|------------|----------------|
+| **Layer 3** | Agent Frameworks | parser and loader component safety |
+| **Layer 4** | Deployment & Infrastructure | runtime sandboxing of deserialization paths |
+| **Layer 6** | Security & Compliance | policy enforcement for safe parser configuration |
+
+### MAESTRO Layer Details
+
+- **Layer 3: Agent Frameworks** - safest parser defaults and deserialization policies.
+- **Layer 4: Deployment & Infrastructure** - isolation of skill ingestion pipelines.
+- **Layer 6: Security & Compliance** - mandates for safe data handling and code verification.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

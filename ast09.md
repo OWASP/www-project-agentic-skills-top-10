@@ -57,6 +57,20 @@ Multi-agent pipeline means a compromised upstream skill propagates malicious ins
 - **SAMM v3** (Operational Enablement)
 - **NIST AI RMF** (GOVERN function)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST09 Mapping |
+|---------------|------------|----------------|
+| **Layer 6** | Security & Compliance | governance, audit, policy management |
+| **Layer 7** | Agent Ecosystem | registry and marketplace governance gaps |
+| **Layer 5** | Evaluation & Observability | missing telemetry and SOC visibility |
+
+### MAESTRO Layer Details
+
+- **Layer 6: Security & Compliance** - enterprise skill policy, approval workflows, audit logs.
+- **Layer 7: Agent Ecosystem** - marketplace and registry controls for governance.
+- **Layer 5: Evaluation & Observability** - detection visibility and incident monitoring.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

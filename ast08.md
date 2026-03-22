@@ -57,6 +57,20 @@ Skill behaves safely in test environments; activates malicious path only when sp
 - **CWE-693** (Protection Mechanism Failure)
 - **ASVS V14.3** (Unintended Information Disclosure)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST08 Mapping |
+|---------------|------------|----------------|
+| **Layer 5** | Evaluation & Observability | detector robustness, scanner integrity |
+| **Layer 6** | Security & Compliance | policy enforcement for scanning requirements |
+| **Layer 3** | Agent Frameworks | semantic analysis in frameworks and loaders |
+
+### MAESTRO Layer Details
+
+- **Layer 5: Evaluation & Observability** - scanning resume, telemetry integrity, false-negative risk.
+- **Layer 6: Security & Compliance** - audit compliance for scanning, model governance.
+- **Layer 3: Agent Frameworks** - built-in scanning and analysis pipelines in frameworks.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

@@ -56,6 +56,20 @@ Hide malicious instructions using zero-width Unicode, base64, or ASCII smuggling
 - **CWE-345** (Insufficient Verification of Data Authenticity)
 - **ASVS V14.5** (HTTP Security)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST04 Mapping |
+|---------------|------------|----------------|
+| **Layer 7** | Agent Ecosystem | Marketplace manipulation, identity spoofing |
+| **Layer 3** | Agent Frameworks | metadata parsing and validation in skill frameworks |
+| **Layer 6** | Security & Compliance | metadata integrity and provenance policy |
+
+### MAESTRO Layer Details
+
+- **Layer 7: Agent Ecosystem** - metadata-based trust decisions and registry abuse.
+- **Layer 3: Agent Frameworks** - how frameworks integrate and verify skill metadata.
+- **Layer 6: Security & Compliance** - enforcing schema and metadata authenticity policies.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

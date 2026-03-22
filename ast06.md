@@ -57,6 +57,20 @@ Locally-bound agent WebSocket is reachable from any browser tab; malicious site 
 - **CWE-653** (Insufficient Compartmentalization)
 - **ASVS V12** (File/Resource)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST06 Mapping |
+|---------------|------------|----------------|
+| **Layer 4** | Deployment & Infrastructure | host/container isolation, runtime boundaries |
+| **Layer 6** | Security & Compliance | enforcement of isolation policies and least privilege |
+| **Layer 3** | Agent Frameworks | orchestrator sandboxing and process separation |
+
+### MAESTRO Layer Details
+
+- **Layer 4: Deployment & Infrastructure** - default isolation & host containment.
+- **Layer 6: Security & Compliance** - enforceable policies and access controls.
+- **Layer 3: Agent Frameworks** - per-skill sandbox orchestration and lifecycle management.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

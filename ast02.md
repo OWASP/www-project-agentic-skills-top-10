@@ -57,6 +57,22 @@ Compromise a trusted skill author's account, push a backdoored version.
 - **ASVS V14.2** (Dependency)
 - **CWE-494** (Download of Code Without Integrity Check)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST02 Mapping |
+|---------------|------------|----------------|
+| **Layer 7** | Agent Ecosystem | Registry compromise, marketplace manipulation |
+| **Layer 3** | Agent Frameworks | Compromised components, supply chain attacks |
+| **Layer 6** | Security & Compliance | Policy enforcement, access controls |
+| **Layer 4** | Deployment & Infrastructure | IaC manipulation, runtime environment security |
+
+### MAESTRO Layer Details
+
+- **Layer 7: Agent Ecosystem** - primary for registry provenance and marketplace trust.
+- **Layer 3: Agent Frameworks** - supply chain and compromised component risk in skill loaders.
+- **Layer 6: Security & Compliance** - missing governance controls and policy enforcement gaps.
+- **Layer 4: Deployment & Infrastructure** - compromised deployment pipelines enabling poisoned skill updates.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

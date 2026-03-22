@@ -56,6 +56,20 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 - **CWE-1329** (Reliance on Component Without Verification)
 - **ASVS V14.2** (Dependency)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST07 Mapping |
+|---------------|------------|----------------|
+| **Layer 4** | Deployment & Infrastructure | insecure update pipelines, config drift |
+| **Layer 6** | Security & Compliance | update policy, verification enforcement |
+| **Layer 7** | Agent Ecosystem | cross-registry trust and update governance |
+
+### MAESTRO Layer Details
+
+- **Layer 4: Deployment & Infrastructure** - unsafe automatic update and runtime drift.
+- **Layer 6: Security & Compliance** - requirements for signed updates, patch policy.
+- **Layer 7: Agent Ecosystem** - registry trust and cross-platform update consistency.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

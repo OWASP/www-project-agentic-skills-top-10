@@ -52,6 +52,22 @@ A skill requesting write access to `SOUL.md` and `MEMORY.md` installs persistent
 - **ASVS V4** (Access Control)
 - **CWE-250** (Execution with Unnecessary Privileges)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST03 Mapping |
+|---------------|------------|----------------|
+| **Layer 6** | Security & Compliance | Access controls, policy enforcement |
+| **Layer 4** | Deployment & Infrastructure | Container/host hardening, sandboxing |
+| **Layer 3** | Agent Frameworks | framework privilege handling, skill integration |
+| **Layer 7** | Agent Ecosystem | registry policy enforcement and trust boundaries |
+
+### MAESTRO Layer Details
+
+- **Layer 6: Security & Compliance** - enforcement of least privilege and identity safety.
+- **Layer 4: Deployment & Infrastructure** - runtime isolation and resource constraints.
+- **Layer 3: Agent Frameworks** - permission orchestration in LangChain/AutoGen-like agents.
+- **Layer 7: Agent Ecosystem** - enterprise capability to govern and score skill permissions.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

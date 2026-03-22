@@ -115,6 +115,20 @@ changelog:
 - **LLM03** (Supply Chain)
 - **CWE-1357** (Reliance on Insufficiently Trustworthy Component)
 
+## MAESTRO Framework Mapping
+
+| MAESTRO Layer | Layer Name | AST10 Mapping |
+|---------------|------------|----------------|
+| **Layer 7** | Agent Ecosystem | cross-platform marketplace/registry intelligence |
+| **Layer 3** | Agent Frameworks | translation and normalization controls across platforms |
+| **Layer 6** | Security & Compliance | uniform policy enforcement and compliance across ecosystems |
+
+### MAESTRO Layer Details
+
+- **Layer 7: Agent Ecosystem** - cross-registry incident sharing, false trust signals.
+- **Layer 3: Agent Frameworks** - framework-level normalization of security metadata.
+- **Layer 6: Security & Compliance** - cross-platform governance for skill attributes.
+
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)

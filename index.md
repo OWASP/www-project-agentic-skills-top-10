@@ -169,6 +169,23 @@ Each of the 10 risks is documented in a separate file. Click on the risk name to
 
 ---
 
+## MAESTRO Mapping
+
+| AST | Risk | MAESTRO Layers |
+|-----|------|----------------|
+| AST01 | Malicious Skills | 7, 3, 6, 4, 5 |
+| AST02 | Supply Chain Compromise | 7, 3, 6, 4 |
+| AST03 | Over-Privileged Skills | 6, 4, 3, 7 |
+| AST04 | Insecure Metadata | 7, 3, 6 |
+| AST05 | Unsafe Deserialization | 3, 4, 6 |
+| AST06 | Weak Isolation | 4, 6, 3 |
+| AST07 | Update Drift | 4, 6, 7 |
+| AST08 | Poor Scanning | 5, 6, 3 |
+| AST09 | No Governance | 6, 7, 5 |
+| AST10 | Cross-Platform Reuse | 7, 3, 6 |
+
+*The MAESTRO layer mapping helps teams align AST10 risks with CSA’s 7-layer threat model for agentic AI.*
+
 *For detailed descriptions, attack scenarios, preventive mitigations, and OWASP mappings, see each individual risk file.*
 
 ## Universal Skill Format Proposal
