@@ -67,6 +67,8 @@ While significant attention has been devoted to securing large language models (
 
 **Mental Model**: *MCP = how the model talks to tools; AST10 = what those tools actually do.*
 
+**MAESTRO Mapping**: Each AST10 risk is mapped to the Cloud Security Alliance's MAESTRO 7-layer threat model for agentic AI systems, enabling targeted threat localization and cross-layer risk analysis.
+
 ---
 
 ## The Problem: A Crisis Already in Progress
