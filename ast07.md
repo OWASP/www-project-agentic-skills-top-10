@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST07 — Update Drift
-
 **Severity**: Medium  
 **Platforms Affected**: All
 

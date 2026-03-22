@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST04 — Insecure Metadata
-
 **Severity**: High  
 **Platforms Affected**: All
 

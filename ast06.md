@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST06 — Weak Isolation
-
 **Severity**: High  
 **Platforms Affected**: All
 

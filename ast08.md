@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST08 — Poor Scanning
-
 **Severity**: Medium  
 **Platforms Affected**: All
 

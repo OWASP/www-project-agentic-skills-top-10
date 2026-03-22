@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST10 — Cross-Platform Reuse Without Security Normalization
-
 **Severity**: Medium  
 **Platforms Affected**: All
 

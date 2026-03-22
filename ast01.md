@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST01 — Malicious Skills
-
 **Severity**: Critical  
 **Platforms Affected**: All
 

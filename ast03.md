@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST03 — Over-Privileged Skills
-
 **Severity**: High  
 **Platforms Affected**: All
 

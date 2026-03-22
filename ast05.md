@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST05 — Unsafe Deserialization
-
 **Severity**: High  
 **Platforms Affected**: All
 

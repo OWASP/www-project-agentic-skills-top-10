@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST09 — No Governance
-
 **Severity**: Medium  
 **Platforms Affected**: All
 

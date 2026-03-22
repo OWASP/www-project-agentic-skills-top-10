@@ -6,8 +6,6 @@ level: 2
 type: documentation
 ---
 
-# AST02 — Supply Chain Compromise
-
 **Severity**: Critical  
 **Platforms Affected**: All
 
