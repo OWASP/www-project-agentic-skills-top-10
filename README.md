@@ -5,6 +5,23 @@
 [![Version](https://img.shields.io/badge/version-1.0--2026-green.svg)]()
 [![Last Updated](https://img.shields.io/badge/updated-March%202026-orange.svg)]()
 
+## Quick Links
+
+- **Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
+- **OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
+
+---
+
+> **Security Risks and Mitigations for AI Agent Skills**
+>
+> Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+
+---
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Version](https://img.shields.io/badge/version-1.0--2026-green.svg)]()
+[![Last Updated](https://img.shields.io/badge/updated-March%202026-orange.svg)]()
+
 > **Security Risks and Mitigations for AI Agent Skills**
 >
 > Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
@@ -180,16 +197,16 @@ Each of the 10 risks is documented in a separate file. Click on the risk name to
 
 | # | Risk | Severity | Platforms Affected | Key Mitigation | Real-World Evidence |
 |---|------|----------|--------------------|----------------|---------------------|
-| [AST01](ast01.md) | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
-| [AST02](ast02.md) | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
-| [AST03](ast03.md) | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
-| [AST04](ast04.md) | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
-| [AST05](ast05.md) | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
-| [AST06](ast06.md) | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
-| [AST07](ast07.md) | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
-| [AST08](ast08.md) | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
-| [AST09](ast09.md) | No Governance | Medium | All | Skill inventories, agentic identity controls | 53K exposed instances with no SOC visibility |
-| [AST10](ast10.md) | Cross-Platform Reuse | Medium | All | Universal YAML format | Malicious skills ported across ClawHub, skills.sh |
+| [AST01](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast01.md) | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
+| [AST02](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast02.md) | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
+| [AST03](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast03.md) | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
+| [AST04](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast04.md) | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
+| [AST05](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast05.md) | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
+| [AST06](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast06.md) | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
+| [AST07](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast07.md) | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
+| [AST08](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast08.md) | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
+| [AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md) | No Governance | Medium | All | Skill inventories, agentic identity controls | 53K exposed instances with no SOC visibility |
+| [AST10](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast10.md) | Cross-Platform Reuse | Medium | All | Universal YAML format | Malicious skills ported across ClawHub, skills.sh |
 
 ---
 
