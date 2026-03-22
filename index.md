@@ -24,8 +24,7 @@ pitch: Security Risks and Mitigations for AI Agent Skills
 - [The Problem: A Crisis Already in Progress](#the-problem-a-crisis-already-in-progress)
 - [What Are Agentic Skills?](#what-are-agentic-skills)
 - [Incident Timeline (2026)](#incident-timeline-2026)
-- [The 10 Risks — Summary Table](#the-10-risks--summary-table)
-- [Detailed Risk Descriptions](#detailed-risk-descriptions)
+- [Summary Table](#summary-table)
 - [Universal Skill Format Proposal](#universal-skill-format-proposal)
 - [Getting Started](#getting-started)
 - [Target Audience](#target-audience)
@@ -151,24 +150,7 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 
 ---
 
-## The 10 Risks — Summary Table
-
-| # | Risk | Severity | Platforms Affected | Key Mitigation | Real-World Evidence |
-|---|------|----------|--------------------|----------------|---------------------|
-| **AST01** | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
-| **AST02** | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
-| **AST03** | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
-| **AST04** | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
-| **AST05** | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
-| **AST06** | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
-| **AST07** | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
-| **AST08** | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
-| **AST09** | No Governance | Medium | All | Skill inventories, agentic identity controls | 53K exposed instances with no SOC visibility |
-| **AST10** | Cross-Platform Reuse | Medium | All | Universal YAML format | Malicious skills ported across ClawHub, skills.sh |
-
----
-
-## Detailed Risk Descriptions
+## Summary Table
 
 Each of the 10 risks is documented in a separate file. Click on the risk name to view the full details.
 
