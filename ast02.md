@@ -51,6 +51,37 @@ Compromise a trusted skill author's account, push a backdoored version.
 5. **Scan recursive dependency trees**, not just top-level skill files.
 6. **Support an internal skill mirror / allowlist** for enterprise deployments.
 
+### Code Example: Dependency Pinning
+
+```yaml
+# requirements.txt - BAD (version ranges)
+requests>=2.25.0
+beautifulsoup4>=4.9.0
+
+# requirements.txt - GOOD (pinned hashes)
+requests==2.31.0 --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7b4300988b709f44e013003f996
+beautifulsoup4==4.12.2 --hash=sha256:492bbc69dca35d12daac71c4db1bfff0c876c00ef4a2ffacce226d4638eb72da396
+```
+
+### Code Example: Transparency Log Verification
+
+```python
+import requests
+import hashlib
+
+def verify_transparency_log(skill_name: str, expected_hash: str) -> bool:
+    """Verify skill exists in transparency log"""
+    log_url = f"https://transparency.skillregistry.org/log/{skill_name}"
+    response = requests.get(log_url)
+    
+    if response.status_code != 200:
+        return False
+    
+    # Check if our expected hash is in the log
+    log_entries = response.json()
+    return any(entry['hash'] == expected_hash for entry in log_entries)
+```
+
 ## OWASP Mapping
 
 - **LLM03** (Supply Chain)
@@ -79,6 +110,45 @@ Compromise a trusted skill author's account, push a backdoored version.
 - [AST07 — Update Drift](ast07.md): Lack of immutable updates exacerbates supply chain risks.
 - [AST08 — Poor Scanning](ast08.md): Inadequate scanning misses supply chain vulnerabilities.
 - [AST10 — Cross-Platform Reuse](ast10.md): Inconsistent security across platforms creates supply chain gaps.
+
+## Reference Materials
+
+### Supply Chain Risk Assessment Framework
+
+When evaluating skill supply chain risks, consider these factors:
+
+1. **Publisher Verification**
+   - Code signing key age and rotation history
+   - Publisher account creation date and activity patterns
+   - Cross-reference with known malicious actor databases
+
+2. **Dependency Analysis**
+   - Complete dependency tree mapping
+   - Third-party library vulnerability scanning
+   - License compatibility and compliance
+
+3. **Registry Security**
+   - Transparency log implementation
+   - Automated malware scanning
+   - Two-person rule for emergency updates
+
+### Enterprise Supply Chain Controls
+
+For organizations deploying agent skills:
+
+- **Private Mirrors**: Host approved skills on internal registries
+- **Automated Scanning**: Integrate with existing CI/CD security gates
+- **Change Management**: Require approval for skill updates in production
+- **Inventory Management**: Track all installed skills across the organization
+
+### Detection and Response
+
+Supply chain compromise indicators:
+- [ ] Unexpected skill updates or version changes
+- [ ] New dependencies in existing skills
+- [ ] Publisher account changes
+- [ ] Registry outage followed by rapid updates
+- [ ] Anomalous download patterns
 
 ## References
 

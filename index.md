@@ -46,6 +46,36 @@ While significant attention has been devoted to securing large language models (
 
 **Mental Model**: *MCP = how the model talks to tools; AST10 = what those tools actually do.*
 
+## Quick Security Checklist
+
+Use this checklist to assess your agent skill security posture:
+
+### Registry & Installation
+- [ ] Only install skills from verified publishers with code signing
+- [ ] Enable automated scanning for all skill installations
+- [ ] Review skill permissions before installation
+- [ ] Pin skill versions to prevent automatic malicious updates
+
+### Runtime Security
+- [ ] Run agents in isolated environments (containers/sandbox)
+- [ ] Implement network restrictions for agent processes
+- [ ] Monitor agent file system and network activity
+- [ ] Regularly audit installed skills and their dependencies
+
+### Governance & Monitoring
+- [ ] Maintain inventory of all deployed agent skills
+- [ ] Implement approval workflows for skill installations
+- [ ] Enable comprehensive audit logging for agent actions
+- [ ] Establish incident response procedures for skill compromises
+
+### Development Practices
+- [ ] Sign all published skills with cryptographic keys
+- [ ] Include comprehensive permission manifests
+- [ ] Test skills in isolated environments before publishing
+- [ ] Document security considerations in skill metadata
+
+*See the [complete Security Assessment Checklist](checklist.md) for detailed guidance.*
+
 ---
 
 ## The Problem: A Crisis Already in Progress

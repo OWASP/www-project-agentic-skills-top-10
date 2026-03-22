@@ -5,49 +5,230 @@
 [![Version](https://img.shields.io/badge/version-1.0--2026-green.svg)]()
 [![Last Updated](https://img.shields.io/badge/updated-March%202026-orange.svg)]()
 
+> **Security Risks and Mitigations for AI Agent Skills**
+>
+> Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+
 ## Quick Links
 
-- **Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
-- **GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
-- **OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
+- **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **🐙 GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
+- **🏛️ OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
+- **📋 Security Checklist**: [checklist.md](checklist.md)
+- **🔧 Universal Skill Format**: [universal-skill-format.md](universal-skill-format.md)
+- **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **🛠️ Maintenance**: [MAINTENANCE.md](MAINTENANCE.md)
 
 ---
 
-> **Security Risks and Mitigations for AI Agent Skills**
->
-> Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+## Overview
 
----
-[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
-[![Version](https://img.shields.io/badge/version-1.0--2026-green.svg)]()
-[![Last Updated](https://img.shields.io/badge/updated-March%202026-orange.svg)]()
+The **OWASP Agentic Skills Top 10 (AST10)** is the first comprehensive security framework for AI agent skills. It documents the 10 most critical security risks in agentic AI skills across all major AI agent platforms, providing evidence-based mitigations and prevention strategies.
 
-> **Security Risks and Mitigations for AI Agent Skills**
->
-> Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+### Key Features
+
+- **🎯 Platform Coverage**: OpenClaw, Claude Code, Cursor/Codex, VS Code
+- **🔍 Risk Analysis**: 10 critical security risks with real-world evidence
+- **🛡️ Mitigation Strategies**: Practical prevention and response guidance
+- **📊 MAESTRO Mapping**: Alignment with CSA's 7-layer threat model
+- **🔗 Cross-References**: Interconnected risk analysis
+- **📝 Universal Format**: Cross-platform skill security standard
+- **👥 Community Driven**: Open source with active contributor community
+
+### Why Agent Skills Matter
+
+While significant attention has been given to securing LLMs and MCP tools, agent skills represent the **behavior layer** that translates AI capabilities into real-world actions. Skills define *how* agents orchestrate multi-step workflows, making them a critical attack surface.
+
+**2026 Statistics:**
+- 3,984 skills scanned across registries
+- 36.82% contained security flaws
+- 13.4% had critical vulnerabilities
+- 76+ confirmed malicious payloads
+- 1,184 skills in ClawHavoc campaign
 
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [The Problem: A Crisis Already in Progress](#the-problem-a-crisis-already-in-progress)
-- [What Are Agentic Skills?](#what-are-agentic-skills)
-- [Incident Timeline (2026)](#incident-timeline-2026)
-- [Summary Table](#summary-table)
-- [MAESTRO Mapping](#maestro-mapping)
-- [Universal Skill Format Proposal](#universal-skill-format-proposal)
-  - [AST01 — Malicious Skills](#ast01--malicious-skills)
-  - [AST02 — Supply Chain Compromise](#ast02--supply-chain-compromise)
-  - [AST03 — Over-Privileged Skills](#ast03--over-privileged-skills)
-  - [AST04 — Insecure Metadata](#ast04--insecure-metadata)
-  - [AST05 — Unsafe Deserialization](#ast05--unsafe-deserialization)
-  - [AST06 — Weak Isolation](#ast06--weak-isolation)
-  - [AST07 — Update Drift](#ast07--update-drift)
-  - [AST08 — Poor Scanning](#ast08--poor-scanning)
-  - [AST09 — No Governance](#ast09--no-governance)
-  - [AST10 — Cross-Platform Reuse](#ast10--cross-platform-reuse)
-- [Universal Skill Format Proposal](#universal-skill-format-proposal)
+- [The Problem](#the-problem)
+- [Risk Summary](#risk-summary)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [Project Status](#project-status)
+- [Resources](#resources)
+- [License](#license)
+
+---
+
+## The Problem
+
+This is not a theoretical future risk. The AI agent skill ecosystem is under active attack as of Q1 2026.
+
+### Active Threats (2026)
+
+| Threat | Impact | Evidence |
+|--------|--------|----------|
+| **ClawHavoc Campaign** | 1,184 malicious skills | Antiy CERT (Feb 2026) |
+| **Registry Poisoning** | 36.82% skills vulnerable | Snyk ToxicSkills (Feb 2026) |
+| **Claude Code RCE** | CVE-2025-59536/21852 | Check Point Research (Feb 2026) |
+| **WebSocket Hijacking** | CVE-2026-28363 | Oasis Security (Feb 2026) |
+| **Supply Chain Attacks** | 280+ leaky skills | Snyk (Feb 2026) |
+
+### The Lethal Trifecta
+
+An AI agent skill is especially dangerous when it has:
+1. **Access to private data** (SSH keys, API credentials, wallet files)
+2. **Exposure to untrusted content** (skill instructions, memory files, email)
+3. **Ability to communicate externally** (network egress, webhook calls)
+
+Most production agent deployments satisfy all three conditions.
+
+---
+
+## Risk Summary
+
+| # | Risk | Severity | Key Mitigation |
+|---|------|----------|----------------|
+| [AST01](ast01.md) | Malicious Skills | Critical | Cryptographic signing, behavioral scanning |
+| [AST02](ast02.md) | Supply Chain Compromise | Critical | Transparency logs, dependency pinning |
+| [AST03](ast03.md) | Over-Privileged Skills | High | Least-privilege manifests, runtime enforcement |
+| [AST04](ast04.md) | Insecure Metadata | High | Schema validation, provenance tracking |
+| [AST05](ast05.md) | Unsafe Deserialization | High | Safe parsers, sandboxed loading |
+| [AST06](ast06.md) | Weak Isolation | High | Containerization, process isolation |
+| [AST07](ast07.md) | Update Drift | Medium | Immutable pinning, hash verification |
+| [AST08](ast08.md) | Poor Scanning | Medium | Multi-tool pipeline, semantic analysis |
+| [AST09](ast09.md) | No Governance | Medium | Skill inventories, audit logging |
+| [AST10](ast10.md) | Cross-Platform Reuse | Medium | Universal format, platform validation |
+
+*See [index.md](index.md) for detailed descriptions and MAESTRO mappings.*
+
+---
+
+## Getting Started
+
+### For Security Teams
+
+1. **Assess Current Posture**: Use the [Security Assessment Checklist](checklist.md)
+2. **Review Risk Details**: Read the 10 AST files for specific platform guidance
+3. **Implement Controls**: Apply mitigations appropriate to your environment
+4. **Monitor Threats**: Subscribe to security advisories and threat intelligence
+
+### For Skill Developers
+
+1. **Follow Best Practices**: Implement least-privilege and secure coding
+2. **Use Universal Format**: Adopt the proposed cross-platform standard
+3. **Sign Your Skills**: Enable cryptographic verification
+4. **Test Security**: Validate in isolated environments
+
+### For Platform Developers
+
+1. **Registry Security**: Implement scanning and provenance tracking
+2. **Runtime Isolation**: Default to sandboxed execution
+3. **Audit Logging**: Enable comprehensive activity monitoring
+4. **User Trust**: Require explicit confirmation for privileged operations
+
+---
+
+## Contributing
+
+We welcome contributions from the community! Here's how to get involved:
+
+### Ways to Contribute
+
+- **🐛 Report Issues**: Found a security risk or documentation error?
+- **✨ Add Content**: New examples, mitigations, or research
+- **🔧 Code Examples**: Provide secure coding patterns
+- **🌐 Translations**: Help localize the guide
+- **📊 Research**: Share threat intelligence or analysis
+
+### Getting Started
+
+1. **Read Guidelines**: Check [CONTRIBUTING.md](CONTRIBUTING.md)
+2. **Fork & Clone**: Work on your own branch
+3. **Use Templates**: Issue and PR templates provided
+4. **Test Changes**: Run validation scripts
+5. **Submit PR**: Follow the contribution workflow
+
+### Community
+
+- **📅 Monthly Calls**: 1st Thursday of each month (OWASP Zoom)
+- **💬 Slack**: `#proj-agentic-skills-top-10` in OWASP Slack
+- **📧 Mailing List**: owasp-agentic-skills@lists.owasp.org
+
+---
+
+## Project Status
+
+**Status**: Active Development → Launch Preparation  
+**Version**: 1.0 (2026 Edition)  
+**License**: CC BY-SA 4.0  
+
+### Timeline
+
+| Phase | Status | Deliverables |
+|-------|--------|-------------|
+| **Foundation** | ✅ Complete | Repo, OWASP page, AST01-10 drafts |
+| **Content Expansion** | ✅ Complete | Examples, code samples, references |
+| **UX & Community** | ✅ Complete | Templates, checklists, interactive elements |
+| **Maintenance Setup** | ✅ Complete | Automation, governance, procedures |
+| **Launch Preparation** | 🔄 In Progress | Final polish, validation, promotion |
+
+### Success Metrics
+
+- **📈 Adoption**: 2+ major registries implement Universal Format
+- **🌍 Community**: 50+ contributors, active discussions
+- **🎯 Impact**: Referenced in OWASP Top 10, industry standards
+- **📊 Quality**: 100% link validity, comprehensive coverage
+
+---
+
+## Resources
+
+### Documentation
+- **[Full Website](https://owasp.github.io/www-project-agentic-skills-top-10/)**: Complete documentation
+- **[Risk Details](top10.md)**: All 10 risks in one document
+- **[Security Checklist](checklist.md)**: Assessment and remediation guide
+- **[Universal Format](universal-skill-format.md)**: Cross-platform standard specification
+
+### Research & References
+- **Snyk ToxicSkills** (Feb 2026): Comprehensive skill ecosystem audit
+- **Check Point Research**: Claude Code vulnerability analysis
+- **Antiy CERT**: ClawHavoc campaign analysis
+- **CSA MAESTRO**: 7-layer threat model for agentic AI
+
+### Tools & Automation
+- **[Validation Script](validate.sh)**: Content quality checker
+- **[Maintenance Guide](MAINTENANCE.md)**: Long-term project procedures
+- **GitHub Actions**: Automated testing and deployment
+
+---
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+
+You are free to share and adapt this material for any purpose, provided you give appropriate credit, provide a link to the license, indicate if changes were made, and distribute your contributions under the same license.
+
+---
+
+## Contact
+
+**Project Lead**: Ken Huang — OWASP AIVSS Lead, Agentic AI Security Researcher
+
+- **📧 Email**: ken.huang@owasp.org
+- **🐙 GitHub**: [@kenhuang](https://github.com/kenhuang)
+- **🔗 LinkedIn**: [Ken Huang](https://linkedin.com/in/kenhuang)
+
+For questions, suggestions, or to get involved:
+- Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
+- Join the `#proj-agentic-skills-top-10` channel in [OWASP Slack](https://owasp.org/slack/)
+- Attend the monthly community call — 1st Thursday, [OWASP Zoom](https://owasp.org/events/)
+
+---
+
+*OWASP Agentic Skills Top 10 - Protecting the AI Agent Ecosystem* 🛡️🤖
 - [Relationship to Existing OWASP Projects](#relationship-to-existing-owasp-projects)
 - [Getting Started](#getting-started)
 - [Target Audience](#target-audience)

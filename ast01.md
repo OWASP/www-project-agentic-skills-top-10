@@ -43,11 +43,71 @@ Fake "setup required" dialogs that coerce users into running malicious scripts.
 
 Malicious skills write backdoor instructions into the agent's identity file, surviving skill uninstall.
 
+### Memory Poisoning
+
+Skills that inject malicious context into `MEMORY.md`, causing the agent to execute attacker commands in future sessions.
+
+### WebSocket Hijacking
+
+Skills that establish persistent WebSocket connections to attacker C2 servers, enabling real-time command execution.
+
 ## Preventive Mitigations
 
 1. **Require cryptographic signatures (ed25519)** on all published skills; reject unsigned installs.
 2. **Implement Merkle root signing** for skill registries.
 3. **Scan skills at publish time and at install time** using behavioral analysis (not just pattern matching).
+4. **Isolate skill execution** in containers or sandboxes.
+5. **Audit skill actions** through structured logging.
+6. **Implement skill reputation systems** based on community feedback and automated testing.
+
+### Code Example: Signature Verification
+
+```python
+import ed25519
+
+def verify_skill_signature(skill_content: str, signature: str, public_key: str) -> bool:
+    """Verify ed25519 signature of skill content"""
+    try:
+        pk = ed25519.VerifyingKey(public_key.encode(), encoding='hex')
+        pk.verify(signature.encode(), skill_content.encode(), encoding='hex')
+        return True
+    except:
+        return False
+
+# Usage in registry
+def install_skill(skill_path: str, signature: str, pubkey: str):
+    with open(skill_path, 'r') as f:
+        content = f.read()
+    
+    if not verify_skill_signature(content, signature, pubkey):
+        raise ValueError("Invalid skill signature")
+    
+    # Proceed with installation
+```
+
+### Code Example: Behavioral Sandboxing
+
+```python
+import subprocess
+import os
+
+def run_skill_in_sandbox(skill_script: str, timeout: int = 30):
+    """Execute skill in isolated environment"""
+    env = os.environ.copy()
+    env['SANDBOX'] = '1'  # Signal sandbox mode
+    
+    # Run in container or restricted process
+    result = subprocess.run(
+        ['docker', 'run', '--rm', '--network', 'none', 
+         '-v', f'{skill_script}:/skill.sh', 'alpine:latest', 
+         'sh', '/skill.sh'],
+        capture_output=True,
+        timeout=timeout,
+        env=env
+    )
+    
+    return result.returncode, result.stdout, result.stderr
+```
 4. **Display skill publisher trust level, install count, and scan status** in registry UI.
 5. **Never auto-execute "Prerequisites" sections** without explicit user review.
 6. **Hash-pin installed skills** and alert on any modification.
@@ -101,6 +161,47 @@ The Cloud Security Alliance (CSA) MAESTRO framework provides a structured threat
 - [AST03 — Over-Privileged Skills](ast03.md): Malicious skills exploit excessive permissions.
 - [AST04 — Insecure Metadata](ast04.md): Brand impersonation enables malicious skill distribution.
 - [AST08 — Poor Scanning](ast08.md): Ineffective detection allows malicious skills to proliferate.
+
+## Reference Materials
+
+### Malicious Skill Analysis Framework
+
+When analyzing suspected malicious skills, follow this systematic approach:
+
+1. **Static Analysis**
+   - Review `SKILL.md` for suspicious instructions
+   - Check for obfuscated code or unusual YAML structures
+   - Validate signature against known publisher keys
+
+2. **Dynamic Analysis**
+   - Execute in isolated sandbox environment
+   - Monitor file system, network, and process activity
+   - Check for persistence mechanisms (SOUL.md, MEMORY.md modifications)
+
+3. **Behavioral Indicators**
+   - Unusual network connections
+   - File exfiltration attempts
+   - Shell command execution beyond stated function
+   - Memory or identity file modifications
+
+### Detection Signatures
+
+Common patterns in malicious skills:
+- Base64-encoded payloads in YAML comments
+- Instructions to download from non-HTTPS URLs
+- Requests for excessive permissions (write to identity files)
+- Typosquatting of popular service names
+- Social engineering prompts ("Run this command to enable...")
+
+### Incident Response Checklist
+
+For confirmed malicious skill incidents:
+- [ ] Isolate affected agents
+- [ ] Revoke compromised credentials
+- [ ] Scan for lateral movement
+- [ ] Notify skill registry
+- [ ] Update detection signatures
+- [ ] Review installation approval processes
 
 ## References
 
