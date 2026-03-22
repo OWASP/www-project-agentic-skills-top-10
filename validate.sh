@@ -50,8 +50,9 @@ echo ""
 echo "📝 Frontmatter validation:"
 for file in ast*.md; do
     if [ -f "$file" ]; then
-        # Check if file starts with ---
-        if head -1 "$file" | grep -q "^---$"; then
+        # Check if file starts with --- using portable method
+        first_line=$(head -n 1 "$file" 2>/dev/null || sed -n '1p' "$file" 2>/dev/null || echo "")
+        if [ "$first_line" = "---" ]; then
             echo "   ✅ $file has frontmatter"
         else
             echo "   ❌ $file missing frontmatter"

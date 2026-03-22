@@ -1,3 +1,31 @@
 remote_theme: "owasp/www--site-theme@main"
 plugins:
  - jekyll-include-cache-0.2.0
+
+# GitHub Pages Configuration
+repository: OWASP/www-project-agentic-skills-top-10
+url: "https://owasp.org"
+baseurl: "/www-project-agentic-skills-top-10"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:name/
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - .git/
+  - .github/
+  - validate.sh
