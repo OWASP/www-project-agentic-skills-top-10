@@ -21,8 +21,10 @@
 - **🛡️ Threat Intelligence**: [threat-intelligence.md](threat-intelligence.md)
 - **🔍 Risk Assessment Tool**: [risk-assessment.md](risk-assessment.md)
 - **🔎 Skill Scanner Integration**: [skill-scanner-integration.md](skill-scanner-integration.md)
-- **🔌 API Documentation**: [api-documentation.md](api-documentation.md)
-- **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **🔌 API Documentation**: [api-documentation.md](api-documentation.md)- **📚 Skill Development Guide**: [skill-development-guide.md](skill-development-guide.md)
+- **⚖️ Platform Comparison**: [platform-comparison.md](platform-comparison.md)
+- **👥 Community & Contribution**: [community-contribution.md](community-contribution.md)
+- **🎓 Training & Certification**: [training-certification.md](training-certification.md)- **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **🛠️ Maintenance**: [MAINTENANCE.md](MAINTENANCE.md)
 
 ---
