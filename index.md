@@ -477,8 +477,8 @@ changelog:
 
 ## Resources
 
-- **GitHub**: `github.com/OWASP/www-project-agentic-skills-top-10`
-- **OWASP Project Page**: `owasp.org/projects/agentic-skills-top-10`
+- **GitHub**: [github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
+- **OWASP Project Page**: [owasp.org/projects/agentic-skills-top-10](https://owasp.org/projects/agentic-skills-top-10)
 - **Full Risk Documentation**: [top10.md](top10.md)
 - **Project Proposal**: [proposal.md](proposal.md)
 - **Security Assessment Checklist**: [checklist.md](checklist.md)

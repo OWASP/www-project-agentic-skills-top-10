@@ -20,8 +20,8 @@
 
 ## Project Links (Planned)
 
-- **GitHub**: `github.com/OWASP/www-project-agentic-skills-top-10`  
-- **OWASP Page**: `owasp.org/projects/agentic-skills-top-10`
+- **GitHub**: [github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
+- **OWASP Page**: [owasp.org/projects/agentic-skills-top-10](https://owasp.org/projects/agentic-skills-top-10)
 
 
 ## Goals & Success Metrics
@@ -207,7 +207,7 @@ signature: "ed25519:ABC123..."
 
 ## Next Steps
 
-1. **Immediate**: Create `github.com/OWASP/www-project-agentic-skills-top-10`  
+1. **Immediate**: Create [github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
 2. **Week 1**: Populate with v0.1 (AST01-AST03 \+ proposal)  
 3. **Week 2**: OWASP project submission form  
 4. **Week 4**: First community call \+ reviewer recruitment
