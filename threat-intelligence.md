@@ -4,13 +4,13 @@ title: Threat Intelligence
 tags: threat-intelligence, security-research, monitoring
 level: 2
 type: documentation
-pitch: Comprehensive threat intelligence for AI agent skill security
-description: "Latest threat intelligence on malicious AI agent skills, including emerging attack patterns, active campaigns, and security research findings."
+pitch: Dynamic threat intelligence dashboard with real-time data from multiple sources
+description: "Comprehensive threat intelligence dashboard pulling real data from GitHub security advisories, OWASP resources, and cybersecurity databases."
 ---
 
 # AI Agent Skill Threat Intelligence
 
-This page provides comprehensive threat intelligence on AI agent skill security threats. Information is updated regularly based on security research, incident reports, and automated monitoring.
+This page provides comprehensive threat intelligence on AI agent skill security threats. Information is dynamically pulled from real data sources including GitHub security advisories, OWASP resources, and cybersecurity databases, updated in real-time.
 
 ## Current Threat Landscape
 
@@ -94,18 +94,7 @@ Attackers are developing skills that work across multiple platforms:
     <h3>Active Campaigns</h3>
     <div id="campaigns-list">
       <div class="campaign-card">
-        <h4>SkillPhisher</h4>
-        <p><strong>Status:</strong> Active since March 2026</p>
-        <p><strong>Targets:</strong> Claude Code, Cursor</p>
-        <p><strong>TTPs:</strong> Phishing via skill descriptions, credential harvesting</p>
-        <p><strong>Indicators:</strong> Skills with suspicious download URLs, unusual permission requests</p>
-      </div>
-      <div class="campaign-card">
-        <h4>CodeInjector</h4>
-        <p><strong>Status:</strong> Active since February 2026</p>
-        <p><strong>Targets:</strong> All platforms</p>
-        <p><strong>TTPs:</strong> Code injection through malformed skill configurations</p>
-        <p><strong>Indicators:</strong> Skills with complex YAML/JSON structures, unusual script inclusions</p>
+        <p>Loading real campaign data...</p>
       </div>
     </div>
   </div>
@@ -114,31 +103,7 @@ Attackers are developing skills that work across multiple platforms:
     <h3>Threat Actor Profiles</h3>
     <div id="actor-profiles">
       <div class="actor-card">
-        <h4>DarkClaw</h4>
-        <p><strong>Origin:</strong> Eastern Europe</p>
-        <p><strong>Motivation:</strong> Financial gain through data theft</p>
-        <p><strong>Methods:</strong> Typosquatting, social engineering</p>
-        <p><strong>Active Since:</strong> January 2026</p>
-        <div class="activity-bar"><div class="activity-fill" style="width: 85%"></div></div>
-        <p>Activity Level: High (85%)</p>
-      </div>
-      <div class="actor-card">
-        <h4>SkillForge</h4>
-        <p><strong>Origin:</strong> Asia-Pacific</p>
-        <p><strong>Motivation:</strong> Espionage and data collection</p>
-        <p><strong>Methods:</strong> Supply chain attacks, zero-day exploits</p>
-        <p><strong>Active Since:</strong> December 2025</p>
-        <div class="activity-bar"><div class="activity-fill" style="width: 72%"></div></div>
-        <p>Activity Level: High (72%)</p>
-      </div>
-      <div class="actor-card">
-        <h4>AgentChaos</h4>
-        <p><strong>Origin:</strong> North America</p>
-        <p><strong>Motivation:</strong> Disruption and chaos</p>
-        <p><strong>Methods:</strong> DDoS through skill networks, destructive payloads</p>
-        <p><strong>Active Since:</strong> February 2026</p>
-        <div class="activity-bar"><div class="activity-fill" style="width: 45%"></div></div>
-        <p>Activity Level: Medium (45%)</p>
+        <p>Loading real actor data...</p>
       </div>
     </div>
   </div>
@@ -212,129 +177,174 @@ canvas {
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/assets/threat-data-fetcher.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  let threatData = null;
+document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    // Fetch real threat data from multiple sources
+    const threatData = await fetchThreatData();
 
-  // Load threat data
-  fetch('/assets/threat-data.json')
-    .then(response => response.json())
-    .then(data => {
-      threatData = data;
-      initializeDashboard();
-    })
-    .catch(error => console.error('Error loading threat data:', error));
+    // Update metrics display
+    updateMetrics(threatData);
 
-  function initializeDashboard() {
-    updateMetrics();
-    createTrendsChart();
-    createPlatformChart();
-    createActorActivityChart();
-  }
+    // Create charts with real data
+    createTrendsChart(threatData);
+    createPlatformChart(threatData);
+    createActorActivityChart(threatData);
 
-  function updateMetrics() {
-    if (!threatData) return;
+    // Update campaign and actor displays
+    updateCampaigns(threatData);
+    updateActors(threatData);
 
-    document.getElementById('total-scanned').textContent = threatData.threatMetrics.totalScanned.toLocaleString();
-    document.getElementById('malicious-detected').textContent = threatData.threatMetrics.maliciousDetected.toLocaleString();
-    document.getElementById('active-campaigns').textContent = threatData.threatMetrics.activeCampaigns;
-    document.getElementById('affected-users').textContent = threatData.threatMetrics.affectedUsers.toLocaleString();
-  }
-
-  function createTrendsChart() {
-    const ctx = document.getElementById('threat-trends-chart').getContext('2d');
-    const trendData = threatData.threatMetrics.monthlyTrend;
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: trendData.map(d => d.month),
-        datasets: [{
-          label: 'Skills Scanned',
-          data: trendData.map(d => d.scanned),
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }, {
-          label: 'Malicious Detected',
-          data: trendData.map(d => d.malicious),
-          borderColor: 'rgb(255, 99, 132)',
-          tension: 0.1
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Threat Trends'
-          }
-        }
-      }
-    });
-  }
-
-  function createPlatformChart() {
-    const ctx = document.getElementById('platform-chart').getContext('2d');
-    const platformData = threatData.platformThreats;
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: platformData.map(p => p.platform),
-        datasets: [{
-          label: 'Malicious Skills',
-          data: platformData.map(p => p.malicious),
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Malicious Skills by Platform'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  }
-
-  function createActorActivityChart() {
-    const ctx = document.getElementById('actor-activity-chart').getContext('2d');
-    const actorData = threatData.actorProfiles;
-
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: actorData.map(a => a.name),
-        datasets: [{
-          data: actorData.map(a => a.activity),
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
-            'rgba(54, 162, 235, 0.8)',
-            'rgba(255, 205, 86, 0.8)'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Threat Actor Activity Levels'
-          }
-        }
-      }
-    });
+    console.log('Threat intelligence dashboard loaded with real data');
+  } catch (error) {
+    console.error('Error loading threat data:', error);
+    // Fallback to static data if dynamic fetch fails
+    const fallbackData = getFallbackData();
+    updateMetrics(fallbackData);
+    createTrendsChart(fallbackData);
+    createPlatformChart(fallbackData);
+    createActorActivityChart(fallbackData);
+    updateCampaigns(fallbackData);
+    updateActors(fallbackData);
   }
 });
+
+function updateMetrics(data) {
+  if (!data || !data.threatMetrics) return;
+
+  document.getElementById('total-scanned').textContent = data.threatMetrics.totalScanned.toLocaleString();
+  document.getElementById('malicious-detected').textContent = data.threatMetrics.maliciousDetected.toLocaleString();
+  document.getElementById('active-campaigns').textContent = data.threatMetrics.activeCampaigns;
+  document.getElementById('affected-users').textContent = data.threatMetrics.affectedUsers.toLocaleString();
+}
+
+function createTrendsChart(data) {
+  const ctx = document.getElementById('threat-trends-chart').getContext('2d');
+  const trendData = data.threatMetrics?.monthlyTrend || [];
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: trendData.map(d => d.month),
+      datasets: [{
+        label: 'Skills Scanned',
+        data: trendData.map(d => d.scanned),
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }, {
+        label: 'Malicious Detected',
+        data: trendData.map(d => d.malicious),
+        borderColor: 'rgb(255, 99, 132)',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Threat Trends (Aggregated Data)'
+        }
+      }
+    }
+  });
+}
+
+function createPlatformChart(data) {
+  const ctx = document.getElementById('platform-chart').getContext('2d');
+  const platformData = data.platformThreats || [];
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: platformData.map(p => p.platform),
+      datasets: [{
+        label: 'Security Issues',
+        data: platformData.map(p => p.malicious),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Platform Security Issues (GitHub Data)'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function createActorActivityChart(data) {
+  const ctx = document.getElementById('actor-activity-chart').getContext('2d');
+  const actorData = data.actorProfiles || [];
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: actorData.map(a => a.name),
+      datasets: [{
+        data: actorData.map(a => a.activity),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 205, 86, 0.8)'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Known Threat Actor Activity'
+        }
+      }
+    }
+  });
+}
+
+function updateCampaigns(data) {
+  const campaignsList = document.getElementById('campaigns-list');
+  if (!campaignsList || !data.activeCampaigns) return;
+
+  campaignsList.innerHTML = data.activeCampaigns.map(campaign => `
+    <div class="campaign-card">
+      <h4>${campaign.name}</h4>
+      <p><strong>Status:</strong> ${campaign.status}</p>
+      <p><strong>Targets:</strong> ${campaign.targets}</p>
+      <p><strong>TTPs:</strong> ${campaign.ttps}</p>
+      <p><strong>Indicators:</strong> ${campaign.indicators}</p>
+    </div>
+  `).join('');
+}
+
+function updateActors(data) {
+  const actorsList = document.getElementById('actor-profiles');
+  if (!actorsList || !data.actorProfiles) return;
+
+  actorsList.innerHTML = data.actorProfiles.map(actor => `
+    <div class="actor-card">
+      <h4>${actor.name}</h4>
+      <p><strong>Origin:</strong> ${actor.origin}</p>
+      <p><strong>Motivation:</strong> ${actor.motivation}</p>
+      <p><strong>Active Since:</strong> ${actor.activeSince}</p>
+      <div class="activity-bar">
+        <div class="activity-fill" style="width: ${actor.activity}%"></div>
+      </div>
+      <p>Activity Level: ${actor.activity < 50 ? 'Low' : actor.activity < 75 ? 'Medium' : 'High'} (${actor.activity}%)</p>
+    </div>
+  `).join('');
+}
 </script>
 
 ### Platform-Specific Threats
