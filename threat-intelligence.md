@@ -4,13 +4,13 @@ title: Threat Intelligence
 tags: threat-intelligence, security-research, monitoring
 level: 2
 type: documentation
-pitch: Real-time threat intelligence for AI agent skill security
+pitch: Comprehensive threat intelligence for AI agent skill security
 description: "Latest threat intelligence on malicious AI agent skills, including emerging attack patterns, active campaigns, and security research findings."
 ---
 
 # AI Agent Skill Threat Intelligence
 
-This page provides real-time threat intelligence on AI agent skill security threats. Information is updated regularly based on security research, incident reports, and automated monitoring.
+This page provides comprehensive threat intelligence on AI agent skill security threats. Information is updated regularly based on security research, incident reports, and automated monitoring.
 
 ## Current Threat Landscape
 
@@ -222,8 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
       threatData = data;
       initializeDashboard();
-      // Simulate real-time updates every 30 seconds
-      setInterval(updateMetrics, 30000);
     })
     .catch(error => console.error('Error loading threat data:', error));
 
@@ -237,17 +235,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateMetrics() {
     if (!threatData) return;
 
-    // Add some random variation to simulate real-time updates
-    const variation = 0.02; // 2% variation
-    const scanned = Math.floor(threatData.threatMetrics.totalScanned * (1 + (Math.random() - 0.5) * variation));
-    const malicious = Math.floor(threatData.threatMetrics.maliciousDetected * (1 + (Math.random() - 0.5) * variation));
-    const campaigns = Math.max(1, threatData.threatMetrics.activeCampaigns + Math.floor((Math.random() - 0.5) * 2));
-    const users = Math.floor(threatData.threatMetrics.affectedUsers * (1 + (Math.random() - 0.5) * variation));
-
-    document.getElementById('total-scanned').textContent = scanned.toLocaleString();
-    document.getElementById('malicious-detected').textContent = malicious.toLocaleString();
-    document.getElementById('active-campaigns').textContent = campaigns;
-    document.getElementById('affected-users').textContent = users.toLocaleString();
+    document.getElementById('total-scanned').textContent = threatData.threatMetrics.totalScanned.toLocaleString();
+    document.getElementById('malicious-detected').textContent = threatData.threatMetrics.maliciousDetected.toLocaleString();
+    document.getElementById('active-campaigns').textContent = threatData.threatMetrics.activeCampaigns;
+    document.getElementById('affected-users').textContent = threatData.threatMetrics.affectedUsers.toLocaleString();
   }
 
   function createTrendsChart() {
