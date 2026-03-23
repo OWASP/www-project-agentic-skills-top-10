@@ -155,6 +155,150 @@ The Cloud Security Alliance (CSA) MAESTRO framework provides a structured threat
 - Detection evasion through obfuscated malicious instructions
 - Metric manipulation to bypass security scanning
 
+## Platform-Specific Mitigation Guides
+
+### OpenClaw Platform
+
+#### Registry Security
+- Enable "Verified Publisher" requirement for all skill installations
+- Use ClawHub's built-in malware scanning before installation
+- Review skill permissions in the installation dialog
+
+#### Skill Development
+```yaml
+# Example: Secure SKILL.md structure
+name: "Secure File Backup"
+version: "1.0.0"
+publisher: "trusted-org"
+signature: "ed25519_signature_here"
+
+permissions:
+  - filesystem:read
+  - network:outbound
+
+instructions: |
+  This skill securely backs up files to a designated location.
+  Never executes arbitrary commands or accesses sensitive data.
+```
+
+#### Runtime Protection
+- Run skills in isolated containers using ClawSandbox
+- Monitor skill execution logs for suspicious patterns
+- Implement skill execution timeouts
+
+### Claude Code Platform
+
+#### Skill Validation
+- Use Claude's built-in skill validator before publishing
+- Implement signature verification for all skills
+- Review skill code for injection vulnerabilities
+
+#### Code Example: Secure Claude Skill
+```json
+{
+  "name": "Secure Data Processor",
+  "version": "1.0.0",
+  "permissions": ["read_files", "write_temp"],
+  "tools": [
+    {
+      "name": "process_data",
+      "description": "Securely process user data",
+      "parameters": {
+        "input_file": {"type": "string", "description": "Input file path"}
+      }
+    }
+  ],
+  "security": {
+    "signature_required": true,
+    "sandboxed_execution": true
+  }
+}
+```
+
+#### Best Practices
+- Avoid dynamic code execution in skills
+- Use parameterized inputs only
+- Implement proper error handling
+
+### Cursor Platform
+
+#### Manifest Security
+```json
+{
+  "name": "Secure Code Assistant",
+  "version": "1.0.0",
+  "publisher": "verified-publisher",
+  "permissions": {
+    "filesystem": "read-only",
+    "network": "outbound-only"
+  },
+  "security": {
+    "requireSignature": true,
+    "sandbox": true,
+    "auditLog": true
+  }
+}
+```
+
+#### Development Guidelines
+- Use Cursor's security linter during development
+- Test skills in isolated environments
+- Document all permission requirements clearly
+
+### VS Code Platform
+
+#### Extension Security
+- Follow VS Code extension security guidelines
+- Use proper manifest declarations
+- Implement content security policies
+
+#### Code Example: Secure VS Code Skill
+```json
+{
+  "name": "secure-skill",
+  "version": "1.0.0",
+  "publisher": "trusted-publisher",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "permissions": ["workspace", "commands"],
+  "security": {
+    "enablement": "workspaceTrust",
+    "supportedEnvironments": ["desktop"]
+  }
+}
+```
+
+#### Deployment Checklist
+- [ ] Code signed with verified certificate
+- [ ] Security review completed
+- [ ] Permissions minimized
+- [ ] Sandbox testing passed
+- [ ] Audit logging enabled
+
+## Cross-Platform Best Practices
+
+### Skill Publisher Responsibilities
+1. **Code Signing**: All skills must be cryptographically signed
+2. **Minimal Permissions**: Request only necessary permissions
+3. **Clear Documentation**: Document all functionality and security measures
+4. **Regular Updates**: Maintain and patch security vulnerabilities
+5. **Transparency**: Disclose data collection and processing practices
+
+### Platform Operator Responsibilities
+1. **Automated Scanning**: Implement malware detection for all skills
+2. **Publisher Verification**: Verify publisher identities
+3. **User Warnings**: Alert users to high-risk permissions
+4. **Incident Response**: Rapid removal of malicious skills
+5. **Community Feedback**: Allow user reporting of suspicious skills
+
+### User Responsibilities
+1. **Source Verification**: Only install from trusted publishers
+2. **Permission Review**: Understand what permissions are granted
+3. **Regular Audits**: Review installed skills periodically
+4. **Report Suspicious Activity**: Report potential security issues
+5. **Keep Updated**: Use latest platform versions with security fixes
+
 ## Related Risks
 
 - [AST02 — Supply Chain Compromise](ast02.md): Often the delivery mechanism for malicious skills.

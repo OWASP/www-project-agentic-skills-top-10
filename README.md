@@ -17,6 +17,11 @@
 - **🏛️ OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
 - **📋 Security Checklist**: [checklist.md](checklist.md)
 - **🔧 Universal Skill Format**: [universal-skill-format.md](universal-skill-format.md)
+- **📊 Case Studies**: [case-studies.md](case-studies.md)
+- **🛡️ Threat Intelligence**: [threat-intelligence.md](threat-intelligence.md)
+- **🔍 Risk Assessment Tool**: [risk-assessment.md](risk-assessment.md)
+- **🔎 Skill Scanner Integration**: [skill-scanner-integration.md](skill-scanner-integration.md)
+- **🔌 API Documentation**: [api-documentation.md](api-documentation.md)
 - **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **🛠️ Maintenance**: [MAINTENANCE.md](MAINTENANCE.md)
 
