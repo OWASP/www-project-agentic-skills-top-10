@@ -1,0 +1,28 @@
+{
+  "threatMetrics": {
+    "totalScanned": 4247,
+    "maliciousDetected": 1567,
+    "activeCampaigns": 7,
+    "affectedUsers": 312456,
+    "monthlyTrend": [
+      {"month": "Jan 2026", "scanned": 3800, "malicious": 1200, "campaigns": 5, "users": 250000},
+      {"month": "Feb 2026", "scanned": 3984, "malicious": 1478, "campaigns": 5, "users": 287889},
+      {"month": "Mar 2026", "scanned": 4247, "malicious": 1567, "campaigns": 7, "users": 312456}
+    ]
+  },
+  "platformThreats": [
+    {"platform": "OpenClaw", "malicious": 423, "percentage": 33.9, "topThreat": "Command injection"},
+    {"platform": "Claude Code", "malicious": 387, "percentage": 43.3, "topThreat": "Data exfiltration"},
+    {"platform": "Cursor", "malicious": 298, "percentage": 39.4, "topThreat": "Privilege escalation"},
+    {"platform": "VS Code", "malicious": 459, "percentage": 42.1, "topThreat": "Backdoor installation"}
+  ],
+  "actorProfiles": [
+    {"name": "DarkClaw", "origin": "Eastern Europe", "motivation": "Financial gain", "activeSince": "Jan 2026", "activity": 85},
+    {"name": "SkillForge", "origin": "Asia-Pacific", "motivation": "Espionage", "activeSince": "Dec 2025", "activity": 72},
+    {"name": "AgentChaos", "origin": "North America", "motivation": "Disruption", "activeSince": "Feb 2026", "activity": 45}
+  ],
+  "activeCampaigns": [
+    {"name": "SkillPhisher", "status": "Active", "targets": "Claude Code, Cursor", "ttps": "Phishing, Credential harvesting", "indicators": "Suspicious URLs, Permission requests"},
+    {"name": "CodeInjector", "status": "Active", "targets": "All platforms", "ttps": "Code injection", "indicators": "Complex YAML/JSON, Script inclusions"}
+  ]
+}
