@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OWASP AST10 - New Risk Entry Form</title>
+  <style>
+    :root {
+      --primary: #003366;
+      --primary-light: #004488;
+      --accent: #0066cc;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-600: #6c757d;
+      --gray-800: #343a40;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      color: var(--gray-800);
+      background: var(--gray-100);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 30px 0;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--gray-300);
+      padding-bottom: 10px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: var(--gray-200);
+      border: none;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .tab:hover {
+      background: var(--gray-300);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-section {
+      background: white;
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .form-section h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gray-200);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--gray-800);
+    }
+
+    label .required {
+      color: var(--danger);
+    }
+
+    label .hint {
+      font-weight: normal;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--gray-300);
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: auto;
+    }
+
+    .array-input {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .array-input input {
+      flex: 1;
+    }
+
+    .array-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    .array-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    .array-list li button {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #218838;
+    }
+
+    .btn-secondary {
+      background: var(--gray-600);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-800);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .output-section {
+      background: white;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .output-section h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    #generated-output {
+      background: var(--gray-800);
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 5px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .copy-btn {
+      margin-top: 15px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--success);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .preview-section {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 5px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .preview-section h3 {
+      margin-bottom: 15px;
+    }
+
+    .severity-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .severity-critical { background: var(--danger); color: white; }
+    .severity-high { background: var(--warning); color: var(--gray-800); }
+    .severity-medium { background: #17a2b8; color: white; }
+    .severity-low { background: var(--success); color: white; }
+
+    .help-text {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin-top: 5px;
+    }
+
+    .template-btn {
+      background: var(--gray-200);
+      border: 1px dashed var(--gray-600);
+      color: var(--gray-600);
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .template-btn:hover {
+      background: var(--gray-300);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    #file-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>🛡️ OWASP AST10 - New Risk Entry Form</h1>
+      <p>Create new Agentic Skills Top 10 risk entries with proper formatting</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('form')">📝 Form Entry</button>
+      <button class="tab" onclick="switchTab('json')">📋 JSON Entry</button>
+      <button class="tab" onclick="switchTab('preview')">👁️ Preview</button>
+    </div>
+
+    <!-- Form Entry Tab -->
+    <div id="form-tab" class="tab-content active">
+      <form id="ast-form">
+        <!-- Basic Information -->
+        <div class="form-section">
+          <h2>📌 Basic Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Risk ID <span class="required">*</span></label>
+              <input type="text" id="risk-id" placeholder="e.g., AST11" required>
+              <p class="help-text">Next available: AST11 (AST01-AST10 are taken)</p>
+            </div>
+            
+            <div class="form-group">
+              <label>Risk Title <span class="required">*</span></label>
+              <input type="text" id="risk-title" placeholder="e.g., Prompt Injection via Skills" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Severity <span class="required">*</span></label>
+              <select id="severity" required>
+                <option value="">Select severity...</option>
+                <option value="Critical">Critical</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Platforms Affected <span class="required">*</span></label>
+              <input type="text" id="platforms" placeholder="e.g., All, or OpenClaw, Claude Code" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="form-section">
+          <h2>📖 Description</h2>
+          
+          <div class="form-group">
+            <label>Description <span class="required">*</span></label>
+            <textarea id="description" placeholder="Detailed description of the security risk..." required></textarea>
+            <p class="help-text">Explain what the risk is and how it manifests in agentic skills.</p>
+          </div>
+
+          <div class="form-group">
+            <label>Why It's Unique to Skills</label>
+            <textarea id="unique-to-skills" placeholder="Explain why this risk is specific to agent skills..."></textarea>
+          </div>
+        </div>
+
+        <!-- Evidence & Scenarios -->
+        <div class="form-section">
+          <h2>🔍 Evidence & Attack Scenarios</h2>
+          
+          <div class="form-group">
+            <label>Real-World Evidence</label>
+            <textarea id="real-world-evidence" placeholder="Documented incidents, CVEs, research papers..."></textarea>
+            <p class="help-text">Include citations and dates where possible.</p>
+          </div>
+
+          <div class="form-group">
+            <label>Attack Scenarios</label>
+            <textarea id="attack-scenarios" placeholder="Step-by-step attack scenarios..."></textarea>
+            <p class="help-text">Describe concrete attack scenarios with examples.</p>
+          </div>
+        </div>
+
+        <!-- Mitigations -->
+        <div class="form-section">
+          <h2>🛡️ Mitigations</h2>
+          
+          <div class="form-group">
+            <label>Preventive Mitigations <span class="required">*</span></label>
+            <textarea id="mitigations" placeholder="List preventive measures and best practices..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Code Examples</label>
+            <textarea id="code-examples" placeholder="Code snippets demonstrating mitigations..." style="font-family: monospace;"></textarea>
+            <p class="help-text">Use markdown code blocks with language specification.</p>
+          </div>
+        </div>
+
+        <!-- Mappings -->
+        <div class="form-section">
+          <h2>🔗 Framework Mappings</h2>
+          
+          <div class="form-group">
+            <label>OWASP Mapping</label>
+            <input type="text" id="owasp-mapping" placeholder="e.g., LLM03 (Supply Chain), ASVS V14">
+          </div>
+
+          <div class="form-group">
+            <label>MAESTRO Layer Mappings</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 1: Foundation Models"> Layer 1: Foundation Models
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 2: Data & Knowledge"> Layer 2: Data & Knowledge
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 3: Agent Frameworks"> Layer 3: Agent Frameworks
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 4: Deployment & Infrastructure"> Layer 4: Deployment & Infrastructure
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 5: Evaluation & Observability"> Layer 5: Evaluation & Observability
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 6: Security & Compliance"> Layer 6: Security & Compliance
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="maestro" value="Layer 7: Agent Ecosystem"> Layer 7: Agent Ecosystem
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>MAESTRO Layer Details</label>
+            <textarea id="maestro-details" placeholder="Explain how this risk maps to each selected MAESTRO layer..."></textarea>
+          </div>
+        </div>
+
+        <!-- Platform-Specific -->
+        <div class="form-section">
+          <h2>🖥️ Platform-Specific Mitigations</h2>
+          
+          <div class="form-group">
+            <label>OpenClaw Platform Guidance</label>
+            <textarea id="openclaw-guidance" placeholder="Platform-specific mitigations for OpenClaw..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Claude Code Platform Guidance</label>
+            <textarea id="claude-guidance" placeholder="Platform-specific mitigations for Claude Code..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Cursor Platform Guidance</label>
+            <textarea id="cursor-guidance" placeholder="Platform-specific mitigations for Cursor..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>VS Code Platform Guidance</label>
+            <textarea id="vscode-guidance" placeholder="Platform-specific mitigations for VS Code..."></textarea>
+          </div>
+        </div>
+
+        <!-- Related Risks & References -->
+        <div class="form-section">
+          <h2>📚 Related Risks & References</h2>
+          
+          <div class="form-group">
+            <label>Related Risks</label>
+            <div class="array-input">
+              <input type="text" id="related-risk-input" placeholder="e.g., AST01, AST03">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="addRelatedRisk()">Add</button>
+            </div>
+            <ul id="related-risks-list" class="array-list"></ul>
+          </div>
+
+          <div class="form-group">
+            <label>References</label>
+            <textarea id="references" placeholder="Academic papers, blog posts, CVE links..."></textarea>
+            <p class="help-text">Use markdown link format: [Title](URL)</p>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" onclick="generateMarkdown()">Generate Markdown</button>
+          <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+          <button type="button" class="btn btn-secondary" onclick="loadTemplate()">Load Template</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- JSON Entry Tab -->
+    <div id="json-tab" class="tab-content">
+      <div class="form-section">
+        <h2>📋 JSON Entry</h2>
+        <p class="help-text" style="margin-bottom: 15px;">Enter risk data as JSON for programmatic generation or bulk import.</p>
+        
+        <div class="btn-group" style="margin-top: 0; margin-bottom: 15px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="loadExampleJSON()">Load Example</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('file-input').click()">Import JSON File</button>
+          <input type="file" id="file-input" accept=".json" onchange="importJSON(event)">
+        </div>
+        
+        <textarea id="json-input" style="font-family: monospace; min-height: 400px;" placeholder='{
+  "riskId": "AST11",
+  "title": "Example Risk",
+  "severity": "High",
+  "platforms": "All",
+  "description": "Description here...",
+  "mitigations": "Mitigations here..."
+}'></textarea>
+        
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" onclick="generateFromJSON()">Generate from JSON</button>
+          <button type="button" class="btn btn-secondary" onclick="exportToJSON()">Export Form to JSON</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Tab -->
+    <div id="preview-tab" class="tab-content">
+      <div class="output-section">
+        <h2>📄 Generated Markdown Output</h2>
+        <p class="help-text" style="margin-bottom: 15px;">Copy this markdown and save it as <code>astXX.md</code> in the project root.</p>
+        
+        <pre id="generated-output">// Fill out the form and click "Generate Markdown" to see output here...</pre>
+        
+        <div class="btn-group">
+          <button type="button" class="btn btn-success copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+          <button type="button" class="btn btn-primary" onclick="downloadMarkdown()">⬇️ Download as .md File</button>
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <h3>📊 Form Summary</h3>
+        <div id="form-summary">
+          <p>Complete the form to see a summary here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script>
+    // State
+    let relatedRisks = [];
+    let generatedMarkdown = '';
+
+    // Tab switching
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+
+    // Related risks management
+    function addRelatedRisk() {
+      const input = document.getElementById('related-risk-input');
+      const value = input.value.trim().toUpperCase();
+      
+      if (value && !relatedRisks.includes(value)) {
+        relatedRisks.push(value);
+        renderRelatedRisks();
+        input.value = '';
+      }
+    }
+
+    function removeRelatedRisk(index) {
+      relatedRisks.splice(index, 1);
+      renderRelatedRisks();
+    }
+
+    function renderRelatedRisks() {
+      const list = document.getElementById('related-risks-list');
+      list.innerHTML = relatedRisks.map((risk, i) => `
+        <li>
+          <span>${risk}</span>
+          <button type="button" onclick="removeRelatedRisk(${i})">Remove</button>
+        </li>
+      `).join('');
+    }
+
+    // Get MAESTRO layers
+    function getMAESTROLayers() {
+      const checkboxes = document.querySelectorAll('input[name="maestro"]:checked');
+      return Array.from(checkboxes).map(cb => cb.value);
+    }
+
+    // Generate markdown
+    function generateMarkdown() {
+      const riskId = document.getElementById('risk-id').value.trim().toUpperCase();
+      const title = document.getElementById('risk-title').value.trim();
+      const severity = document.getElementById('severity').value;
+      const platforms = document.getElementById('platforms').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const uniqueToSkills = document.getElementById('unique-to-skills').value.trim();
+      const realWorldEvidence = document.getElementById('real-world-evidence').value.trim();
+      const attackScenarios = document.getElementById('attack-scenarios').value.trim();
+      const mitigations = document.getElementById('mitigations').value.trim();
+      const codeExamples = document.getElementById('code-examples').value.trim();
+      const owaspMapping = document.getElementById('owasp-mapping').value.trim();
+      const maestroLayers = getMAESTROLayers();
+      const maestroDetails = document.getElementById('maestro-details').value.trim();
+      const openclawGuidance = document.getElementById('openclaw-guidance').value.trim();
+      const claudeGuidance = document.getElementById('claude-guidance').value.trim();
+      const cursorGuidance = document.getElementById('cursor-guidance').value.trim();
+      const vscodeGuidance = document.getElementById('vscode-guidance').value.trim();
+      const references = document.getElementById('references').value.trim();
+
+      if (!riskId || !title || !severity || !platforms || !description || !mitigations) {
+        alert('Please fill in all required fields marked with *');
+        return;
+      }
+
+      // Build markdown
+      let md = `---
+layout: col-sidebar
+title: ${riskId} — ${title}
+tags: agentic-security, ${riskId.toLowerCase()}, ${title.toLowerCase().replace(/\s+/g, '-')}
+level: 2
+type: documentation
+---
+
+**Severity**: ${severity}  
+**Platforms Affected**: ${platforms}
+
+## Description
+
+${description}
+`;
+
+      if (uniqueToSkills) {
+        md += `
+## Why It's Unique to Skills
+
+${uniqueToSkills}
+`;
+      }
+
+      if (realWorldEvidence) {
+        md += `
+## Real-World Evidence
+
+${realWorldEvidence}
+`;
+      }
+
+      if (attackScenarios) {
+        md += `
+## Attack Scenarios
+
+${attackScenarios}
+`;
+      }
+
+      md += `
+## Preventive Mitigations
+
+${mitigations}
+`;
+
+      if (codeExamples) {
+        md += `
+### Code Example
+
+${codeExamples}
+`;
+      }
+
+      if (owaspMapping) {
+        md += `
+## OWASP Mapping
+
+- **${owaspMapping}**
+`;
+      }
+
+      if (maestroLayers.length > 0) {
+        md += `
+## MAESTRO Framework Mapping
+
+The Cloud Security Alliance (CSA) MAESTRO framework provides a structured threat modeling approach for agentic AI systems across 7 layers:
+
+| MAESTRO Layer | Layer Name | ${riskId} Mapping |
+|---------------|------------|-------------------|
+`;
+        maestroLayers.forEach(layer => {
+          const layerNum = layer.split(':')[0].replace('Layer ', '');
+          const layerName = layer.split(': ')[1];
+          md += `| **Layer ${layerNum}** | ${layerName} | See details below |\n`;
+        });
+
+        if (maestroDetails) {
+          md += `
+### MAESTRO Layer Details
+
+${maestroDetails}
+`;
+        }
+      }
+
+      if (openclawGuidance || claudeGuidance || cursorGuidance || vscodeGuidance) {
+        md += `
+## Platform-Specific Mitigation Guides
+`;
+        if (openclawGuidance) {
+          md += `
+### OpenClaw Platform
+
+${openclawGuidance}
+`;
+        }
+        if (claudeGuidance) {
+          md += `
+### Claude Code Platform
+
+${claudeGuidance}
+`;
+        }
+        if (cursorGuidance) {
+          md += `
+### Cursor Platform
+
+${cursorGuidance}
+`;
+        }
+        if (vscodeGuidance) {
+          md += `
+### VS Code Platform
+
+${vscodeGuidance}
+`;
+        }
+      }
+
+      if (relatedRisks.length > 0) {
+        md += `
+## Related Risks
+
+`;
+        relatedRisks.forEach(risk => {
+          md += `- [${risk}](ast${risk.replace('AST', '').padStart(2, '0')}.md)\n`;
+        });
+      }
+
+      if (references) {
+        md += `
+## References
+
+${references}
+`;
+      }
+
+      md += `
+---
+
+*Last updated: ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}*
+`;
+
+      generatedMarkdown = md;
+      document.getElementById('generated-output').textContent = md;
+      
+      // Update summary
+      updateSummary(riskId, title, severity, platforms);
+      
+      // Switch to preview tab
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('.tab:nth-child(3)').classList.add('active');
+      document.getElementById('preview-tab').classList.add('active');
+    }
+
+    function updateSummary(id, title, severity, platforms) {
+      const severityClass = `severity-${severity.toLowerCase()}`;
+      document.getElementById('form-summary').innerHTML = `
+        <p><strong>Risk ID:</strong> ${id}</p>
+        <p><strong>Title:</strong> ${title}</p>
+        <p><strong>Severity:</strong> <span class="severity-badge ${severityClass}">${severity}</span></p>
+        <p><strong>Platforms:</strong> ${platforms}</p>
+        <p><strong>Related Risks:</strong> ${relatedRisks.length > 0 ? relatedRisks.join(', ') : 'None'}</p>
+        <p><strong>MAESTRO Layers:</strong> ${getMAESTROLayers().length} selected</p>
+        <p><strong>Word Count:</strong> ~${generatedMarkdown.split(/\s+/).length} words</p>
+      `;
+    }
+
+    // Copy to clipboard
+    function copyToClipboard() {
+      if (!generatedMarkdown) {
+        alert('Please generate markdown first');
+        return;
+      }
+      
+      navigator.clipboard.writeText(generatedMarkdown).then(() => {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2000);
+      });
+    }
+
+    // Download markdown
+    function downloadMarkdown() {
+      if (!generatedMarkdown) {
+        alert('Please generate markdown first');
+        return;
+      }
+      
+      const riskId = document.getElementById('risk-id').value.trim().toLowerCase();
+      const blob = new Blob([generatedMarkdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${riskId}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Clear form
+    function clearForm() {
+      if (confirm('Are you sure you want to clear all form fields?')) {
+        document.getElementById('ast-form').reset();
+        relatedRisks = [];
+        renderRelatedRisks();
+        generatedMarkdown = '';
+        document.getElementById('generated-output').textContent = '// Form cleared. Fill out the form to generate new markdown...';
+        document.getElementById('form-summary').innerHTML = '<p>Complete the form to see a summary here.</p>';
+      }
+    }
+
+    // Load template
+    function loadTemplate() {
+      document.getElementById('risk-id').value = 'AST11';
+      document.getElementById('risk-title').value = 'Example New Risk';
+      document.getElementById('severity').value = 'High';
+      document.getElementById('platforms').value = 'All';
+      document.getElementById('description').value = `Attackers exploit [describe the vulnerability] to [describe the impact]. This risk manifests when [describe the conditions].`;
+      document.getElementById('unique-to-skills').value = `Unlike traditional [comparison], agent skills [explain the unique aspect].`;
+      document.getElementById('mitigations').value = `1. **First mitigation**: Description of the first preventive measure.
+2. **Second mitigation**: Description of the second preventive measure.
+3. **Third mitigation**: Description of the third preventive measure.`;
+      document.getElementById('owasp-mapping').value = 'LLM01 (Prompt Injection)';
+    }
+
+    // JSON functions
+    function loadExampleJSON() {
+      const example = {
+        riskId: "AST11",
+        title: "Example New Risk",
+        severity: "High",
+        platforms: "All",
+        description: "This is an example risk description. Describe the vulnerability and its impact here.",
+        uniqueToSkills: "Explain why this risk is unique to agent skills.",
+        realWorldEvidence: "- **Example Incident (2026)**: Description of real-world evidence.",
+        attackScenarios: "### Scenario 1\nStep-by-step attack description.",
+        mitigations: "1. **First mitigation**: Description.\n2. **Second mitigation**: Description.",
+        owaspMapping: "LLM01 (Prompt Injection)",
+        relatedRisks: ["AST01", "AST03"]
+      };
+      document.getElementById('json-input').value = JSON.stringify(example, null, 2);
+    }
+
+    function generateFromJSON() {
+      try {
+        const data = JSON.parse(document.getElementById('json-input').value);
+        
+        // Populate form fields
+        if (data.riskId) document.getElementById('risk-id').value = data.riskId;
+        if (data.title) document.getElementById('risk-title').value = data.title;
+        if (data.severity) document.getElementById('severity').value = data.severity;
+        if (data.platforms) document.getElementById('platforms').value = data.platforms;
+        if (data.description) document.getElementById('description').value = data.description;
+        if (data.uniqueToSkills) document.getElementById('unique-to-skills').value = data.uniqueToSkills;
+        if (data.realWorldEvidence) document.getElementById('real-world-evidence').value = data.realWorldEvidence;
+        if (data.attackScenarios) document.getElementById('attack-scenarios').value = data.attackScenarios;
+        if (data.mitigations) document.getElementById('mitigations').value = data.mitigations;
+        if (data.codeExamples) document.getElementById('code-examples').value = data.codeExamples;
+        if (data.owaspMapping) document.getElementById('owasp-mapping').value = data.owaspMapping;
+        if (data.maestroDetails) document.getElementById('maestro-details').value = data.maestroDetails;
+        if (data.openclawGuidance) document.getElementById('openclaw-guidance').value = data.openclawGuidance;
+        if (data.claudeGuidance) document.getElementById('claude-guidance').value = data.claudeGuidance;
+        if (data.cursorGuidance) document.getElementById('cursor-guidance').value = data.cursorGuidance;
+        if (data.vscodeGuidance) document.getElementById('vscode-guidance').value = data.vscodeGuidance;
+        if (data.references) document.getElementById('references').value = data.references;
+        
+        // Handle related risks
+        if (data.relatedRisks && Array.isArray(data.relatedRisks)) {
+          relatedRisks = data.relatedRisks;
+          renderRelatedRisks();
+        }
+        
+        // Handle MAESTRO layers
+        if (data.maestroLayers && Array.isArray(data.maestroLayers)) {
+          document.querySelectorAll('input[name="maestro"]').forEach(cb => {
+            cb.checked = data.maestroLayers.includes(cb.value);
+          });
+        }
+        
+        // Generate markdown
+        generateMarkdown();
+        
+      } catch (error) {
+        alert('Invalid JSON: ' + error.message);
+      }
+    }
+
+    function exportToJSON() {
+      const data = {
+        riskId: document.getElementById('risk-id').value,
+        title: document.getElementById('risk-title').value,
+        severity: document.getElementById('severity').value,
+        platforms: document.getElementById('platforms').value,
+        description: document.getElementById('description').value,
+        uniqueToSkills: document.getElementById('unique-to-skills').value,
+        realWorldEvidence: document.getElementById('real-world-evidence').value,
+        attackScenarios: document.getElementById('attack-scenarios').value,
+        mitigations: document.getElementById('mitigations').value,
+        codeExamples: document.getElementById('code-examples').value,
+        owaspMapping: document.getElementById('owasp-mapping').value,
+        maestroLayers: getMAESTROLayers(),
+        maestroDetails: document.getElementById('maestro-details').value,
+        openclawGuidance: document.getElementById('openclaw-guidance').value,
+        claudeGuidance: document.getElementById('claude-guidance').value,
+        cursorGuidance: document.getElementById('cursor-guidance').value,
+        vscodeGuidance: document.getElementById('vscode-guidance').value,
+        relatedRisks: relatedRisks,
+        references: document.getElementById('references').value
+      };
+      
+      document.getElementById('json-input').value = JSON.stringify(data, null, 2);
+      
+      // Switch to JSON tab
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('.tab:nth-child(2)').classList.add('active');
+      document.getElementById('json-tab').classList.add('active');
+    }
+
+    function importJSON(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('json-input').value = e.target.result;
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    // Add enter key support for related risks
+    document.getElementById('related-risk-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addRelatedRisk();
+      }
+    });
+  </script>
+</body>
+</html>

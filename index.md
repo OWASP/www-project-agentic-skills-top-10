@@ -23,6 +23,7 @@ description: "Comprehensive guide to the top 10 security risks in AI agent skill
 
 ## Table of Contents
 
+- **[➕ Submit New Risk Entry](assets/new-ast-form.html)** — Create new AST risk entries
 - [Overview](#overview)
 - [The Problem: A Crisis Already in Progress](#the-problem-a-crisis-already-in-progress)
 - [What Are Agentic Skills?](#what-are-agentic-skills)

@@ -11,6 +11,7 @@
 
 ## Quick Links
 
+- **➕ Submit New Risk Entry**: [new-ast-form.html](assets/new-ast-form.html) — Create new AST risk entries
 - **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **🐙 GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
@@ -21,7 +22,8 @@
 - **🛡️ Threat Intelligence**: [threat-intelligence.md](threat-intelligence.md)
 - **🔍 Risk Assessment Tool**: [risk-assessment.md](risk-assessment.md)
 - **🔎 Skill Scanner Integration**: [skill-scanner-integration.md](skill-scanner-integration.md)
-- **🔌 API Documentation**: [api-documentation.md](api-documentation.md)- **📚 Skill Development Guide**: [skill-development-guide.md](skill-development-guide.md)
+- **🔌 API Documentation**: [api-documentation.md](api-documentation.md)
+- **📚 Skill Development Guide**: [skill-development-guide.md](skill-development-guide.md)
 - **⚖️ Platform Comparison**: [platform-comparison.md](platform-comparison.md)
 - **👥 Community & Contribution**: [community-contribution.md](community-contribution.md)
 - **🎓 Training & Certification**: [training-certification.md](training-certification.md)
