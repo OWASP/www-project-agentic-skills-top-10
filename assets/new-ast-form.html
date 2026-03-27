@@ -562,6 +562,7 @@
 
         <div class="btn-group">
           <button type="button" class="btn btn-primary" onclick="generateMarkdown()">Generate Markdown</button>
+          <button type="button" class="btn btn-success" onclick="submitToGitHub()">🚀 Submit to GitHub (Create PR)</button>
           <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
           <button type="button" class="btn btn-secondary" onclick="loadTemplate()">Load Template</button>
         </div>
@@ -625,6 +626,51 @@
     // State
     let relatedRisks = [];
     let generatedMarkdown = '';
+    let nextAstNumber = 11;
+    const GITHUB_OWNER = 'OWASP';
+    const GITHUB_REPO = 'www-project-agentic-skills-top-10';
+
+    // Initialize - fetch next AST number
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchNextAstNumber();
+    });
+
+    // Fetch next available AST number from GitHub
+    async function fetchNextAstNumber() {
+      try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`);
+        if (!response.ok) throw new Error('Failed to fetch repository contents');
+        
+        const contents = await response.json();
+        const astFiles = contents
+          .filter(file => file.name.match(/^ast\d+\.md$/i))
+          .map(file => {
+            const match = file.name.match(/ast(\d+)\.md/i);
+            return match ? parseInt(match[1]) : 0;
+          })
+          .filter(num => num > 0);
+        
+        if (astFiles.length > 0) {
+          nextAstNumber = Math.max(...astFiles) + 1;
+        } else {
+          nextAstNumber = 11;
+        }
+        
+        // Update the placeholder and help text
+        const riskIdInput = document.getElementById('risk-id');
+        riskIdInput.placeholder = `e.g., AST${nextAstNumber}`;
+        
+        const helpText = riskIdInput.nextElementSibling;
+        if (helpText) {
+          helpText.textContent = `Next available: AST${nextAstNumber} (AST01-AST${nextAstNumber - 1} are taken)`;
+        }
+        
+        console.log(`Next available AST number: ${nextAstNumber}`);
+      } catch (error) {
+        console.warn('Could not fetch AST numbers from GitHub:', error);
+        nextAstNumber = 11;
+      }
+    }
 
     // Tab switching
     function switchTab(tabName) {
@@ -1024,6 +1070,160 @@ ${references}
           document.getElementById('json-input').value = e.target.result;
         };
         reader.readAsText(file);
+      }
+    }
+
+    // Submit options - show modal with multiple submission methods
+    function submitToGitHub() {
+      // First, generate markdown if not already done
+      if (!generatedMarkdown) {
+        generateMarkdown();
+        if (!generatedMarkdown) return; // Validation failed
+      }
+
+      const riskId = document.getElementById('risk-id').value.trim().toUpperCase();
+      const riskTitle = document.getElementById('risk-title').value.trim();
+
+      if (!riskId || !riskTitle) {
+        alert('Please fill in Risk ID and Risk Title before submitting.');
+        return;
+      }
+
+      // Validate risk ID format
+      if (!/^AST\d+$/i.test(riskId)) {
+        alert('Risk ID must be in format AST followed by numbers (e.g., AST11)');
+        return;
+      }
+
+      showSubmissionOptions(riskId, riskTitle);
+    }
+
+    // Show submission options modal
+    function showSubmissionOptions(riskId, riskTitle) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 20px;
+      `;
+      
+      modal.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 8px; max-width: 700px; max-height: 90vh; overflow-y: auto;">
+          <h2 style="color: #0066cc; margin-bottom: 20px;">📋 Submit New AST Entry: ${riskId}</h2>
+          <p style="margin-bottom: 20px; color: #666;">Choose how you'd like to submit your new risk entry:</p>
+          
+          <div style="display: grid; gap: 15px;">
+            
+            <!-- Option 1: Direct GitHub Creation -->
+            <div style="border: 2px solid #28a745; border-radius: 8px; padding: 20px; background: #f8fff8;">
+              <h3 style="color: #28a745; margin-bottom: 10px;">🚀 Option 1: Create File on GitHub (Recommended)</h3>
+              <p style="margin-bottom: 15px; font-size: 14px;">Opens GitHub's web editor with your content pre-filled. You'll need to:</p>
+              <ol style="margin-bottom: 15px; padding-left: 20px; font-size: 14px;">
+                <li>Sign in to GitHub (if not already)</li>
+                <li>Review the pre-filled content</li>
+                <li>Click "Commit changes" to create the file</li>
+                <li>GitHub will prompt you to create a PR</li>
+              </ol>
+              <a href="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/new/main?filename=${riskId.toLowerCase()}.md&value=${encodeURIComponent(generatedMarkdown)}" 
+                 target="_blank"
+                 style="background: #28a745; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; display: inline-block; font-weight: bold;">
+                🚀 Create ${riskId}.md on GitHub
+              </a>
+            </div>
+            
+            <!-- Option 2: Create GitHub Issue -->
+            <div style="border: 2px solid #0066cc; border-radius: 8px; padding: 20px; background: #f8fbff;">
+              <h3 style="color: #0066cc; margin-bottom: 10px;">📝 Option 2: Create GitHub Issue</h3>
+              <p style="margin-bottom: 15px; font-size: 14px;">Submit as an issue for maintainers to review and convert to a PR.</p>
+              <a href="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/issues/new?title=${encodeURIComponent(`New AST Entry: ${riskId} - ${riskTitle}`)}&body=${encodeURIComponent(`## New AST Risk Entry Submission\n\n**Risk ID:** ${riskId}\n**Title:** ${riskTitle}\n\n### Markdown Content\n\nPlease create a file named \`${riskId.toLowerCase()}.md\` with the following content:\n\n\`\`\`markdown\n${generatedMarkdown}\n\`\`\`\n\n---\n*Submitted via web form*`)}}" 
+                 target="_blank"
+                 style="background: #0066cc; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; display: inline-block; font-weight: bold;">
+                📝 Create Issue on GitHub
+              </a>
+            </div>
+            
+            <!-- Option 3: Download File -->
+            <div style="border: 2px solid #6c757d; border-radius: 8px; padding: 20px; background: #f8f9fa;">
+              <h3 style="color: #6c757d; margin-bottom: 10px;">⬇️ Option 3: Download & Manual PR</h3>
+              <p style="margin-bottom: 15px; font-size: 14px;">Download the file and create a PR manually using git or GitHub web interface.</p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="downloadMarkdown()" 
+                        style="background: #6c757d; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                  ⬇️ Download ${riskId}.md
+                </button>
+                <button onclick="copyToClipboard()" 
+                        style="background: #17a2b8; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                  📋 Copy to Clipboard
+                </button>
+              </div>
+            </div>
+            
+            <!-- Option 4: Create Gist -->
+            <div style="border: 2px solid #ffc107; border-radius: 8px; padding: 20px; background: #fffdf5;">
+              <h3 style="color: #856404; margin-bottom: 10px;">📎 Option 4: Create GitHub Gist</h3>
+              <p style="margin-bottom: 15px; font-size: 14px;">Create a public gist and share the link with maintainers.</p>
+              <button onclick="createGist('${riskId}', '${riskTitle}')" 
+                      style="background: #ffc107; color: #212529; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                📎 Create Public Gist
+              </button>
+            </div>
+            
+          </div>
+          
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <button onclick="this.parentElement.parentElement.remove()" 
+                    style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+    }
+
+    // Create GitHub Gist
+    async function createGist(riskId, riskTitle) {
+      try {
+        const response = await fetch('https://api.github.com/gists', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            description: `OWASP AST10 - New Risk Entry: ${riskId} - ${riskTitle}`,
+            public: true,
+            files: {
+              [`${riskId.toLowerCase()}.md`]: {
+                content: generatedMarkdown
+              }
+            }
+          })
+        });
+
+        if (response.ok) {
+          const gist = await response.json();
+          window.open(gist.html_url, '_blank');
+          alert(`Gist created successfully!\n\nURL: ${gist.html_url}\n\nShare this link with maintainers.`);
+        } else {
+          throw new Error('Failed to create gist');
+        }
+      } catch (error) {
+        console.error('Error creating gist:', error);
+        alert('Could not create gist. Please use the download or copy options instead.');
       }
     }
 

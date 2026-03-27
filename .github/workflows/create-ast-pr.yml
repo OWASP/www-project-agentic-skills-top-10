@@ -1,0 +1,160 @@
+name: Create AST Entry PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      risk_id:
+        description: 'Risk ID (e.g., AST11)'
+        required: true
+        type: string
+      risk_title:
+        description: 'Risk Title'
+        required: true
+        type: string
+      markdown_content:
+        description: 'Full markdown content for the AST file'
+        required: true
+        type: string
+      submitter_name:
+        description: 'Name of the submitter'
+        required: false
+        type: string
+        default: 'Anonymous'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-ast-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate risk ID format
+        run: |
+          RISK_ID="${{ github.event.inputs.risk_id }}"
+          if [[ ! "$RISK_ID" =~ ^AST[0-9]+$ ]]; then
+            echo "Error: Risk ID must be in format AST followed by numbers (e.g., AST11)"
+            exit 1
+          fi
+          echo "Risk ID validated: $RISK_ID"
+
+      - name: Check if risk ID already exists
+        run: |
+          RISK_ID="${{ github.event.inputs.risk_id }}"
+          FILENAME="${RISK_ID,,}.md"  # Convert to lowercase
+          if [ -f "$FILENAME" ]; then
+            echo "Error: $FILENAME already exists in the repository"
+            exit 1
+          fi
+          echo "Risk ID $RISK_ID is available"
+
+      - name: Create branch
+        run: |
+          RISK_ID="${{ github.event.inputs.risk_id }}"
+          BRANCH_NAME="add-${RISK_ID,,}-$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create AST file
+        run: |
+          RISK_ID="${{ github.event.inputs.risk_id }}"
+          FILENAME="${RISK_ID,,}.md"
+          echo "${{ github.event.inputs.markdown_content }}" > "$FILENAME"
+          echo "Created $FILENAME"
+
+      - name: Update index.md with new risk
+        run: |
+          RISK_ID="${{ github.event.inputs.risk_id }}"
+          RISK_TITLE="${{ github.event.inputs.risk_title }}"
+          FILENAME="${RISK_ID,,}.md"
+          
+          # Add to summary table in index.md if it exists
+          if grep -q "| \[${RISK_ID}\]" index.md; then
+            echo "Risk $RISK_ID already in index.md"
+          else
+            # Find the summary table and add new row before the closing
+            # This adds the new risk to the table
+            echo "| [${RISK_ID}](${FILENAME}) | ${RISK_TITLE} | TBD | All | See details | Pending |" >> index.md
+            echo "Added $RISK_ID to index.md"
+          fi
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "feat: Add new AST risk entry - ${{ github.event.inputs.risk_id }}: ${{ github.event.inputs.risk_title }}
+
+          Submitted by: ${{ github.event.inputs.submitter_name }}
+          
+          This PR adds a new Agentic Skills Top 10 risk entry:
+          - Risk ID: ${{ github.event.inputs.risk_id }}
+          - Title: ${{ github.event.inputs.risk_title }}
+          
+          Please review the content for:
+          - Accuracy of security information
+          - Proper formatting and structure
+          - Appropriate severity classification
+          - Complete mitigations and references"
+
+      - name: Push branch
+        run: |
+          git push origin ${{ env.BRANCH_NAME }}
+
+      - name: Create Pull Request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const riskId = '${{ github.event.inputs.risk_id }}';
+            const riskTitle = '${{ github.event.inputs.risk_title }}';
+            const submitter = '${{ github.event.inputs.submitter_name }}';
+            const branchName = '${{ env.BRANCH_NAME }}';
+            
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Add new AST risk: ${riskId} - ${riskTitle}`,
+              head: branchName,
+              base: 'main',
+              body: `## New AST Risk Entry Submission
+
+              **Risk ID:** ${riskId}
+              **Title:** ${riskTitle}
+              **Submitted by:** ${submitter}
+              
+              ### Checklist for Reviewers
+              - [ ] Content accuracy verified
+              - [ ] Severity classification appropriate
+              - [ ] Mitigations are actionable
+              - [ ] References are valid
+              - [ ] MAESTRO mappings are correct
+              - [ ] Platform-specific guidance is accurate
+              
+              ### Description
+              This PR adds a new Agentic Skills Top 10 risk entry as submitted through the web form.
+              
+              Please review the markdown content in \`${riskId.toLowerCase()}.md\` for completeness and accuracy.
+              
+              ---
+              *Auto-generated by AST Entry Workflow*`
+            });
+            
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+            
+            // Add labels if they exist
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: ['documentation', 'enhancement', 'new-risk-entry']
+              });
+            } catch (e) {
+              console.log('Could not add labels:', e.message);
+            }
