@@ -54,7 +54,7 @@ The AI agent skill ecosystem is under **active attack** as of Q1 2026:
 
 ### For Security Teams
 
-1. **Assess Your Posture**: Use the [Security Assessment Checklist](checklist.md)
+1. **Assess Your Posture**: Use the [Security Assessment Checklist](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/checklist.md)
 2. **Review Risks**: Read the 10 AST files for platform-specific guidance
 3. **Implement Controls**: Apply mitigations appropriate to your environment
 4. **Monitor Threats**: Subscribe to security advisories
@@ -91,10 +91,10 @@ The form generates properly formatted markdown and provides multiple submission 
 ### Browse Documentation
 
 - **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
-- **📖 Full Documentation**: [README.md](README.md)
-- **📋 Risk Details**: [index.md](index.md)
-- **🔍 Security Checklist**: [checklist.md](checklist.md)
-- **🔧 Universal Format**: [universal-skill-format.md](universal-skill-format.md)
+- **📖 Full Documentation**: [README.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/README.md)
+- **📋 Risk Details**: [index.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/index.md)
+- **🔍 Security Checklist**: [checklist.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/checklist.md)
+- **🔧 Universal Format**: [universal-skill-format.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/universal-skill-format.md)
 
 ---
 
@@ -112,7 +112,7 @@ We welcome contributions from the security community!
 
 ### Getting Started
 
-1. **Read Guidelines**: Check [CONTRIBUTING.md](CONTRIBUTING.md)
+1. **Read Guidelines**: Check [CONTRIBUTING.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/CONTRIBUTING.md)
 2. **Fork & Clone**: Work on your own branch
 3. **Use Templates**: Issue and PR templates provided
 4. **Test Changes**: Run validation scripts
@@ -120,7 +120,7 @@ We welcome contributions from the security community!
 
 ### Submit New Risks
 
-Use the [New AST Form](assets/new-ast-form.html) to submit new risk entries with proper formatting.
+Use the [New AST Form](https://owasp.github.io/www-project-agentic-skills-top-10/assets/new-ast-form.html) to submit new risk entries with proper formatting.
 
 ---
 
@@ -130,7 +130,7 @@ Use the [New AST Form](assets/new-ast-form.html) to submit new risk entries with
 
 Sign up to receive updates about the OWASP Agentic Skills Top 10 project:
 
-**� [Sign Up for Updates](https://forms.gle/XXXXXXXXXXXXXXX)** *(Google Form)*
+**📋 [Sign Up for Updates](https://docs.google.com/document/d/1WIAMIZnH5kivRGF7QDhOFNO3zPs9y5MxjmTf1hcZ9Ms/edit?tab=t.0)** *(Google Document)*
 
 ### Communication Channels
 
@@ -161,9 +161,9 @@ Sign up to receive updates about the OWASP Agentic Skills Top 10 project:
 
 ### Documentation
 - **[Full Website](https://owasp.github.io/www-project-agentic-skills-top-10/)**: Complete documentation
-- **[Risk Details](top10.md)**: All 10 risks in one document
-- **[Security Checklist](checklist.md)**: Assessment and remediation guide
-- **[Universal Format](universal-skill-format.md)**: Cross-platform standard specification
+- **[Risk Details](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/top10.md)**: All 10 risks in one document
+- **[Security Checklist](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/checklist.md)**: Assessment and remediation guide
+- **[Universal Format](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/universal-skill-format.md)**: Cross-platform standard specification
 
 ### Research & References
 - **Snyk ToxicSkills** (Feb 2026): Comprehensive skill ecosystem audit
@@ -172,8 +172,8 @@ Sign up to receive updates about the OWASP Agentic Skills Top 10 project:
 - **CSA MAESTRO**: 7-layer threat model for agentic AI
 
 ### Tools & Automation
-- **[Validation Script](validate.sh)**: Content quality checker
-- **[Maintenance Guide](MAINTENANCE.md)**: Long-term project procedures
+- **[Validation Script](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/validate.sh)**: Content quality checker
+- **[Maintenance Guide](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/MAINTENANCE.md)**: Long-term project procedures
 - **GitHub Actions**: Automated testing and deployment
 
 ---
@@ -200,7 +200,7 @@ Sign up to receive updates about the OWASP Agentic Skills Top 10 project:
 For questions, suggestions, or to get involved:
 - Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
 - Submit a [pull request](https://github.com/OWASP/www-project-agentic-skills-top-10/pulls) with your contribution
-- [Sign up for updates](https://forms.gle/XXXXXXXXXXXXXXX) to stay informed
+- [Sign up for updates](https://docs.google.com/document/d/1WIAMIZnH5kivRGF7QDhOFNO3zPs9y5MxjmTf1hcZ9Ms/edit?tab=t.0) to stay informed
 
 ---
 
