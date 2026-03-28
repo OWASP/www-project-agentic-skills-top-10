@@ -130,7 +130,7 @@ Unlike MCP tools (which define *what* resources and actions are available), skil
 **The "Lethal Trifecta" (Simon Willison / Palo Alto Networks, 2026):**
 An AI agent skill is especially dangerous when it simultaneously has:
 1. **Access to private data** (SSH keys, API credentials, wallet files, browser data)
-2. **Exposure to untrusted content** (skill instructions, memory files, email, Slack)
+2. **Exposure to untrusted content** (skill instructions, memory files, email)
 3. **Ability to communicate externally** (network egress, webhook calls, curl)
 
 Most production agent deployments today satisfy all three conditions.
@@ -433,7 +433,6 @@ changelog:
 | **GitHub Issues** | Risk suggestions, new attack scenarios, mitigation proposals |
 | **GitHub PRs** | Content contributions, platform-specific examples, translations |
 | **Monthly Calls** | OWASP Zoom — 1st Thursday of each month |
-| **Slack** | `#proj-agentic-skills-top-10` in OWASP Slack |
 
 ### Goals and Success Metrics
 
@@ -509,7 +508,6 @@ You are free to share and adapt this material for any purpose, provided you give
 
 For questions, suggestions, or to get involved:
 - Open an issue on GitHub
-- Join the `#proj-agentic-skills-top-10` channel in OWASP Slack
 - Attend the monthly community call — 1st Thursday, OWASP Zoom
 
 ---

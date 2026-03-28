@@ -152,7 +152,6 @@ GitHub PRs: Content \+ platform examples
 
 Monthly calls: OWASP Zoom (1st Thursday)
 
-Slack: \#proj-agentic-skills-top-10
 
 ## Alignment with OWASP MCP Top 10
 

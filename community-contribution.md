@@ -300,7 +300,6 @@ Contributing significantly can lead to:
 ### Contact
 - **Email**: security@owasp.org/ast10
 - **Twitter**: @OWASP
-- **Slack**: OWASP Community Slack
 - **Forum**: OWASP Project Forum
 
 ## Contributors Hall of Fame
