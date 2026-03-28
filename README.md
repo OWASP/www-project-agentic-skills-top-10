@@ -11,7 +11,6 @@
 
 ## Quick Links
 
-- **➕ Submit New Risk Entry**: [new-ast-form.html](assets/new-ast-form.html) — Create new AST risk entries
 - **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **🐙 GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
@@ -162,6 +161,17 @@ We welcome contributions from the community! Here's how to get involved:
 3. **Use Templates**: Issue and PR templates provided
 4. **Test Changes**: Run validation scripts
 5. **Submit PR**: Follow the contribution workflow
+
+### Submit New Risk Entries
+
+Use our **interactive web form** to submit new AST risk entries:
+
+**➕ [Submit New Risk Entry](https://owasp.github.io/www-project-agentic-skills-top-10/assets/new-ast-form.html)**
+
+The form generates properly formatted markdown and provides multiple submission options:
+- Direct GitHub file creation
+- Create GitHub Issue
+- Download and manual PR
 
 ### Community
 
