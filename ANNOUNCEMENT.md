@@ -126,18 +126,16 @@ Use the [New AST Form](assets/new-ast-form.html) to submit new risk entries with
 
 ## 📅 Community
 
-### Monthly Calls
+### Stay Updated
 
-Join our monthly community calls:
-- **When**: 1st Thursday of each month
-- **Where**: OWASP Zoom (link in OWASP Slack)
-- **What**: Project updates, new contributions, community discussion
+Sign up to receive updates about the OWASP Agentic Skills Top 10 project:
+
+**� [Sign Up for Updates](https://forms.gle/XXXXXXXXXXXXXXX)** *(Google Form)*
 
 ### Communication Channels
 
-- **💬 Slack**: `#proj-agentic-skills-top-10` in [OWASP Slack](https://owasp.org/slack/)
-- **📧 Mailing List**: owasp-agentic-skills@lists.owasp.org
 - **🐙 GitHub**: [Issues](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) and [Discussions](https://github.com/OWASP/www-project-agentic-skills-top-10/discussions)
+- **📧 Contact**: Reach out via GitHub Issues for questions or suggestions
 
 ---
 
@@ -201,8 +199,8 @@ Join our monthly community calls:
 
 For questions, suggestions, or to get involved:
 - Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
-- Join the `#proj-agentic-skills-top-10` channel in [OWASP Slack](https://owasp.org/slack/)
-- Attend the monthly community call — 1st Thursday, [OWASP Zoom](https://owasp.org/events/)
+- Submit a [pull request](https://github.com/OWASP/www-project-agentic-skills-top-10/pulls) with your contribution
+- [Sign up for updates](https://forms.gle/XXXXXXXXXXXXXXX) to stay informed
 
 ---
 
