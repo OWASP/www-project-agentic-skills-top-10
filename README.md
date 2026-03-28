@@ -175,7 +175,6 @@ The form generates properly formatted markdown and provides multiple submission 
 
 ### Community
 
-- **📅 Monthly Calls**: 1st Thursday of each month (OWASP Zoom)
 - ** Mailing List**: owasp-agentic-skills@lists.owasp.org
 
 ---
@@ -244,7 +243,6 @@ You are free to share and adapt this material for any purpose, provided you give
 
 For questions, suggestions, or to get involved:
 - Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
-- Attend the monthly community call — 1st Thursday, [OWASP Zoom](https://owasp.org/events/)
 
 ---
 
@@ -619,7 +617,6 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 |---------|---------|
 | **GitHub Issues** | Risk suggestions, new attack scenarios, mitigation proposals |
 | **GitHub PRs** | Content contributions, platform-specific examples, translations |
-| **Monthly Calls** | OWASP Zoom — 1st Thursday of each month |
 
 ### Goals and Success Metrics
 
@@ -695,8 +692,6 @@ You are free to share and adapt this material for any purpose, provided you give
 
 For questions, suggestions, or to get involved:
 - Open an issue on GitHub (link above when available)
-- Join the `#proj-agentic-skills-top-10` channel in OWASP Slack
-- Attend the monthly community call — 1st Thursday, OWASP Zoom
 
 ---
 
