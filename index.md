@@ -269,7 +269,6 @@ We welcome contributions from the community! Here's how you can help:
 2. Create a feature branch for your changes.
 3. Make your edits following our [contributing guidelines](CONTRIBUTING.md).
 4. Submit a pull request with a clear description of your changes.
-5. Join our monthly community calls to discuss proposals.
 
 ### Submit New Risk Entries
 
@@ -432,7 +431,6 @@ changelog:
 |---------|---------|
 | **GitHub Issues** | Risk suggestions, new attack scenarios, mitigation proposals |
 | **GitHub PRs** | Content contributions, platform-specific examples, translations |
-| **Monthly Calls** | OWASP Zoom — 1st Thursday of each month |
 
 ### Goals and Success Metrics
 
@@ -508,7 +506,6 @@ You are free to share and adapt this material for any purpose, provided you give
 
 For questions, suggestions, or to get involved:
 - Open an issue on GitHub
-- Attend the monthly community call — 1st Thursday, OWASP Zoom
 
 ---
 
