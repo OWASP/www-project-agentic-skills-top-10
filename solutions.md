@@ -11,7 +11,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
-| [AgentMint](https://claude.ai/chat/3c4cbcba-b466-4119-917a-6f6f661d50ac#agentmint) | MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
 
 
 ---
