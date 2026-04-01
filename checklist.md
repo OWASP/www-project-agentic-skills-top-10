@@ -182,6 +182,7 @@ The following open-source tools can be used to automate checklist verification:
 | [TruffleHog](https://github.com/trufflesecurity/trufflehog) | Secret scanning across repos and history | AST03, AST08 |
 | [Caterpillar](https://github.com/alice-dot-io/caterpillar) | Dynamic SAST for AI agents — continuous behavioral analysis | AST01, AST03, AST08 |
 | [Snyk](https://snyk.io/) | Dependency and supply chain scanning | AST02, AST07 |
+| [Pipelock](https://github.com/luckyPipewrench/pipelock) | Runtime network proxy — DLP, injection detection, tool poisoning, process sandbox (Landlock/seccomp) | AST01, AST03, AST04, AST06, AST07, AST08 |
 
 > No single tool covers all risks. A multi-tool pipeline combining static analysis, credential detection, and behavioral/dynamic analysis is recommended (see AST08).
 
