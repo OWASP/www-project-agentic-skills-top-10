@@ -59,6 +59,45 @@ Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typica
 
 ---
 
+
+## WraithVector
+
+**Description:** Agent Authority Management gateway for AI agents. Sits between agents and tool execution, enforcing role-based permissions before every action and producing cryptographically hash-chained audit records for every decision — ALLOW or BLOCK.
+
+**License:** MIT  
+**Repository:** https://github.com/wraithvector0/
+**Install:** `pip install wraithvector-openclaw`  
+**Contact:** fran@wraithvector.com  
+**Dependencies:** requests
+
+### AST Risks Addressed
+
+**AST03 — Over-Privileged Skills:** Role-based tool permission enforcement at runtime. Each agent role has an explicit allowlist of tools. Actions outside the approved scope are blocked before execution. Fail-closed by default.
+
+**AST06 — Weak Isolation:** Fail-closed enforcement — if the governance layer fails or is unreachable, execution is blocked. No fail-open fallback.
+
+**AST09 — No Governance:** Per-agent audit logging with hash-chained decision records. Every ALLOW and BLOCK is stored with agent ID, role, action, timestamp, and SHA-256 chain hash linking to the previous decision. PDF evidence export supported.
+
+### Risks Not Addressed
+
+**AST01 — Malicious Skills:** Does not scan skill manifests for malicious content.  
+**AST02 — Supply Chain Compromise:** Does not implement registry transparency or dependency pinning.  
+**AST05 — Unsafe Deserialization:** Does not parse untrusted skill configs.  
+**AST07 — Update Drift:** No policy version pinning or TTL expiry.  
+**AST08 — Poor Scanning:** No semantic or behavioral scanning.  
+**AST10 — Cross-Platform Reuse:** OpenClaw-specific plugin. Universal Skill Format not yet implemented.
+
+### Known Limitations
+
+- Enforcement runs as a plugin hook. A compromised process can bypass it.
+- Full dashboard and multi-tenant API require a hosted account.
+- LangChain integration requires API key (hosted service).
+- No containerization or sandbox isolation.
+
+### Framework Integration
+
+Integrates with OpenClaw via before-tool-call hook. LangChain integration available via REST API. OpenClaw plugin is open source with a minimal governance dashboard included. For questions or integration support: fran@wraithvector.com
+
 ## Template for New Entries
 
 ```markdown
