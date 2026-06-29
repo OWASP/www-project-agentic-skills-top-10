@@ -411,6 +411,48 @@ print(json.dumps(results, indent=2))
 }
 ```
 
+### Multi-Scanner Report Interoperability
+
+No single scanner covers every AST10 risk: a drift detector flags that a skill's capability surface changed, a static content scanner flags hostile patterns, and an agentic-threat-rule engine flags behavioral exploits. When several scanners run over the same skill, their findings should compose into one verdict without re-scanning or manual correlation.
+
+The SARIF `artifacts[]` + `hashes` mechanism makes this deterministic. A scanner that emits a content digest for each scanned file lets a consumer (a registry, a PR bot, a dashboard) join findings from independent tools on that digest:
+
+- `run.artifacts[]` — one entry per scanned file, each carrying `location.uri` and `hashes["sha-256"]` (bare lowercase 64-char hex of the file bytes). The SHA-256 is the **join key**: two reports describe the same artifact iff their digests match.
+- `result … physicalLocation.artifactLocation.index` — every finding points into `artifacts[]`, so it resolves to the exact bytes it was raised against and self-invalidates when the file changes.
+- `result.properties.layer` — a short string naming the class of scanner that produced the finding (e.g. `drift`, `content`, `atr`), so merged findings stay attributable. Consumers should treat an unknown layer as opaque rather than dropping the finding.
+- `run.tool.driver.name` + `version` — provenance, so a merged report records which tool and version produced each layer.
+
+A consumer merges N reports by grouping `artifacts[]` across runs on `hashes["sha-256"]`, attaching each run's results via `artifactLocation.index`, and partitioning by `layer` — no content re-hashing and no coordination between the tools.
+
+```json
+{
+  "runs": [
+    {
+      "tool": { "driver": { "name": "example-drift-scanner", "version": "1.2.0" } },
+      "artifacts": [
+        {
+          "location": { "uri": "SKILL.md" },
+          "hashes": { "sha-256": "64f9e18e...ec3395a" }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "AST07",
+          "level": "error",
+          "message": { "text": "Capability surface changed: network egress added" },
+          "locations": [
+            { "physicalLocation": { "artifactLocation": { "uri": "SKILL.md", "index": 0 } } }
+          ],
+          "properties": { "layer": "drift" }
+        }
+      ]
+    }
+  ]
+}
+```
+
+This pattern is descriptive about reporting, not prescriptive about detection — it says nothing about *how* a tool finds an issue, only how findings bind to the bytes they concern and the layer they belong to, which is the minimum needed for cross-tool composition.
+
 ## Best Practices
 
 ### Scanner Implementation
