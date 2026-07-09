@@ -298,7 +298,6 @@
 <div class="tab-bar-wrap">
   <div class="tab-bar" role="tablist" aria-label="Page sections">
     <button type="button" class="tab-btn" role="tab" id="tab-leadership" aria-controls="panel-leadership" aria-selected="true" data-tab="leadership">Leadership</button>
-    <button type="button" class="tab-btn" role="tab" id="tab-founders" aria-controls="panel-founders" aria-selected="false" data-tab="founders">AIVSS Founders</button>
     <button type="button" class="tab-btn" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="false" data-tab="overview">Overview</button>
     <button type="button" class="tab-btn" role="tab" id="tab-top10" aria-controls="panel-top10" aria-selected="false" data-tab="top10">Top 10</button>
     <button type="button" class="tab-btn" role="tab" id="tab-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist">Checklist</button>
@@ -626,15 +625,58 @@
             <div class="info">Niv Hoffman<span class="tag">Co-Lead</span></div>
           </a>
         </div>
-      </div>
-    </section>
-  </div>
 
-  <!-- ═══ Tab 6: AIVSS Founding Members ═══ -->
-  <div class="tab-panel" role="tabpanel" id="panel-founders" aria-labelledby="tab-founders">
-    <section class="leadership">
-      <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" style="margin-top:3rem;">
+          <div class="kicker">sibling owasp project</div>
+          <h2>AIVSS Distinguished Review Board</h2>
+        </div>
+        <p style="color:var(--muted); max-width:68ch; margin:0 0 1.5rem; line-height:1.6;">
+          The <a href="https://owasp.org/www-project-agentic-ai-vulnerability-scoring-system/" target="_blank" rel="noopener" style="color:var(--orange-2);">OWASP AIVSS (Agentic AI Vulnerability Scoring System)</a> project's Distinguished Review Board comprises world-renowned cybersecurity leaders, former government officials, and industry pioneers who provide strategic guidance and expert oversight. We thank them for their guidance, several of whom have also supported this project's work.
+        </p>
+        <div class="colead-grid">
+          <a class="colead" href="https://www.linkedin.com/in/rob-joyce-b43445116/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/rob-joyce.jpg" alt="Rob Joyce" loading="lazy">
+            <div class="info">Rob Joyce<span class="tag">Advisor to PwC and OpenAI, Former Special Assistant to the President and Cybersecurity Coordinator</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/jason-d-clinton/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/jason-clinton.jpg" alt="Jason Clinton" loading="lazy">
+            <div class="info">Jason Clinton<span class="tag">Deputy CISO, Anthropic</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/amy-steagall/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/amy-r-steagall.jpg" alt="Amy R. Steagall" loading="lazy">
+            <div class="info">Amy R. Steagall<span class="tag">Chief Information Security Officer, Stanford University</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/mcs729/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/martin-stanley.jpg" alt="Martin Stanley" loading="lazy">
+            <div class="info">Martin Stanley<span class="tag">AI Risk Management Framework Lead, NIST</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/avassilev" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/apostol-vassilev.jpg" alt="Apostol Vassilev" loading="lazy">
+            <div class="info">Apostol Vassilev<span class="tag">Research Supervisor, NIST</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/andrewcoyne/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/andrew-coyne.jpg" alt="Andrew Coyne" loading="lazy">
+            <div class="info">Andrew Coyne<span class="tag">CISO, Banner Health, Former CISO, Mayo Clinic</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/kevinrocque/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/kevin-rocque.jpg" alt="Kevin Rocque" loading="lazy">
+            <div class="info">Kevin Rocque<span class="tag">Managing Director/Executive Vice President, Global Technology Risk Officer, TD Bank</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/planetlevel/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/jeff-williams.jpg" alt="Jeff Williams" loading="lazy">
+            <div class="info">Jeff Williams<span class="tag">Former Global OWASP Chair, Founder and CTO, Contrast Security</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/michaeltranduff/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/michael-tran-duff.jpg" alt="Michael Tran Duff" loading="lazy">
+            <div class="info">Michael Tran Duff<span class="tag">University Chief Information Security and Data Privacy Officer, Harvard University</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/emilbenderlassen/" target="_blank" rel="noopener">
+            <img class="avatar" src="reviewboard/emil-bender-lassen.png" alt="Emil Bender Lassen" loading="lazy">
+            <div class="info">Emil Bender Lassen<span class="tag">Standards Lead, AIUC-1</span></div>
+          </a>
+        </div>
+
+        <div class="section-head" style="margin-top:3rem;">
           <div class="kicker">sibling owasp project</div>
           <h2>OWASP AIVSS Founding Members</h2>
         </div>
@@ -856,6 +898,7 @@
     </section>
   </div>
 
+
 </div>
 
 <footer>
@@ -871,8 +914,7 @@
     top10: "top10",
     checklist: "checklist",
     "getting-started": "getting-started",
-    leadership: "leadership",
-    founders: "founders"
+    leadership: "leadership"
   };
   var DEFAULT = "leadership";
 

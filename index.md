@@ -488,6 +488,63 @@ changelog:
   </a>
 </div>
 
+### AIVSS Distinguished Review Board
+
+The OWASP AIVSS project's Distinguished Review Board comprises world-renowned cybersecurity leaders, former government officials, and industry pioneers who provide strategic guidance and expert oversight for the AI Vulnerability Scoring System framework. We thank them for their guidance, several of whom have also supported this project's work.
+
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0;">
+  <a href="https://www.linkedin.com/in/rob-joyce-b43445116/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/rob-joyce.jpg" alt="Rob Joyce" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Rob Joyce</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Advisor to PwC and OpenAI, Former Special Assistant to the President and Cybersecurity Coordinator</span>
+  </a>
+  <a href="https://www.linkedin.com/in/jason-d-clinton/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/jason-clinton.jpg" alt="Jason Clinton" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Jason Clinton</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Deputy CISO, Anthropic</span>
+  </a>
+  <a href="https://www.linkedin.com/in/amy-steagall/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/amy-r-steagall.jpg" alt="Amy R. Steagall" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Amy R. Steagall</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Chief Information Security Officer, Stanford University</span>
+  </a>
+  <a href="https://www.linkedin.com/in/mcs729/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/martin-stanley.jpg" alt="Martin Stanley" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Martin Stanley</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">AI Risk Management Framework Lead, NIST</span>
+  </a>
+  <a href="https://www.linkedin.com/in/avassilev" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/apostol-vassilev.jpg" alt="Apostol Vassilev" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Apostol Vassilev</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Research Supervisor, NIST</span>
+  </a>
+  <a href="https://www.linkedin.com/in/andrewcoyne/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/andrew-coyne.jpg" alt="Andrew Coyne" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Andrew Coyne</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">CISO, Banner Health, Former CISO, Mayo Clinic</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kevinrocque/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/kevin-rocque.jpg" alt="Kevin Rocque" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Kevin Rocque</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Managing Director/Executive Vice President, Global Technology Risk Officer, TD Bank</span>
+  </a>
+  <a href="https://www.linkedin.com/in/planetlevel/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/jeff-williams.jpg" alt="Jeff Williams" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Jeff Williams</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Former Global OWASP Chair, Founder and CTO, Contrast Security</span>
+  </a>
+  <a href="https://www.linkedin.com/in/michaeltranduff/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/michael-tran-duff.jpg" alt="Michael Tran Duff" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Michael Tran Duff</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">University Chief Information Security and Data Privacy Officer, Harvard University</span>
+  </a>
+  <a href="https://www.linkedin.com/in/emilbenderlassen/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-reviewboard/emil-bender-lassen.png" alt="Emil Bender Lassen" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Emil Bender Lassen</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Standards Lead, AIUC-1</span>
+  </a>
+</div>
+
 ### OWASP AIVSS Founding Members
 
 The [OWASP AIVSS (Agentic AI Vulnerability Scoring System)](https://owasp.org/www-project-agentic-ai-vulnerability-scoring-system/) project is a sibling OWASP initiative focused on scoring the severity of agentic AI vulnerabilities. Its founding members are recognized here as OWASP founding members in the agentic AI security space; many of them have also contributed directly to the Agentic Skills Top 10 project's research and review process.
