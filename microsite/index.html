@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWASP Agentic Skills Top 10</title>
+<meta name="description" content="The 10 critical security risks in AI agent skills — an OWASP Incubator Project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e17; --bg-2:#0d1220; --line:rgba(255,255,255,.08);
+    --ink:#f5f6f8; --muted:#9aa4b2; --orange:#ff7a3d; --orange-2:#ffb08a;
+    --crit:#ff5c5c; --high:#ff9a3d; --med:#e8c34a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(600px 300px at 20% 0%, rgba(255,122,61,.08), transparent 60%),
+      radial-gradient(800px 400px at 90% 10%, rgba(255,122,61,.05), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.5;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(10,14,23,.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1100px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.05rem;}
+  .brand .diamond{width:12px;height:12px;background:var(--orange);transform:rotate(45deg);border-radius:2px;flex:none;}
+  .back-btn{
+    background:var(--orange); color:#1a0d05; font-weight:700; font-size:.88rem;
+    padding:9px 18px; border-radius:999px; text-decoration:none; white-space:nowrap;
+  }
+  .back-btn:hover{background:var(--orange-2);}
+
+  .hero{padding:96px 24px 64px; text-align:center;}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px dashed rgba(255,154,61,.5); color:var(--orange-2);
+    font-family:"Kalam",cursive; font-size:1rem;
+    padding:10px 20px; border-radius:999px; margin-bottom:36px;
+  }
+  h1.title{
+    font-family:"Space Grotesk",sans-serif; font-weight:700;
+    font-size:clamp(2.6rem, 7vw, 5.2rem); line-height:1.02; margin:0 0 22px;
+    letter-spacing:-.02em;
+  }
+  h1.title .grad{
+    background:linear-gradient(90deg,#ffe3d1,var(--orange));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .subtitle{font-size:clamp(1.05rem,2.4vw,1.4rem); color:var(--muted); max-width:720px; margin:0 auto 40px;}
+  .subtitle b{color:var(--ink);}
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .cta{
+    padding:13px 26px; border-radius:10px; font-weight:600; font-size:.95rem;
+    text-decoration:none; border:1px solid var(--line);
+  }
+  .cta.primary{background:var(--orange); color:#1a0d05; border-color:var(--orange);}
+  .cta.primary:hover{background:var(--orange-2);}
+  .cta.ghost{color:var(--ink);}
+  .cta.ghost:hover{border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.04);}
+
+  .stats{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; margin:64px auto 0; max-width:900px;
+  }
+  .stat{background:var(--bg-2); padding:26px 16px; text-align:center;}
+  .stat .num{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:1.9rem; color:var(--orange-2);}
+  .stat .lbl{font-size:.82rem; color:var(--muted); margin-top:4px;}
+
+  section.top10{padding:88px 24px 40px;}
+  .section-head{text-align:center; margin-bottom:48px;}
+  .section-head .kicker{font-family:"Kalam",cursive; color:var(--orange); font-size:1.05rem;}
+  .section-head h2{font-family:"Space Grotesk",sans-serif; font-size:clamp(1.8rem,4vw,2.6rem); margin:8px 0 0;}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px;}
+  .card{
+    background:var(--bg-2); border:1px solid var(--line); border-left:4px solid var(--high);
+    border-radius:14px; padding:20px 20px 18px; text-decoration:none; color:inherit;
+    transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.35); border-left-color:var(--orange);}
+  .card.crit{border-left-color:var(--crit);}
+  .card.med{border-left-color:var(--med);}
+  .card-top{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+  .card-id{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.08em; color:var(--orange-2);}
+  .pill{margin-left:auto; font-size:.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 10px; border-radius:999px; color:#1a0d05;}
+  .pill.crit{background:var(--crit);}
+  .pill.high{background:var(--high);}
+  .pill.med{background:var(--med);}
+  .card-title{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:1.08rem; margin:0 0 8px;}
+  .card-desc{font-size:.9rem; color:var(--muted); flex:1;}
+  .card-more{font-size:.82rem; font-weight:600; color:var(--orange-2); margin-top:14px;}
+  .card:hover .card-more{text-decoration:underline;}
+
+  .panel{
+    max-width:900px; margin:88px auto 0; padding:32px; border:1px solid var(--line);
+    border-radius:16px; background:var(--bg-2); text-align:center;
+  }
+  .panel h3{font-family:"Space Grotesk",sans-serif; margin:0 0 10px;}
+  .panel p{color:var(--muted); margin:0 0 20px;}
+
+  footer{border-top:1px solid var(--line); margin-top:88px; padding:32px 24px; text-align:center; color:var(--muted); font-size:.85rem;}
+  footer a{color:var(--orange-2); text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand"><span class="diamond"></span> OWASP Agentic Skills Top 10</div>
+    <a class="back-btn" href="/www-project-agentic-skills-top-10/">&larr; Full documentation site</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="badge">OWASP Incubator Project &middot; Community Driven &middot; v1.0 &middot; 2026</div>
+  <h1 class="title">Agentic Skills <span class="grad">Top 10</span></h1>
+  <p class="subtitle">The <b>10 critical security risks</b> in AI agent skills — across OpenClaw, Claude Code, Cursor/Codex, and VS Code.</p>
+  <div class="cta-row">
+    <a class="cta primary" href="/www-project-agentic-skills-top-10/top10.html">See the Visual Overview</a>
+    <a class="cta ghost" href="https://github.com/OWASP/www-project-agentic-skills-top-10" target="_blank" rel="noopener">View on GitHub</a>
+    <a class="cta ghost" href="https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0" target="_blank" rel="noopener">Submit v1 Feedback</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num">10</div><div class="lbl">Documented risks</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">Platforms covered</div></div>
+    <div class="stat"><div class="num">96K+</div><div class="lbl">Skills scanned in referenced research</div></div>
+    <div class="stat"><div class="num">CC BY-SA 4.0</div><div class="lbl">Open license</div></div>
+  </div>
+</div>
+
+<section class="top10">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">the risks, ranked</div>
+      <h2>Where each risk hits the skill lifecycle</h2>
+    </div>
+
+    <div class="grid">
+
+      <a class="card crit" href="/www-project-agentic-skills-top-10/ast01.html">
+        <div class="card-top"><span class="card-id">AST01</span><span class="pill crit">Critical</span></div>
+        <div class="card-title">Malicious Skills</div>
+        <div class="card-desc">Skills that look legitimate but hide credential stealers, reverse shells, or prose instructions that hijack the agent.</div>
+        <div class="card-more">Read AST01 &rarr;</div>
+      </a>
+
+      <a class="card crit" href="/www-project-agentic-skills-top-10/ast02.html">
+        <div class="card-top"><span class="card-id">AST02</span><span class="pill crit">Critical</span></div>
+        <div class="card-title">Supply Chain Compromise</div>
+        <div class="card-desc">Registries without provenance let attackers mass-upload, take over accounts, and poison distribution channels.</div>
+        <div class="card-more">Read AST02 &rarr;</div>
+      </a>
+
+      <a class="card" href="/www-project-agentic-skills-top-10/ast03.html">
+        <div class="card-top"><span class="card-id">AST03</span><span class="pill high">High</span></div>
+        <div class="card-title">Over-Privileged Skills</div>
+        <div class="card-desc">Skills granted far more access than they need — weaponisable by prompt injection into a huge blast radius.</div>
+        <div class="card-more">Read AST03 &rarr;</div>
+      </a>
+
+      <a class="card" href="/www-project-agentic-skills-top-10/ast04.html">
+        <div class="card-top"><span class="card-id">AST04</span><span class="pill high">High</span></div>
+        <div class="card-title">Insecure Metadata</div>
+        <div class="card-desc">Unvalidated, unsigned metadata enables brand impersonation, understated permissions, and poisoned search.</div>
+        <div class="card-more">Read AST04 &rarr;</div>
+      </a>
+
+      <a class="card" href="/www-project-agentic-skills-top-10/ast05.html">
+        <div class="card-top"><span class="card-id">AST05</span><span class="pill high">High</span></div>
+        <div class="card-title">Untrusted External Instructions</div>
+        <div class="card-desc">Skills that point the agent at external docs trust mutable, unpinnable content that can be rug-pulled into malicious instructions.</div>
+        <div class="card-more">Read AST05 &rarr;</div>
+      </a>
+
+      <a class="card" href="/www-project-agentic-skills-top-10/ast06.html">
+        <div class="card-top"><span class="card-id">AST06</span><span class="pill high">High</span></div>
+        <div class="card-title">Weak Isolation</div>
+        <div class="card-desc">Skills run in the agent's full security context — with no sandbox, every skill is a potential full-system compromise.</div>
+        <div class="card-more">Read AST06 &rarr;</div>
+      </a>
+
+      <a class="card med" href="/www-project-agentic-skills-top-10/ast07.html">
+        <div class="card-top"><span class="card-id">AST07</span><span class="pill med">Medium</span></div>
+        <div class="card-title">Update Drift</div>
+        <div class="card-desc">Without pinning or verification, skills silently drift to vulnerable — or freshly malicious — versions.</div>
+        <div class="card-more">Read AST07 &rarr;</div>
+      </a>
+
+      <a class="card med" href="/www-project-agentic-skills-top-10/ast08.html">
+        <div class="card-top"><span class="card-id">AST08</span><span class="pill med">Medium</span></div>
+        <div class="card-title">Poor Scanning</div>
+        <div class="card-desc">Natural-language-plus-code blends defeat signature scanners, so malicious skills pass every automated check.</div>
+        <div class="card-more">Read AST08 &rarr;</div>
+      </a>
+
+      <a class="card med" href="/www-project-agentic-skills-top-10/ast09.html">
+        <div class="card-top"><span class="card-id">AST09</span><span class="pill med">Medium</span></div>
+        <div class="card-title">No Governance</div>
+        <div class="card-desc">No inventory, approval, audit, or revocation — a shadow-AI layer that security teams cannot see or control.</div>
+        <div class="card-more">Read AST09 &rarr;</div>
+      </a>
+
+      <a class="card med" href="/www-project-agentic-skills-top-10/ast10.html">
+        <div class="card-top"><span class="card-id">AST10</span><span class="pill med">Medium</span></div>
+        <div class="card-title">Cross-Platform Reuse</div>
+        <div class="card-desc">Porting skills across platforms drops the source format's security metadata, opening exploitable gaps.</div>
+        <div class="card-more">Read AST10 &rarr;</div>
+      </a>
+
+    </div>
+
+    <div class="panel">
+      <h3>v1 is in public review</h3>
+      <p>Comments on the Top 10 content go in the shared review doc — issues and PRs remain open for transparency, but the doc is where v1 feedback is tracked.</p>
+      <a class="cta primary" href="https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0" target="_blank" rel="noopener">Open the v1 Review Doc</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  OWASP Agentic Skills Top 10 &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>
+  &middot; <a href="/www-project-agentic-skills-top-10/">Full documentation</a>
+  &middot; <a href="https://github.com/OWASP/www-project-agentic-skills-top-10" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+</body>
+</html>
