@@ -241,8 +241,8 @@ You are free to share and adapt this material for any purpose, provided you give
 **Project Lead**: Ken Huang — OWASP AIVSS Lead, Agentic AI Security Researcher
 
 - **📧 Email**: ken.huang@owasp.org
-- **🐙 GitHub**: [@kenhuang](https://github.com/kenhuang)
-- **🔗 LinkedIn**: [Ken Huang](https://linkedin.com/in/kenhuang)
+- **🐙 GitHub**: [@kenhuangus](https://github.com/kenhuangus)
+- **🔗 LinkedIn**: [Ken Huang](https://www.linkedin.com/in/kenhuang8)
 
 For questions, suggestions, or to get involved:
 - Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
