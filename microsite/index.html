@@ -117,21 +117,33 @@
   footer a:hover{text-decoration:underline;}
 
   section.leadership{padding:24px 24px 40px;}
+  .avatar{
+    width:44px; height:44px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--orange),#c8501f);
+    color:#1a0d05; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:.95rem;
+  }
   .lead-card{
     max-width:900px; margin:0 auto 28px; background:var(--bg-2); border:1px solid var(--line);
-    border-left:4px solid var(--orange); border-radius:14px; padding:22px 24px;
+    border-left:4px solid var(--orange); border-radius:14px; padding:20px 24px;
+    display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
+    transition:border-color .15s ease;
   }
+  .lead-card:hover{border-color:rgba(255,255,255,.2);}
+  .lead-card .avatar{width:56px; height:56px; font-size:1.15rem;}
   .lead-card .role{font-family:"Kalam",cursive; color:var(--orange-2); font-size:.95rem; margin-bottom:4px;}
   .lead-card .name{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:1.3rem;}
-  .lead-card .blurb{color:var(--muted); font-size:.9rem; margin-top:6px;}
   .colead-grid{
     max-width:900px; margin:0 auto; display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px;
   }
   .colead{
     background:var(--bg-2); border:1px solid var(--line); border-radius:10px;
-    padding:14px 16px; font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.95rem;
+    padding:12px 16px; display:flex; align-items:center; gap:12px;
+    text-decoration:none; color:inherit; transition:border-color .15s ease;
   }
+  .colead:hover{border-color:rgba(255,255,255,.2);}
+  .colead .info{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.95rem;}
   .colead .tag{display:block; font-family:"Inter",sans-serif; font-weight:400; color:var(--muted); font-size:.76rem; margin-top:2px;}
 </style>
 </head>
@@ -258,19 +270,43 @@
       <h2>Leadership &amp; Governance</h2>
     </div>
 
-    <div class="lead-card">
-      <div class="role">Project Lead</div>
-      <div class="name">Ken Huang</div>
-    </div>
+    <a class="lead-card" href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener">
+      <div class="avatar">KH</div>
+      <div>
+        <div class="role">Project Lead</div>
+        <div class="name">Ken Huang</div>
+      </div>
+    </a>
 
     <div class="colead-grid">
-      <div class="colead">Akram Sheriff<span class="tag">Co-Lead</span></div>
-      <div class="colead">Aonan Guan<span class="tag">Co-Lead</span></div>
-      <div class="colead">Bhavya Gupta<span class="tag">Co-Lead</span></div>
-      <div class="colead">Fabio Cerullo<span class="tag">Co-Lead</span></div>
-      <div class="colead">Hammad Atta<span class="tag">Co-Lead</span></div>
-      <div class="colead">Iftach Orr<span class="tag">Co-Lead</span></div>
-      <div class="colead">Niv Hoffman<span class="tag">Co-Lead</span></div>
+      <a class="colead" href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener">
+        <div class="avatar">AS</div>
+        <div class="info">Akram Sheriff<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener">
+        <div class="avatar">AG</div>
+        <div class="info">Aonan Guan<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener">
+        <div class="avatar">BG</div>
+        <div class="info">Bhavya Gupta<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener">
+        <div class="avatar">FC</div>
+        <div class="info">Fabio Cerullo<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener">
+        <div class="avatar">HA</div>
+        <div class="info">Hammad Atta<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener">
+        <div class="avatar">IO</div>
+        <div class="info">Iftach Orr<span class="tag">Co-Lead</span></div>
+      </a>
+      <a class="colead" href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener">
+        <div class="avatar">NH</div>
+        <div class="info">Niv Hoffman<span class="tag">Co-Lead</span></div>
+      </a>
     </div>
   </div>
 </section>
