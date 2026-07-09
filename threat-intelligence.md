@@ -455,6 +455,21 @@ If you discover a malicious skill or security threat:
 - Automated Scanning Systems
 - Agent Threat Rules (ATR) wild-scan dataset (open data, MIT)
 
+## External Detection Crosswalks
+
+Externally maintained mappings from detection rulesets to the AST controls, for
+teams that want executable detections aligned to this Top 10:
+
+- **Agent Threat Rules (ATR) -> AST crosswalk** — maps ATR detection rules to
+  AST01-AST10.
+  [Crosswalk document](https://github.com/Agent-Threat-Rule/agent-threat-rules/blob/main/docs/crosswalks/atr-ast-crosswalk.md).
+  Generation method (documented at the link): a curated thematic mapping over
+  the ATR `tags.category` enum as the primary join key, with
+  `references.owasp_agentic` as secondary evidence; it is not an id-equality
+  join, and it reports AST07/AST08/AST10 as out of scope for runtime detection
+  rather than claiming coverage. Regenerated from rule metadata and CI-checked
+  so the mapping does not drift.
+
 ---
 
 *Threat intelligence is updated daily. Last update: March 22, 2026*
