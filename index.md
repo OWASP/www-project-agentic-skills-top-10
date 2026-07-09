@@ -832,6 +832,11 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
     <span style="font-weight:600;text-align:center;font-size:0.85rem;">Bhavya Gupta</span>
     <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
   </a>
+  <a href="https://www.linkedin.com/in/david-girard-1250762/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/david-girard.jpg" alt="David Girard" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">David Girard</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Director, AI Security &amp; AI Alliances, Trend Micro</span>
+  </a>
   <a href="https://www.linkedin.com/in/dennis-xu-b52aa519/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
     <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/dennis-xu.jpg" alt="Dennis Xu" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
     <span style="font-weight:600;text-align:center;font-size:0.85rem;">Dennis Xu</span>
