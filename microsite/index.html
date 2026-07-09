@@ -36,11 +36,6 @@
   .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1100px;margin:0 auto;}
   .brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.05rem;}
   .brand .diamond{width:12px;height:12px;background:var(--orange);transform:rotate(45deg);border-radius:2px;flex:none;}
-  .back-btn{
-    background:var(--orange); color:#1a0d05; font-weight:700; font-size:.88rem;
-    padding:9px 18px; border-radius:999px; text-decoration:none; white-space:nowrap;
-  }
-  .back-btn:hover{background:var(--orange-2);}
 
   .hero{padding:96px 24px 64px; text-align:center;}
   .badge{
@@ -79,11 +74,129 @@
   .stat .num{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:1.9rem; color:var(--orange-2);}
   .stat .lbl{font-size:.82rem; color:var(--muted); margin-top:4px;}
 
-  section.top10{padding:88px 24px 40px;}
+  /* ── Tabs ── */
+  .tab-bar-wrap{
+    position:sticky; top:57px; z-index:9;
+    background:rgba(10,14,23,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .tab-bar{
+    display:flex; gap:4px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    max-width:1100px; margin:0 auto; padding:10px 24px;
+    scrollbar-width:none;
+  }
+  .tab-bar::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    appearance:none; border:1px solid transparent; background:transparent;
+    color:var(--muted); font-family:"Inter",system-ui,sans-serif;
+    font-weight:600; font-size:.9rem; white-space:nowrap; cursor:pointer;
+    padding:10px 18px; border-radius:999px; transition:color .15s, background .15s, border-color .15s;
+  }
+  .tab-btn:hover{color:var(--ink); background:rgba(255,255,255,.04);}
+  .tab-btn[aria-selected="true"]{
+    color:#1a0d05; background:var(--orange); border-color:var(--orange);
+  }
+  .tab-btn:focus-visible{outline:2px solid var(--orange-2); outline-offset:2px;}
+
+  .tab-panels{padding:48px 0 24px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
   .section-head{text-align:center; margin-bottom:48px;}
   .section-head .kicker{font-family:"Kalam",cursive; color:var(--orange); font-size:1.05rem;}
   .section-head h2{font-family:"Space Grotesk",sans-serif; font-size:clamp(1.8rem,4vw,2.6rem); margin:8px 0 0;}
+  .section-head p.lead{
+    color:var(--muted); max-width:720px; margin:14px auto 0; font-size:1.02rem;
+  }
 
+  /* Overview */
+  .prose{max-width:780px; margin:0 auto;}
+  .prose p{color:var(--muted); font-size:1.02rem; margin:0 0 18px;}
+  .prose p strong, .prose p b{color:var(--ink);}
+  .mental-model{
+    margin:28px 0 40px; padding:18px 22px; border-radius:12px;
+    border:1px dashed rgba(255,154,61,.4); background:rgba(255,122,61,.06);
+    font-family:"Kalam",cursive; color:var(--orange-2); font-size:1.1rem; text-align:center;
+  }
+  .subhead{
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:1.35rem;
+    margin:40px 0 18px; text-align:center;
+  }
+  .data-table-wrap{
+    overflow-x:auto; border:1px solid var(--line); border-radius:14px;
+    background:var(--bg-2); margin:0 auto 28px; max-width:900px;
+  }
+  table.data-table{width:100%; border-collapse:collapse; font-size:.92rem;}
+  table.data-table th, table.data-table td{
+    padding:14px 18px; text-align:left; border-bottom:1px solid var(--line);
+  }
+  table.data-table th{
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.78rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    background:rgba(255,255,255,.02);
+  }
+  table.data-table tr:last-child td{border-bottom:none;}
+  table.data-table td.metric{color:var(--ink); font-weight:500;}
+  table.data-table td.figure{
+    font-family:"Space Grotesk",sans-serif; font-weight:700;
+    color:var(--orange-2); white-space:nowrap;
+  }
+  table.data-table td.source{color:var(--muted); font-size:.85rem;}
+  .closing-note{
+    max-width:780px; margin:0 auto; text-align:center;
+    color:var(--muted); font-size:1.02rem;
+  }
+
+  /* Checklist */
+  .check-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:18px; margin-bottom:36px;
+  }
+  .check-card{
+    background:var(--bg-2); border:1px solid var(--line); border-radius:14px;
+    padding:22px 22px 18px;
+  }
+  .check-card h3{
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:1.08rem;
+    margin:0 0 14px; color:var(--ink);
+  }
+  .check-list{list-style:none; margin:0; padding:0;}
+  .check-list li{
+    position:relative; padding:8px 0 8px 28px; color:var(--muted); font-size:.92rem;
+    border-bottom:1px solid rgba(255,255,255,.04);
+  }
+  .check-list li:last-child{border-bottom:none;}
+  .check-list li::before{
+    content:""; position:absolute; left:0; top:11px;
+    width:14px; height:14px; border-radius:4px;
+    border:1.5px solid rgba(255,154,61,.55); background:rgba(255,122,61,.08);
+  }
+  .checklist-more{text-align:center; margin-top:8px;}
+  .checklist-more a{
+    color:var(--orange-2); font-weight:600; text-decoration:none; font-size:.95rem;
+  }
+  .checklist-more a:hover{text-decoration:underline;}
+
+  /* Getting Started */
+  .role-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:18px; margin-bottom:40px;
+  }
+  .role-card{
+    background:var(--bg-2); border:1px solid var(--line); border-radius:14px;
+    padding:22px 22px 18px; border-top:3px solid var(--orange);
+  }
+  .role-card h3{
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:1.1rem;
+    margin:0 0 14px;
+  }
+  .role-card ol{margin:0; padding-left:1.25rem; color:var(--muted); font-size:.9rem;}
+  .role-card ol li{margin-bottom:10px; padding-left:4px;}
+  .role-card ol li:last-child{margin-bottom:0;}
+  .role-card ol li strong, .role-card ol li b{color:var(--ink);}
+
+  /* Top 10 (relocated, unchanged styling) */
+  section.top10{padding:0 0 24px;}
   .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px;}
   .card{
     background:var(--bg-2); border:1px solid var(--line); border-left:4px solid var(--high);
@@ -106,17 +219,14 @@
   .card:hover .card-more{text-decoration:underline;}
 
   .panel{
-    max-width:900px; margin:88px auto 0; padding:32px; border:1px solid var(--line);
+    max-width:900px; margin:48px auto 0; padding:32px; border:1px solid var(--line);
     border-radius:16px; background:var(--bg-2); text-align:center;
   }
   .panel h3{font-family:"Space Grotesk",sans-serif; margin:0 0 10px;}
   .panel p{color:var(--muted); margin:0 0 20px;}
 
-  footer{border-top:1px solid var(--line); margin-top:88px; padding:32px 24px; text-align:center; color:var(--muted); font-size:.85rem;}
-  footer a{color:var(--orange-2); text-decoration:none;}
-  footer a:hover{text-decoration:underline;}
-
-  section.leadership{padding:24px 24px 40px;}
+  /* Leadership (relocated) */
+  section.leadership{padding:0 0 24px;}
   .avatar{
     width:44px; height:44px; border-radius:50%; flex:none;
     display:flex; align-items:center; justify-content:center;
@@ -146,6 +256,16 @@
   .colead:hover{border-color:rgba(255,255,255,.2);}
   .colead .info{font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.95rem;}
   .colead .tag{display:block; font-family:"Inter",sans-serif; font-weight:400; color:var(--muted); font-size:.76rem; margin-top:2px;}
+
+  footer{border-top:1px solid var(--line); margin-top:64px; padding:32px 24px; text-align:center; color:var(--muted); font-size:.85rem;}
+  footer a{color:var(--orange-2); text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  footer a.footer-docs{
+    display:inline-block; margin:0 2px; padding:6px 14px; border-radius:999px;
+    background:var(--orange); color:#1a0d05; font-weight:700; font-size:.82rem;
+    text-decoration:none;
+  }
+  footer a.footer-docs:hover{background:var(--orange-2); text-decoration:none;}
 </style>
 </head>
 <body>
@@ -153,7 +273,6 @@
 <header>
   <div class="nav">
     <div class="brand"><span class="diamond"></span> OWASP Agentic Skills Top 10</div>
-    <a class="back-btn" href="/www-project-agentic-skills-top-10/?full=1">&larr; Full documentation site</a>
   </div>
 </header>
 
@@ -175,148 +294,422 @@
   </div>
 </div>
 
-<section class="top10">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">the risks, ranked</div>
-      <h2>Where each risk hits the skill lifecycle</h2>
-    </div>
-
-    <div class="grid">
-
-      <a class="card crit" href="/www-project-agentic-skills-top-10/ast01.html">
-        <div class="card-top"><span class="card-id">AST01</span><span class="pill crit">Critical</span></div>
-        <div class="card-title">Malicious Skills</div>
-        <div class="card-desc">Skills that look legitimate but hide credential stealers, reverse shells, or prose instructions that hijack the agent.</div>
-        <div class="card-more">Read AST01 &rarr;</div>
-      </a>
-
-      <a class="card crit" href="/www-project-agentic-skills-top-10/ast02.html">
-        <div class="card-top"><span class="card-id">AST02</span><span class="pill crit">Critical</span></div>
-        <div class="card-title">Supply Chain Compromise</div>
-        <div class="card-desc">Registries without provenance let attackers mass-upload, take over accounts, and poison distribution channels.</div>
-        <div class="card-more">Read AST02 &rarr;</div>
-      </a>
-
-      <a class="card" href="/www-project-agentic-skills-top-10/ast03.html">
-        <div class="card-top"><span class="card-id">AST03</span><span class="pill high">High</span></div>
-        <div class="card-title">Over-Privileged Skills</div>
-        <div class="card-desc">Skills granted far more access than they need — weaponisable by prompt injection into a huge blast radius.</div>
-        <div class="card-more">Read AST03 &rarr;</div>
-      </a>
-
-      <a class="card" href="/www-project-agentic-skills-top-10/ast04.html">
-        <div class="card-top"><span class="card-id">AST04</span><span class="pill high">High</span></div>
-        <div class="card-title">Insecure Metadata</div>
-        <div class="card-desc">Unvalidated, unsigned metadata enables brand impersonation, understated permissions, and poisoned search.</div>
-        <div class="card-more">Read AST04 &rarr;</div>
-      </a>
-
-      <a class="card" href="/www-project-agentic-skills-top-10/ast05.html">
-        <div class="card-top"><span class="card-id">AST05</span><span class="pill high">High</span></div>
-        <div class="card-title">Untrusted External Instructions</div>
-        <div class="card-desc">Skills that point the agent at external docs trust mutable, unpinnable content that can be rug-pulled into malicious instructions.</div>
-        <div class="card-more">Read AST05 &rarr;</div>
-      </a>
-
-      <a class="card" href="/www-project-agentic-skills-top-10/ast06.html">
-        <div class="card-top"><span class="card-id">AST06</span><span class="pill high">High</span></div>
-        <div class="card-title">Weak Isolation</div>
-        <div class="card-desc">Skills run in the agent's full security context — with no sandbox, every skill is a potential full-system compromise.</div>
-        <div class="card-more">Read AST06 &rarr;</div>
-      </a>
-
-      <a class="card med" href="/www-project-agentic-skills-top-10/ast07.html">
-        <div class="card-top"><span class="card-id">AST07</span><span class="pill med">Medium</span></div>
-        <div class="card-title">Update Drift</div>
-        <div class="card-desc">Without pinning or verification, skills silently drift to vulnerable — or freshly malicious — versions.</div>
-        <div class="card-more">Read AST07 &rarr;</div>
-      </a>
-
-      <a class="card med" href="/www-project-agentic-skills-top-10/ast08.html">
-        <div class="card-top"><span class="card-id">AST08</span><span class="pill med">Medium</span></div>
-        <div class="card-title">Poor Scanning</div>
-        <div class="card-desc">Natural-language-plus-code blends defeat signature scanners, so malicious skills pass every automated check.</div>
-        <div class="card-more">Read AST08 &rarr;</div>
-      </a>
-
-      <a class="card med" href="/www-project-agentic-skills-top-10/ast09.html">
-        <div class="card-top"><span class="card-id">AST09</span><span class="pill med">Medium</span></div>
-        <div class="card-title">No Governance</div>
-        <div class="card-desc">No inventory, approval, audit, or revocation — a shadow-AI layer that security teams cannot see or control.</div>
-        <div class="card-more">Read AST09 &rarr;</div>
-      </a>
-
-      <a class="card med" href="/www-project-agentic-skills-top-10/ast10.html">
-        <div class="card-top"><span class="card-id">AST10</span><span class="pill med">Medium</span></div>
-        <div class="card-title">Cross-Platform Reuse</div>
-        <div class="card-desc">Porting skills across platforms drops the source format's security metadata, opening exploitable gaps.</div>
-        <div class="card-more">Read AST10 &rarr;</div>
-      </a>
-
-    </div>
-
-    <div class="panel">
-      <h3>v1 is in public review</h3>
-      <p>Comments on the Top 10 content go in the shared review doc — issues and PRs remain open for transparency, but the doc is where v1 feedback is tracked.</p>
-      <a class="cta primary" href="https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0" target="_blank" rel="noopener">Open the v1 Review Doc</a>
-    </div>
+<!-- Tab bar -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar" role="tablist" aria-label="Page sections">
+    <button type="button" class="tab-btn" role="tab" id="tab-leadership" aria-controls="panel-leadership" aria-selected="true" data-tab="leadership">Leadership</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="false" data-tab="overview">Overview</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-top10" aria-controls="panel-top10" aria-selected="false" data-tab="top10">Top 10</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist">Checklist</button>
+    <button type="button" class="tab-btn" role="tab" id="tab-getting-started" aria-controls="panel-getting-started" aria-selected="false" data-tab="getting-started">Getting Started</button>
   </div>
-</section>
+</div>
 
-<section class="leadership">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">who's behind it</div>
-      <h2>Leadership &amp; Governance</h2>
-    </div>
+<div class="tab-panels">
 
-    <a class="lead-card" href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener">
-      <img class="avatar" src="leaders/ken-huang.jpg" alt="Ken Huang">
-      <div>
-        <div class="role">Project Lead</div>
-        <div class="name">Ken Huang</div>
+  <!-- ═══ Tab 1: Overview ═══ -->
+  <div class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" hidden>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">why this project exists</div>
+        <h2>Closing the skill security gap</h2>
       </div>
-    </a>
 
-    <div class="colead-grid">
-      <a class="colead" href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/akram-sheriff.jpg" alt="Akram Sheriff">
-        <div class="info">Akram Sheriff<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/aonan-guan.jpg" alt="Aonan Guan">
-        <div class="info">Aonan Guan<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/bhavya-gupta.png" alt="Bhavya Gupta">
-        <div class="info">Bhavya Gupta<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/fabio-cerullo.png" alt="Fabio Cerullo">
-        <div class="info">Fabio Cerullo<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/hammad-atta.jpg" alt="Hammad Atta">
-        <div class="info">Hammad Atta<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/iftach-orr.png" alt="Iftach Orr">
-        <div class="info">Iftach Orr<span class="tag">Co-Lead</span></div>
-      </a>
-      <a class="colead" href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener">
-        <img class="avatar" src="leaders/niv-hoffman.png" alt="Niv Hoffman">
-        <div class="info">Niv Hoffman<span class="tag">Co-Lead</span></div>
-      </a>
+      <div class="prose">
+        <p>The <b>OWASP Agentic Skills Top 10 (AST10)</b> documents the 10 most critical security risks in agentic AI skills across all major AI agent platforms. Skills represent the execution layer that gives agents real-world impact: they define not just what resources agents can access, but how they orchestrate multi-step workflows autonomously.</p>
+        <p>While significant attention has been devoted to securing large language models (LLMs) and the Model Context Protocol (MCP) tool layer, the intermediate behavior layer — embodied in agentic skills — has emerged as a particularly vulnerable and under-protected component of the AI agent ecosystem. This project exists to close that gap.</p>
+      </div>
+
+      <div class="mental-model">Mental Model: MCP = how the model talks to tools; AST10 = what those tools actually do.</div>
+
+      <h3 class="subhead">By the numbers</h3>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Metric</th><th>Figure</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="metric">Skills scanned</td><td class="figure">3,984</td><td class="source">Snyk ToxicSkills (Feb 2026)</td></tr>
+            <tr><td class="metric">Skills with security flaws</td><td class="figure">1,467 (36.82%)</td><td class="source">Snyk ToxicSkills (Feb 2026)</td></tr>
+            <tr><td class="metric">Skills with critical issues</td><td class="figure">534 (13.4%)</td><td class="source">Snyk ToxicSkills (Feb 2026)</td></tr>
+            <tr><td class="metric">Confirmed malicious payloads</td><td class="figure">76+</td><td class="source">Snyk ToxicSkills (Feb 2026)</td></tr>
+            <tr><td class="metric">ClawHavoc campaign: malicious skills</td><td class="figure">1,184</td><td class="source">Antiy CERT (Feb 2026)</td></tr>
+            <tr><td class="metric">OpenClaw instances internet-exposed</td><td class="figure">135,000+</td><td class="source">SecurityScorecard (Feb 2026)</td></tr>
+            <tr><td class="metric">CVEs disclosed (OpenClaw alone)</td><td class="figure">9 (3 with public exploits)</td><td class="source">Endor Labs (Feb 2026)</td></tr>
+            <tr><td class="metric">Skills analyzed across all registries</td><td class="figure">30,000+</td><td class="source">National CIO Review / Cisco (2026)</td></tr>
+            <tr><td class="metric">Skills containing at least one vulnerability</td><td class="figure">&gt;25%</td><td class="source">National CIO Review (2026)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="closing-note">No comprehensive security framework or dedicated guidance for agent skills existed before this project. That gap is what AST10 addresses.</p>
     </div>
   </div>
-</section>
+
+  <!-- ═══ Tab 2: Top 10 (existing content, relocated) ═══ -->
+  <div class="tab-panel" role="tabpanel" id="panel-top10" aria-labelledby="tab-top10" hidden>
+    <section class="top10">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">the risks, ranked</div>
+          <h2>Where each risk hits the skill lifecycle</h2>
+        </div>
+
+        <div class="grid">
+
+          <a class="card crit" href="/www-project-agentic-skills-top-10/ast01.html">
+            <div class="card-top"><span class="card-id">AST01</span><span class="pill crit">Critical</span></div>
+            <div class="card-title">Malicious Skills</div>
+            <div class="card-desc">Skills that look legitimate but hide credential stealers, reverse shells, or prose instructions that hijack the agent.</div>
+            <div class="card-more">Read AST01 &rarr;</div>
+          </a>
+
+          <a class="card crit" href="/www-project-agentic-skills-top-10/ast02.html">
+            <div class="card-top"><span class="card-id">AST02</span><span class="pill crit">Critical</span></div>
+            <div class="card-title">Supply Chain Compromise</div>
+            <div class="card-desc">Registries without provenance let attackers mass-upload, take over accounts, and poison distribution channels.</div>
+            <div class="card-more">Read AST02 &rarr;</div>
+          </a>
+
+          <a class="card" href="/www-project-agentic-skills-top-10/ast03.html">
+            <div class="card-top"><span class="card-id">AST03</span><span class="pill high">High</span></div>
+            <div class="card-title">Over-Privileged Skills</div>
+            <div class="card-desc">Skills granted far more access than they need — weaponisable by prompt injection into a huge blast radius.</div>
+            <div class="card-more">Read AST03 &rarr;</div>
+          </a>
+
+          <a class="card" href="/www-project-agentic-skills-top-10/ast04.html">
+            <div class="card-top"><span class="card-id">AST04</span><span class="pill high">High</span></div>
+            <div class="card-title">Insecure Metadata</div>
+            <div class="card-desc">Unvalidated, unsigned metadata enables brand impersonation, understated permissions, and poisoned search.</div>
+            <div class="card-more">Read AST04 &rarr;</div>
+          </a>
+
+          <a class="card" href="/www-project-agentic-skills-top-10/ast05.html">
+            <div class="card-top"><span class="card-id">AST05</span><span class="pill high">High</span></div>
+            <div class="card-title">Untrusted External Instructions</div>
+            <div class="card-desc">Skills that point the agent at external docs trust mutable, unpinnable content that can be rug-pulled into malicious instructions.</div>
+            <div class="card-more">Read AST05 &rarr;</div>
+          </a>
+
+          <a class="card" href="/www-project-agentic-skills-top-10/ast06.html">
+            <div class="card-top"><span class="card-id">AST06</span><span class="pill high">High</span></div>
+            <div class="card-title">Weak Isolation</div>
+            <div class="card-desc">Skills run in the agent's full security context — with no sandbox, every skill is a potential full-system compromise.</div>
+            <div class="card-more">Read AST06 &rarr;</div>
+          </a>
+
+          <a class="card med" href="/www-project-agentic-skills-top-10/ast07.html">
+            <div class="card-top"><span class="card-id">AST07</span><span class="pill med">Medium</span></div>
+            <div class="card-title">Update Drift</div>
+            <div class="card-desc">Without pinning or verification, skills silently drift to vulnerable — or freshly malicious — versions.</div>
+            <div class="card-more">Read AST07 &rarr;</div>
+          </a>
+
+          <a class="card med" href="/www-project-agentic-skills-top-10/ast08.html">
+            <div class="card-top"><span class="card-id">AST08</span><span class="pill med">Medium</span></div>
+            <div class="card-title">Poor Scanning</div>
+            <div class="card-desc">Natural-language-plus-code blends defeat signature scanners, so malicious skills pass every automated check.</div>
+            <div class="card-more">Read AST08 &rarr;</div>
+          </a>
+
+          <a class="card med" href="/www-project-agentic-skills-top-10/ast09.html">
+            <div class="card-top"><span class="card-id">AST09</span><span class="pill med">Medium</span></div>
+            <div class="card-title">No Governance</div>
+            <div class="card-desc">No inventory, approval, audit, or revocation — a shadow-AI layer that security teams cannot see or control.</div>
+            <div class="card-more">Read AST09 &rarr;</div>
+          </a>
+
+          <a class="card med" href="/www-project-agentic-skills-top-10/ast10.html">
+            <div class="card-top"><span class="card-id">AST10</span><span class="pill med">Medium</span></div>
+            <div class="card-title">Cross-Platform Reuse</div>
+            <div class="card-desc">Porting skills across platforms drops the source format's security metadata, opening exploitable gaps.</div>
+            <div class="card-more">Read AST10 &rarr;</div>
+          </a>
+
+        </div>
+
+        <div class="panel">
+          <h3>v1 is in public review</h3>
+          <p>Comments on the Top 10 content go in the shared review doc — issues and PRs remain open for transparency, but the doc is where v1 feedback is tracked.</p>
+          <a class="cta primary" href="https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0" target="_blank" rel="noopener">Open the v1 Review Doc</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══ Tab 3: Checklist ═══ -->
+  <div class="tab-panel" role="tabpanel" id="panel-checklist" aria-labelledby="tab-checklist" hidden>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">assess your posture</div>
+        <h2>Quick Security Checklist</h2>
+        <p class="lead">Use this checklist to assess your agent skill security posture:</p>
+      </div>
+
+      <div class="check-grid">
+        <div class="check-card">
+          <h3>Registry &amp; Installation</h3>
+          <ul class="check-list">
+            <li>Only install skills from verified publishers with code signing</li>
+            <li>Enable automated scanning for all skill installations</li>
+            <li>Review skill permissions before installation</li>
+            <li>Pin skill versions to prevent automatic malicious updates</li>
+          </ul>
+        </div>
+        <div class="check-card">
+          <h3>Runtime Security</h3>
+          <ul class="check-list">
+            <li>Run agents in isolated environments (containers/sandbox)</li>
+            <li>Implement network restrictions for agent processes</li>
+            <li>Monitor agent file system and network activity</li>
+            <li>Regularly audit installed skills and their dependencies</li>
+          </ul>
+        </div>
+        <div class="check-card">
+          <h3>Governance &amp; Monitoring</h3>
+          <ul class="check-list">
+            <li>Maintain inventory of all deployed agent skills</li>
+            <li>Implement approval workflows for skill installations</li>
+            <li>Enable comprehensive audit logging for agent actions</li>
+            <li>Establish incident response procedures for skill compromises</li>
+          </ul>
+        </div>
+        <div class="check-card">
+          <h3>Development Practices</h3>
+          <ul class="check-list">
+            <li>Sign all published skills with cryptographic keys</li>
+            <li>Include comprehensive permission manifests</li>
+            <li>Test skills in isolated environments before publishing</li>
+            <li>Document security considerations in skill metadata</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="checklist-more">
+        <a href="/www-project-agentic-skills-top-10/checklist.html">See the complete Security Assessment Checklist &rarr;</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══ Tab 4: Getting Started ═══ -->
+  <div class="tab-panel" role="tabpanel" id="panel-getting-started" aria-labelledby="tab-getting-started" hidden>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">start here</div>
+        <h2>Getting Started by Role</h2>
+      </div>
+
+      <div class="role-grid">
+        <div class="role-card">
+          <h3>For Security Teams</h3>
+          <ol>
+            <li>Review this document and the complete Top 10 detail pages for full risk descriptions, attack scenarios, and OWASP mappings.</li>
+            <li>Conduct a skill inventory across all agent platforms in use — treat this as an immediate priority given active exploitation confirmed in 2026.</li>
+            <li>Use the Security Assessment Checklist for reviewing installed skills.</li>
+            <li>Implement the governance framework described in AST09: inventory, approval workflow, audit logging, and agentic identity controls.</li>
+            <li>Subscribe to ClawHub, skills.sh, and platform-specific security advisories.</li>
+          </ol>
+        </div>
+        <div class="role-card">
+          <h3>For Skill Developers</h3>
+          <ol>
+            <li><b>Least privilege:</b> Declare a minimal permission manifest; request only what your skill genuinely needs (AST03).</li>
+            <li><b>Safe parsing:</b> Use safe YAML/JSON loaders; never deserialize untrusted skill configs without sandboxing (AST04).</li>
+            <li><b>Sign your skills:</b> Implement ed25519 signing before publication; include content_hash in your manifest (AST01/AST02).</li>
+            <li><b>Pin dependencies:</b> Lock all nested dependencies to immutable hashes — never version ranges (AST07).</li>
+            <li><b>Honest metadata:</b> Accurately declare risk_tier, permissions, and requires; do not understate scope (AST04).</li>
+            <li><b>Protect identity files:</b> Never request write access to SOUL.md, MEMORY.md, or AGENTS.md unless your skill's core function requires it — and document why (AST03).</li>
+          </ol>
+        </div>
+        <div class="role-card">
+          <h3>For Platform Developers</h3>
+          <ol>
+            <li><b>Default sandbox:</b> Make container/Docker isolation the default for skill execution; make host-mode an explicit opt-in (AST06).</li>
+            <li><b>Safe deserialization:</b> Disable dangerous YAML/JSON tags in all skill loaders by default; validate against a schema before execution (AST04).</li>
+            <li><b>Registry scanning:</b> Implement behavioral scanning at publish time and at install time; pattern matching alone is insufficient (AST08).</li>
+            <li><b>Provenance infrastructure:</b> Support the Universal Skill Format; implement Merkle-root transparency logs for your registry (AST01/AST02/AST10).</li>
+            <li><b>Audit logging:</b> Emit structured logs for all skill actions (file access, shell commands, network calls, memory writes) (AST09).</li>
+            <li><b>Trust prompts:</b> Do not allow repository-controlled configuration to execute before explicit user trust confirmation (AST02).</li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 class="subhead">Target Audience</h3>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Role</th><th>Primary Concerns</th><th>Key AST Risks</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="metric">AI Platform Developers</td>
+              <td class="source">Secure skill runtimes, registries, installers, and CI/CD integration</td>
+              <td class="figure">AST01, AST02, AST04, AST05, AST06, AST08</td>
+            </tr>
+            <tr>
+              <td class="metric">AppSec / Product Security</td>
+              <td class="source">Govern skills in enterprise deployments; review skill PRs</td>
+              <td class="figure">AST03, AST04, AST05, AST07, AST09</td>
+            </tr>
+            <tr>
+              <td class="metric">Skill Authors</td>
+              <td class="source">Write safe manifests, scripts, and metadata; ship signable packages</td>
+              <td class="figure">AST03, AST04, AST05, AST07</td>
+            </tr>
+            <tr>
+              <td class="metric">GRC / Compliance</td>
+              <td class="source">Map skill risks to NIST AI RMF, ISO 42001, EU AI Act</td>
+              <td class="figure">AST05, AST09, AST10</td>
+            </tr>
+            <tr>
+              <td class="metric">CISOs / Security Leadership</td>
+              <td class="source">Understand blast radius, incident scope, and governance gaps</td>
+              <td class="figure">AST02, AST05, AST06, AST09</td>
+            </tr>
+            <tr>
+              <td class="metric">Developers / Engineers</td>
+              <td class="source">Safely install and use skills without introducing unreviewed risk</td>
+              <td class="figure">AST01, AST02, AST07</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Tab 5: Leadership (existing content, relocated) ═══ -->
+  <div class="tab-panel active" role="tabpanel" id="panel-leadership" aria-labelledby="tab-leadership">
+    <section class="leadership">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">who's behind it</div>
+          <h2>Leadership &amp; Governance</h2>
+        </div>
+
+        <a class="lead-card" href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener">
+          <img class="avatar" src="leaders/ken-huang.jpg" alt="Ken Huang">
+          <div>
+            <div class="role">Project Lead</div>
+            <div class="name">Ken Huang</div>
+          </div>
+        </a>
+
+        <div class="colead-grid">
+          <a class="colead" href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/akram-sheriff.jpg" alt="Akram Sheriff">
+            <div class="info">Akram Sheriff<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/aonan-guan.jpg" alt="Aonan Guan">
+            <div class="info">Aonan Guan<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/bhavya-gupta.png" alt="Bhavya Gupta">
+            <div class="info">Bhavya Gupta<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/fabio-cerullo.png" alt="Fabio Cerullo">
+            <div class="info">Fabio Cerullo<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/hammad-atta.jpg" alt="Hammad Atta">
+            <div class="info">Hammad Atta<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/iftach-orr.png" alt="Iftach Orr">
+            <div class="info">Iftach Orr<span class="tag">Co-Lead</span></div>
+          </a>
+          <a class="colead" href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener">
+            <img class="avatar" src="leaders/niv-hoffman.png" alt="Niv Hoffman">
+            <div class="info">Niv Hoffman<span class="tag">Co-Lead</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
 
 <footer>
   OWASP Agentic Skills Top 10 &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>
-  &middot; <a href="/www-project-agentic-skills-top-10/?full=1">Full documentation</a>
+  &middot; <a class="footer-docs" href="/www-project-agentic-skills-top-10/?full=1">Full documentation</a>
   &middot; <a href="https://github.com/OWASP/www-project-agentic-skills-top-10" target="_blank" rel="noopener">GitHub</a>
 </footer>
+
+<script>
+(function () {
+  var VALID = {
+    overview: "overview",
+    top10: "top10",
+    checklist: "checklist",
+    "getting-started": "getting-started",
+    leadership: "leadership"
+  };
+  var DEFAULT = "leadership";
+
+  var buttons = Array.prototype.slice.call(document.querySelectorAll(".tab-btn"));
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".tab-panel"));
+
+  function normalizeHash(hash) {
+    var key = (hash || "").replace(/^#/, "").toLowerCase();
+    // aliases
+    if (key === "gettingstarted" || key === "start") key = "getting-started";
+    if (key === "leaders" || key === "team") key = "leadership";
+    if (key === "risks" || key === "ast") key = "top10";
+    return VALID[key] || DEFAULT;
+  }
+
+  function activate(tabId, pushHash) {
+    buttons.forEach(function (btn) {
+      var selected = btn.getAttribute("data-tab") === tabId;
+      btn.setAttribute("aria-selected", selected ? "true" : "false");
+      btn.tabIndex = selected ? 0 : -1;
+    });
+    panels.forEach(function (panel) {
+      var match = panel.id === "panel-" + tabId;
+      panel.classList.toggle("active", match);
+      if (match) {
+        panel.removeAttribute("hidden");
+      } else {
+        panel.setAttribute("hidden", "");
+      }
+    });
+    if (pushHash) {
+      var next = "#" + tabId;
+      if (location.hash !== next) {
+        history.replaceState(null, "", next);
+      }
+    }
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      activate(btn.getAttribute("data-tab"), true);
+    });
+    btn.addEventListener("keydown", function (e) {
+      var idx = buttons.indexOf(btn);
+      var next = -1;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % buttons.length;
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + buttons.length) % buttons.length;
+      if (e.key === "Home") next = 0;
+      if (e.key === "End") next = buttons.length - 1;
+      if (next >= 0) {
+        e.preventDefault();
+        buttons[next].focus();
+        activate(buttons[next].getAttribute("data-tab"), true);
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", function () {
+    activate(normalizeHash(location.hash), false);
+  });
+
+  // Initial activation from URL hash (or Overview default)
+  activate(normalizeHash(location.hash), !!location.hash);
+})();
+</script>
 
 </body>
 </html>
