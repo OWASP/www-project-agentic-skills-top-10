@@ -448,19 +448,49 @@ changelog:
 
 ### Project Lead
 
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0 0.5rem;">
+  <a href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.4rem;min-width:100px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" width="72" height="72" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;">Ken Huang</span>
+  </a>
+</div>
+
 **Ken Huang** — OWASP AIVSS Lead, Agentic AI Security Researcher
 - OpenClaw threat modeling and skill security scanning research
 - RSA / OWASP conference speaker on AI security
 
 ### Co-Leads
 
-- **Akram Sheriff**
-- **Aonan Guan**
-- **Bhavya Gupta**
-- **Fabio Cerullo**
-- **Hammad Atta**
-- **Iftach Orr**
-- **Niv Hoffman**
+<div style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:flex-start;margin:0.75rem 0;">
+  <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Akram Sheriff</span>
+  </a>
+  <a href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/aonan-guan.jpg" alt="Aonan Guan" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Aonan Guan</span>
+  </a>
+  <a href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/bhavya-gupta.png" alt="Bhavya Gupta" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Bhavya Gupta</span>
+  </a>
+  <a href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Fabio Cerullo</span>
+  </a>
+  <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Hammad Atta</span>
+  </a>
+  <a href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/iftach-orr.png" alt="Iftach Orr" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Iftach Orr</span>
+  </a>
+  <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Niv Hoffman</span>
+  </a>
+</div>
 
 ### Contribution Model
 
