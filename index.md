@@ -455,10 +455,6 @@ changelog:
   </a>
 </div>
 
-**Ken Huang** — OWASP AIVSS Lead, Agentic AI Security Researcher
-- OpenClaw threat modeling and skill security scanning research
-- RSA / OWASP conference speaker on AI security
-
 ### Co-Leads
 
 <div style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:flex-start;margin:0.75rem 0;">
