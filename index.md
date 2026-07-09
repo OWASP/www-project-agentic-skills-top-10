@@ -545,6 +545,108 @@ The OWASP AIVSS project's Distinguished Review Board comprises world-renowned cy
   </a>
 </div>
 
+### Agentic Skills Top 10 Founding Members
+
+Founding members of the OWASP Agentic Skills Top 10 project itself — project leads, co-leads, and additional contributors — listed alphabetically. Several also contribute to the sibling OWASP AIVSS project listed above.
+
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0;">
+  <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Akram Sheriff</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/aonan-guan.jpg" alt="Aonan Guan" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Aonan Guan</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/bhavya-gupta.png" alt="Bhavya Gupta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Bhavya Gupta</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/charlesi" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/charles-iheagwara.jpg" alt="Charles Iheagwara" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Charles Iheagwara</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">AI/ML Security Leader, AstraZeneca</span>
+  </a>
+  <a href="https://www.linkedin.com/in/david-girard-1250762/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/david-girard.jpg" alt="David Girard" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">David Girard</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Director, AI Security &amp; AI Alliances, Trend Micro</span>
+  </a>
+  <a href="https://www.linkedin.com/in/dennis-xu-b52aa519/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/dennis-xu.jpg" alt="Dennis Xu" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Dennis Xu</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Research VP, AI, Gartner</span>
+  </a>
+  <a href="https://www.linkedin.com/in/edwardlee1007/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/edward-lee.png" alt="Edward Lee" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Edward Lee</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Vice President, Lead AI Security, JP Morgan</span>
+  </a>
+  <a href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Fabio Cerullo</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Hammad Atta</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/idan-habler/?originalSubdomain=il" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/idan-habler.jpg" alt="Idan Habler" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Idan Habler</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Staff AI/ML Security Researcher, Intuit</span>
+  </a>
+  <a href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/iftach-orr.png" alt="Iftach Orr" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Iftach Orr</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kannasekar/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kanna-sekar.jpg" alt="Kanna Sekar" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Kanna Sekar</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Cyber Security, Google</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Ken Huang</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Project Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kj-lian-4a9a341/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kj-lian.png" alt="KJ Lian" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">KJ Lian</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Manager, Data &amp; AI (Public Sector), AWS</span>
+  </a>
+  <a href="https://www.linkedin.com/in/manishbhatt132123/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/manish-bhatt.jpg" alt="Manish Bhatt" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Manish Bhatt</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Security Researcher, AWS</span>
+  </a>
+  <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Niv Hoffman</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
+  </a>
+  <a href="https://www.linkedin.com/in/pamela-gupta-779355b/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/pamela-gupta.jpg" alt="Pamela Gupta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Pamela Gupta</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Founder &amp; CEO, OutSecure / Trusted AI</span>
+  </a>
+  <a href="https://www.linkedin.com/in/sushmitha-janapareddy/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/sushmitha-janapareddy.jpg" alt="Sushmitha Janapareddy" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Sushmitha Janapareddy</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Director - Security Integrations, American Express</span>
+  </a>
+  <a href="https://www.linkedin.com/in/vineethsai/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/vineeth-sai-narajala.jpg" alt="Vineeth Sai Narajala" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Vineeth Sai Narajala</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Application Security, AWS</span>
+  </a>
+</div>
+
 ### OWASP AIVSS Founding Members
 
 The [OWASP AIVSS (Agentic AI Vulnerability Scoring System)](https://owasp.org/www-project-agentic-ai-vulnerability-scoring-system/) project is a sibling OWASP initiative focused on scoring the severity of agentic AI vulnerabilities. Its founding members are recognized here as OWASP founding members in the agentic AI security space; many of them have also contributed directly to the Agentic Skills Top 10 project's research and review process.
@@ -809,103 +911,6 @@ The [OWASP AIVSS (Agentic AI Vulnerability Scoring System)](https://owasp.org/ww
     <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/xiaochen-zhang.jpg" alt="Xiaochen Zhang" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
     <span style="font-weight:600;text-align:center;font-size:0.85rem;">Xiaochen Zhang</span>
     <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Executive Director and Chief Responsible AI Officer, AI 2030</span>
-  </a>
-</div>
-
-### Agentic Skills Top 10 Founding Members
-
-Founding members of the OWASP Agentic Skills Top 10 project itself — project leads, co-leads, and additional contributors — listed alphabetically. Several also contribute to the sibling OWASP AIVSS project listed above.
-
-<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0;">
-  <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Akram Sheriff</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/aonan-guan.jpg" alt="Aonan Guan" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Aonan Guan</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/bhavya-gupta.png" alt="Bhavya Gupta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Bhavya Gupta</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/david-girard-1250762/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/david-girard.jpg" alt="David Girard" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">David Girard</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Director, AI Security &amp; AI Alliances, Trend Micro</span>
-  </a>
-  <a href="https://www.linkedin.com/in/dennis-xu-b52aa519/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/dennis-xu.jpg" alt="Dennis Xu" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Dennis Xu</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Research VP, AI, Gartner</span>
-  </a>
-  <a href="https://www.linkedin.com/in/edwardlee1007/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/edward-lee.png" alt="Edward Lee" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Edward Lee</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Vice President, Lead AI Security, JP Morgan</span>
-  </a>
-  <a href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Fabio Cerullo</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Hammad Atta</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/idan-habler/?originalSubdomain=il" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/idan-habler.jpg" alt="Idan Habler" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Idan Habler</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Staff AI/ML Security Researcher, Intuit</span>
-  </a>
-  <a href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/iftach-orr.png" alt="Iftach Orr" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Iftach Orr</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/kannasekar/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kanna-sekar.jpg" alt="Kanna Sekar" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Kanna Sekar</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Cyber Security, Google</span>
-  </a>
-  <a href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Ken Huang</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Project Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/kj-lian-4a9a341/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kj-lian.png" alt="KJ Lian" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">KJ Lian</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Manager, Data &amp; AI (Public Sector), AWS</span>
-  </a>
-  <a href="https://www.linkedin.com/in/manishbhatt132123/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/manish-bhatt.jpg" alt="Manish Bhatt" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Manish Bhatt</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Security Researcher, AWS</span>
-  </a>
-  <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Niv Hoffman</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Co-Lead, Agentic Skills Top 10</span>
-  </a>
-  <a href="https://www.linkedin.com/in/pamela-gupta-779355b/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/pamela-gupta.jpg" alt="Pamela Gupta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Pamela Gupta</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Founder &amp; CEO, OutSecure / Trusted AI</span>
-  </a>
-  <a href="https://www.linkedin.com/in/sushmitha-janapareddy/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/sushmitha-janapareddy.jpg" alt="Sushmitha Janapareddy" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Sushmitha Janapareddy</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Director - Security Integrations, American Express</span>
-  </a>
-  <a href="https://www.linkedin.com/in/vineethsai/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
-    <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/vineeth-sai-narajala.jpg" alt="Vineeth Sai Narajala" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
-    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Vineeth Sai Narajala</span>
-    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Application Security, AWS</span>
   </a>
 </div>
 
