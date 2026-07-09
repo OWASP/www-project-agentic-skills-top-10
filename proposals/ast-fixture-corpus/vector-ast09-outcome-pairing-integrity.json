@@ -1,0 +1,53 @@
+{
+  "vectorId": "ast09-outcome-pairing-integrity",
+  "astControl": "AST09",
+  "threatScenario": "A runtime presents an outcome record whose action_ref matches no admission record, a stitched pair that fabricates evidence of an authorized execution.",
+  "request": {
+    "action_type": "file.read",
+    "scope": "path:/data/reports/**"
+  },
+  "authorityContext": {
+    "policy_version": "governance-policy-2.1.0",
+    "delegated": false
+  },
+  "expectedEnforcementPoint": "post-execution verification (pairing check)",
+  "expectedDecision": "FAIL_PAIRING",
+  "expectedAuditArtifact": {
+    "kind": "pairing_check",
+    "preimage_fields": [
+      "agent_id",
+      "action_type",
+      "scope",
+      "timestamp_ms"
+    ],
+    "admission_records_present": [
+      "7fb0077c205e43eaa34cf59da8167ebfbdc8fbe07d2fc68d30889ed55877a350"
+    ],
+    "presented_outcome": {
+      "action_ref": "b8d3cf18c3e0173b4f9a7812137cb2fdb9bad4e14aaf3a3e8eefa527b7fb9785",
+      "status": "completed",
+      "timestamp_ms": 1751600003500
+    },
+    "property": "An outcome record whose action_ref matches no admission record MUST fail pairing; the content-derived identifier prevents after-the-fact stitching."
+  },
+  "safeCase": {
+    "expectedDecision": "PASS_PAIRING",
+    "expectedAuditArtifact": {
+      "kind": "pairing_check",
+      "preimage_fields": [
+        "agent_id",
+        "action_type",
+        "scope",
+        "timestamp_ms"
+      ],
+      "admission_records_present": [
+        "7fb0077c205e43eaa34cf59da8167ebfbdc8fbe07d2fc68d30889ed55877a350"
+      ],
+      "presented_outcome": {
+        "action_ref": "7fb0077c205e43eaa34cf59da8167ebfbdc8fbe07d2fc68d30889ed55877a350",
+        "status": "completed",
+        "timestamp_ms": 1751600002400
+      }
+    }
+  }
+}
