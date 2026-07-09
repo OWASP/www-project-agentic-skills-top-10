@@ -812,6 +812,28 @@ The [OWASP AIVSS (Agentic AI Vulnerability Scoring System)](https://owasp.org/ww
   </a>
 </div>
 
+### Agentic Skills Top 10 Founding Members
+
+The people below are founding members of the OWASP Agentic Skills Top 10 project itself (in addition to, and distinct from, the OWASP AIVSS founding members listed above).
+
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0;">
+  <a href="https://www.linkedin.com/in/pamela-gupta-779355b/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/pamela-gupta.jpg" alt="Pamela Gupta" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Pamela Gupta</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Founder &amp; CEO, OutSecure / Trusted AI</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kannasekar/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kanna-sekar.jpg" alt="Kanna Sekar" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">Kanna Sekar</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Cyber Security, Google</span>
+  </a>
+  <a href="https://www.linkedin.com/in/kj-lian-4a9a341/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:110px;max-width:130px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kj-lian.png" alt="KJ Lian" width="56" height="56" loading="lazy" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.85rem;">KJ Lian</span>
+    <span style="font-size:0.72rem;color:#666;text-align:center;line-height:1.25;">Senior Manager, Data &amp; AI (Public Sector), AWS</span>
+  </a>
+</div>
+
 ### Contribution Model
 
 | Channel | Purpose |
