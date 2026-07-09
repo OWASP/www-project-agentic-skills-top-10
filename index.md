@@ -460,6 +460,7 @@ changelog:
 - **Fabio Cerullo**
 - **Hammad Atta**
 - **Iftach Orr**
+- **Niv Hoffman**
 
 ### Contribution Model
 

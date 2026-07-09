@@ -115,6 +115,24 @@
   footer{border-top:1px solid var(--line); margin-top:88px; padding:32px 24px; text-align:center; color:var(--muted); font-size:.85rem;}
   footer a{color:var(--orange-2); text-decoration:none;}
   footer a:hover{text-decoration:underline;}
+
+  section.leadership{padding:24px 24px 40px;}
+  .lead-card{
+    max-width:900px; margin:0 auto 28px; background:var(--bg-2); border:1px solid var(--line);
+    border-left:4px solid var(--orange); border-radius:14px; padding:22px 24px;
+  }
+  .lead-card .role{font-family:"Kalam",cursive; color:var(--orange-2); font-size:.95rem; margin-bottom:4px;}
+  .lead-card .name{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:1.3rem;}
+  .lead-card .blurb{color:var(--muted); font-size:.9rem; margin-top:6px;}
+  .colead-grid{
+    max-width:900px; margin:0 auto; display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;
+  }
+  .colead{
+    background:var(--bg-2); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.95rem;
+  }
+  .colead .tag{display:block; font-family:"Inter",sans-serif; font-weight:400; color:var(--muted); font-size:.76rem; margin-top:2px;}
 </style>
 </head>
 <body>
@@ -229,6 +247,31 @@
       <h3>v1 is in public review</h3>
       <p>Comments on the Top 10 content go in the shared review doc — issues and PRs remain open for transparency, but the doc is where v1 feedback is tracked.</p>
       <a class="cta primary" href="https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0" target="_blank" rel="noopener">Open the v1 Review Doc</a>
+    </div>
+  </div>
+</section>
+
+<section class="leadership">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">who's behind it</div>
+      <h2>Leadership &amp; Governance</h2>
+    </div>
+
+    <div class="lead-card">
+      <div class="role">Project Lead</div>
+      <div class="name">Ken Huang</div>
+      <div class="blurb">OWASP AIVSS Lead, Agentic AI Security Researcher &mdash; OpenClaw threat modeling and skill security scanning research, RSA / OWASP conference speaker on AI security.</div>
+    </div>
+
+    <div class="colead-grid">
+      <div class="colead">Akram Sheriff<span class="tag">Co-Lead</span></div>
+      <div class="colead">Aonan Guan<span class="tag">Co-Lead</span></div>
+      <div class="colead">Bhavya Gupta<span class="tag">Co-Lead</span></div>
+      <div class="colead">Fabio Cerullo<span class="tag">Co-Lead</span></div>
+      <div class="colead">Hammad Atta<span class="tag">Co-Lead</span></div>
+      <div class="colead">Iftach Orr<span class="tag">Co-Lead</span></div>
+      <div class="colead">Niv Hoffman<span class="tag">Co-Lead</span></div>
     </div>
   </div>
 </section>

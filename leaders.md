@@ -7,3 +7,4 @@
 - [Fabio Cerullo](mailto:fcerullo@owasp.org)
 - [Hammad Atta](mailto:hmmdatta@gmail.com)
 - [Iftach Orr](mailto:Iftach@alice.io)
+- Niv Hoffman
