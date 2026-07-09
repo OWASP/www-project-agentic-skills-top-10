@@ -8,8 +8,14 @@ record, offline-verifiable from its own bytes, with no outcome receipt and no ru
 
 The AST09 Admission receipt is the seven documented fields and carries no signature (a signature
 is documented only on the Outcome receipt). This vector therefore contains no signature and no
-keypair. Tamper detection is the content-derived identifier: `attempt_id` is a hash over the
-admission content, so altering any preimage field makes the stored `attempt_id` fail to recompute.
+keypair.
+
+What the content-derived `attempt_id` gives, and what it does not: altering any preimage field
+makes the stored `attempt_id` fail to recompute, so an alteration is detectable by a verifier that
+holds the identifier from a source other than the record itself. A party who can rewrite the record
+can also rewrite the identifier, so this is not tamper evidence against the record's own writer.
+With no signature on the Admission receipt, no stronger property is available from these bytes
+alone.
 
 ## Files
 
@@ -26,7 +32,8 @@ The AST09 Key Property that denied-before-dispatch carries equal audit weight: a
 record with no outcome receipt for its `attempt_id` evidences the action was blocked before
 dispatch. The checker validates the record from the bytes alone, with no call to any runtime:
 the seven required fields are present, decision is DENY, and `attempt_id` recomputes from the
-content preimage, which is the sole tamper-detection mechanism in a signature-free admission record.
+content preimage, which is the only integrity check available in a signature-free admission record,
+subject to the limits stated above.
 
 ## Run
 
@@ -45,11 +52,19 @@ deterministic content-derived scheme that lets a verifier recompute the identifi
 dropped or altered record satisfies the property). The `agent_id` is synthetic and `timestamp_ms`
 is a fixed deterministic value, not a wall-clock read.
 
+This five-field derivation is a seal: it commits `policy_version`, which nothing else in a
+signature-free Admission receipt protects. It cannot serve as a pairing key, because a party
+recomputing the identifier from the executed request would need `policy_version`, which the
+executing party need not know. The four-field derivation in `proposals/ast-fixture-corpus` is a
+pairing key for exactly that reason. Both fit the guidance's "content-derived identifier" wording.
+They are not interchangeable.
+
 ## Claim boundary
 
-The checker proves record integrity and decision binding, meaning the record is intact and the
-DENY decision is carried in a record whose identifier is bound to the requested scope and policy
-version; it does not prove that the policy decision itself was correct, which is a separate question.
+The checker demonstrates that the record is internally consistent and that the DENY decision is
+carried in a record whose identifier commits to the requested scope and policy version. It does not
+show that the record is tamper evident against its own writer, that the action was not executed by
+some path that produced no receipt, or that the policy decision itself was correct.
 
 ## License
 
