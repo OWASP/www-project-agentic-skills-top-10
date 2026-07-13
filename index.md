@@ -207,6 +207,16 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 
 - **NIST / CAISI**: Federal Register RFI on AI Agent Security (published Jan 8, 2026, comments closed Mar 9, 2026) — the first formal US government solicitation specifically addressing AI agent security risks.
 
+### June 2026
+
+- **Jun 3**: Trail of Bits publishes "The Sorry State of Skill Distribution" — every public skill scanner tested (ClawHub's VirusTotal + LLM guard model, Cisco's `skill-scanner`, the skills.sh scanners) is bypassed in under an hour, via payload padding that forces truncation, logic hidden in binary and archive formats, and prompt-injecting the scanner's own LLM judge.
+
+- **Jun 22–24**: Air Security publishes "The Story of Skills" and "The Circus of Skills" — a researcher-built malicious skill reaches over 26,000 agents while every scanner clears it, its payload served from an attacker-controlled external documentation URL; a follow-up scan of 142,836 live skills finds 17,822 (12.4%, 6.7M installs) resting on at least one untrusted external instruction source.
+
+### July 2026
+
+- **Jul 2**: Air Security publishes "SkillJacking" — 925 skills serving ~134K agents sit on instantly hijackable dependencies (deleted GitHub accounts, unregistered packages, expired domains, freed cloud-app slots); researchers take over the most popular video-generation skill on skills.sh (11,483 installs) by re-registering its deleted owner account.
+
 ---
 
 ## Summary Table
