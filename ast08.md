@@ -25,6 +25,7 @@ A regex scanner can detect `curl` in a shell script. It cannot detect a skill th
 - **ClawHub's original "Skill Defender" scanner** — itself a skill — was used by attackers as a false-trust signal. Some scanner skills were themselves malicious.
 - **NVIDIA SkillSpector (2026)**: an open-source, agent-skill-aware scanner that combines static analysis (AST-based dangerous-code detection, taint tracking, YARA) with optional LLM semantic evaluation across 64 patterns in 16 categories. Per the SkillSpector project, roughly 26.1% of scanned skills contained vulnerabilities and 5.2% showed likely malicious intent — evidence that scanning purpose-built for the skill layer surfaces issues that generic code scanners miss.
 - **Trail of Bits (Jun 3, 2026), *The Sorry State of Skill Distribution***: bypassed every scanner tested — ClawHub (VirusTotal + a GPT-5.5 guard model), Cisco's `skill-scanner`, and the skills.sh scanners — each in under an hour. Padding a payload with 100,000 leading newlines caused the scanner to *truncate* the file and miss the malicious content; logic hidden in a precompiled `.pyc` bytecode file and inside a `.docx` (a ZIP of XML) went unscanned because the tools ignore binary and archive formats; and the scanner's own LLM judge was prompt-injected — wrapped in prose about "corporate standards" and "VPN access" — into rating a malicious npm-registry redirect as benign. Conversely, Anthropic's *legitimate* `LD_PRELOAD` Office shim was rated LOW because explanatory comments convinced the LLM it was safe. The authors conclude the "trust model is broken at the root" and automated scanning cannot replace human review of executable dependencies. Attack code: [trailofbits/overtly-malicious-skills](https://github.com/trailofbits/overtly-malicious-skills).
+- **Air Security, *The Story of Skills* (Jun 22, 2026)**: a deliberately malicious skill was vetted as safe by every scanner tested — Cisco's, NVIDIA's, and all of skills.sh's — because its payload lived at an external documentation URL that scanners never fetch. The attacker-controlled domain served clean content until the skill was trusted and installed, then switched to malicious install instructions; over 26,000 agents were affected without a single scanner noticing.
 
 ## Attack Scenarios
 
@@ -95,6 +96,7 @@ The scanner is a known, static target. Pad the payload to force context truncati
 - [NVIDIA SkillSpector — open-source security scanner for AI agent skills](https://github.com/NVIDIA/SkillSpector)
 - [OWASP Top 10 - A6 Security Misconfiguration](https://owasp.org/www-project-top-ten/)
 - [Trail of Bits — The Sorry State of Skill Distribution (2026)](https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/)
+- [Air Security: The Story of Skills](https://www.air.security/blog-posts/the-story-of-skills)
 
 ---
 
