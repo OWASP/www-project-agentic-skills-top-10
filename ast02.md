@@ -24,6 +24,9 @@ The barrier to publishing on ClawHub was a `SKILL.md` file and a GitHub account 
 - **Dependency confusion**: a skill's `package.json` or `requirements.txt` pulls a typosquatted nested dependency containing the actual payload — the surface skill appears clean.
 - **Snyk-documented attack**: skill named "Summarize YouTube Videos" imports `yutube-dl-core` instead of a legitimate package; nested dependency installs a backdoor.
 - **Trail of Bits (Jun 3, 2026)**: public skill marketplaces (skills.sh, ClawHub) run a "ship-first, secure-later" model with one-click install and no meaningful vetting — and the scanners meant to backstop them were all bypassed in under an hour (see AST08). Their recommendation is the traditional supply-chain one: curate dependencies in an internal/approved marketplace, pin versions, and control who can publish or update — automated scanning cannot replace that.
+- **Air Security, *The Story of Skills* (Jun 22, 2026)**: a researcher-built malicious skill entered a ~36K-star community plugin marketplace through an accepted pull request, inheriting its stars and credibility; promoted on social media, it reached over 26,000 agents — including corporate ones — while scanners, stars, and reputation all cleared it.
+- **Air Security, *The Circus of Skills* (Jun 24, 2026)**: a scan of 142,836 live skills found 17,822 (~12.4%, 6.7M installs) rest on at least one untrusted external resource — sketchy domains, zero-reputation GitHub repos, freshly published packages, free-tier hosts — each an unpinned dependency that can turn malicious without the skill itself changing.
+- **Air Security, *SkillJacking* (Jul 2, 2026)**: 925 skills serving ~134K agents sit on instantly hijackable sources — deleted GitHub accounts, unregistered packages, expired domains, freed cloud-app slots. Researchers took over the most popular video-generation skill on skills.sh (11,483 installs) by re-registering its deleted owner account; the marketplace listing kept its stars, trust, and installs.
 
 ## Attack Scenarios
 
@@ -176,6 +179,9 @@ Supply chain compromise indicators:
 - [IETF Internet-Draft — `draft-sharif-agent-payment-trust`](https://datatracker.ietf.org/doc/draft-sharif-agent-payment-trust/)
 - [JWA `ES256` — RFC 7518 §3.1](https://datatracker.ietf.org/doc/html/rfc7518#section-3.1)
 - [Trail of Bits — The Sorry State of Skill Distribution (2026)](https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/)
+- [Air Security: The Story of Skills](https://www.air.security/blog-posts/the-story-of-skills)
+- [Air Security: The Circus of Skills](https://www.air.security/blog-posts/the-circus-of-skills)
+- [Air Security: SkillJacking](https://www.air.security/blog-posts/skilljacking)
 
 ---
 

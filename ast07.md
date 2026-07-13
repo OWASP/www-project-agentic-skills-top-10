@@ -22,6 +22,8 @@ Package update drift is a known risk in traditional software. In skills, it's am
 - **ClawJacked (CVE-2026-28363, CVSS 9.9)** and the broader OpenClaw CVE cluster (9 CVEs, 3 with public exploit code): the patch-lag window between disclosure and user update created an active exploitation window. SecurityScorecard confirmed 12,812 OpenClaw instances exploitable via RCE at time of analysis.
 - **Claude Code CVE-2025-59536**: fixed in v1.0.111 (Oct 2025); CVE-2026-21852: fixed in v2.0.65 (Jan 2026). Gap of months between fix and public disclosure — users unaware of risk for the duration.
 - **OpenClaw's hot-reload `SkillsWatcher`** enables real-time skill updates: a compromised upstream skill repository becomes instantly active without requiring agent restart.
+- **Air Security, *SkillJacking* (Jul 2, 2026)**: published skills can be taken over outright — the most popular video-generation skill on skills.sh (11,483 installs) served its files live from a GitHub repo whose owner account had been deleted; researchers re-registered the username and controlled what every install received from that moment on. Victims needed no update to be affected — just one more use. In total, 925 skills (~134K agents) sat on such instantly hijackable sources, and the takeover itself tripped no scanner.
+- **Air Security, *The Circus of Skills* (Jun 24, 2026)**: 17,822 skills (~12.4% of 142,836 scanned; 6.7M installs) rest on at least one untrusted external resource — including binaries fetched from a repo's `releases/latest` — content that can drift malicious underneath a deployed skill without any version change or update event.
 
 ## Attack Scenarios
 
@@ -85,6 +87,8 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 - [Check Point Research: Caught in the Hook](https://research.checkpoint.com/2026/rce-and-api-token-exfiltration-through-claude-code-project-files/)
 - [Oasis Security: ClawJacked (CVE-2026-28363)](https://oasis.security/)
 - [SecurityScorecard: 135,000+ OpenClaw instances exposed](https://securityscorecard.com/)
+- [Air Security: SkillJacking](https://www.air.security/blog-posts/skilljacking)
+- [Air Security: The Circus of Skills](https://www.air.security/blog-posts/the-circus-of-skills)
 
 ---
 

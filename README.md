@@ -11,7 +11,7 @@
 
 ## Quick Links
 
-- **🌐 Website**: [https://owasp.org/www-project-agentic-skills-top-10/microsite/](https://owasp.org/www-project-agentic-skills-top-10/microsite/)
+- **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **Tutorial Videos**: [Play the AST10 tutorial videos](http://owasp.org/www-project-agentic-skills-top-10/videos?video=ast01)
 - **Public Review v1 Google Doc**: [Submit comments in Google Docs](https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0)
@@ -677,7 +677,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 
 ## Resources
 
-- **Website**: [https://owasp.org/www-project-agentic-skills-top-10/microsite/](https://owasp.org/www-project-agentic-skills-top-10/microsite/)
+- **Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **GitHub**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
 - **OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
 - **Full Risk Documentation**: [top10.md](top10.md)
