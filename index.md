@@ -30,12 +30,15 @@ Redirecting to the [Agentic Skills Top 10 microsite](/www-project-agentic-skills
 
 **Public review (v1):** Please review and comment on the merged v1 draft in the [Google Doc](https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?usp=drivesdk). Previous GitHub issues and pull requests remain available for historical reference, but v1 publication comments should be submitted in the Google Doc.
 
+**Tutorial videos:** Use the [AST10 tutorial video library](/www-project-agentic-skills-top-10/videos?video=ast01) to play each risk video from selectable cards or share direct links with `?video=ast01` through `?video=ast10`.
+
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [📊 Visual Top 10 Overview](/www-project-agentic-skills-top-10/top10)
+- [Tutorial Videos](/www-project-agentic-skills-top-10/videos?video=ast01)
 - [The Problem: A Crisis Already in Progress](#the-problem-a-crisis-already-in-progress)
 - [What Are Agentic Skills?](#what-are-agentic-skills)
 - [Incident Timeline (2026)](#incident-timeline-2026)

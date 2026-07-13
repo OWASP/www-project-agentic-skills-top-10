@@ -13,6 +13,7 @@
 
 - **🌐 Website**: [https://owasp.org/www-project-agentic-skills-top-10/microsite/](https://owasp.org/www-project-agentic-skills-top-10/microsite/)
 - **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **Tutorial Videos**: [Play the AST10 tutorial videos](http://owasp.org/www-project-agentic-skills-top-10/videos?video=ast01)
 - **Public Review v1 Google Doc**: [Submit comments in Google Docs](https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0)
 - **🐙 GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
 - **🏛️ OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
