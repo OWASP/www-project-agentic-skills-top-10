@@ -189,11 +189,47 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
 
 <div class="founding-members-grid">
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" class="leader-image" loading="lazy" />
-        <h4>Akram Sheriff</h4>
+        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" class="leader-image" loading="lazy" />
+        <h4>Ken Huang</h4>
+        <p><em>Project Lead, Agentic Skills Top 10</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/kenhuang8" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" class="leader-image" loading="lazy" />
+        <h4>Hammad Atta</h4>
         <p><em>Co-Lead, Agentic Skills Top 10</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/manish-bhatt.jpg" alt="Manish Bhatt" class="leader-image" loading="lazy" />
+        <h4>Manish Bhatt</h4>
+        <p><em>Security Researcher, AWS</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/manishbhatt132123/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" class="leader-image" loading="lazy" />
+        <h4>Fabio Cerullo</h4>
+        <p><em>Co-Lead, Agentic Skills Top 10</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/fcerullo/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/david-girard.jpg" alt="David Girard" class="leader-image" loading="lazy" />
+        <h4>David Girard</h4>
+        <p><em>Senior Director, AI Security &amp; AI Alliances, Trend Micro</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/david-girard-1250762/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 
@@ -216,6 +252,33 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
     </div>
 
     <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/pamela-gupta.jpg" alt="Pamela Gupta" class="leader-image" loading="lazy" />
+        <h4>Pamela Gupta</h4>
+        <p><em>Founder &amp; CEO, OutSecure / Trusted AI</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/pamela-gupta-779355b/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/idan-habler.jpg" alt="Idan Habler" class="leader-image" loading="lazy" />
+        <h4>Idan Habler</h4>
+        <p><em>Staff AI/ML Security Researcher, Intuit</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/idan-habler/?originalSubdomain=il" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
+        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" class="leader-image" loading="lazy" />
+        <h4>Niv Hoffman</h4>
+        <p><em>CTO, Air Security</em></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+        </div>
+    </div>
+
+    <div class="founding-member-profile">
         <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/charles-iheagwara.jpg" alt="Charles Iheagwara" class="leader-image" loading="lazy" />
         <h4>Charles Iheagwara</h4>
         <p><em>AI/ML Security Leader, AstraZeneca</em></p>
@@ -225,20 +288,11 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
     </div>
 
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/david-girard.jpg" alt="David Girard" class="leader-image" loading="lazy" />
-        <h4>David Girard</h4>
-        <p><em>Senior Director, AI Security &amp; AI Alliances, Trend Micro</em></p>
+        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/sushmitha-janapareddy.jpg" alt="Sushmitha Janapareddy" class="leader-image" loading="lazy" />
+        <h4>Sushmitha Janapareddy</h4>
+        <p><em>Director - Security Integrations, American Express</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/david-girard-1250762/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/dennis-xu.jpg" alt="Dennis Xu" class="leader-image" loading="lazy" />
-        <h4>Dennis Xu</h4>
-        <p><em>Research VP, AI, Gartner</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/dennis-xu-b52aa519/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/sushmitha-janapareddy/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 
@@ -252,29 +306,20 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
     </div>
 
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" class="leader-image" loading="lazy" />
-        <h4>Fabio Cerullo</h4>
-        <p><em>Co-Lead, Agentic Skills Top 10</em></p>
+        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kj-lian.png" alt="KJ Lian" class="leader-image" loading="lazy" />
+        <h4>KJ Lian</h4>
+        <p><em>Senior Manager, Data &amp; AI (Public Sector), AWS</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/fcerullo/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/kj-lian-4a9a341/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" class="leader-image" loading="lazy" />
-        <h4>Hammad Atta</h4>
-        <p><em>Co-Lead, Agentic Skills Top 10</em></p>
+        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/vineeth-sai-narajala.jpg" alt="Vineeth Sai Narajala" class="leader-image" loading="lazy" />
+        <h4>Vineeth Sai Narajala</h4>
+        <p><em>Application Security, AWS</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/idan-habler.jpg" alt="Idan Habler" class="leader-image" loading="lazy" />
-        <h4>Idan Habler</h4>
-        <p><em>Staff AI/ML Security Researcher, Intuit</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/idan-habler/?originalSubdomain=il" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/vineethsai/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 
@@ -297,65 +342,20 @@ Founding members of the OWASP Agentic Skills Top 10 project itself — project l
     </div>
 
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" class="leader-image" loading="lazy" />
-        <h4>Ken Huang</h4>
-        <p><em>Project Lead, Agentic Skills Top 10</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/kenhuang8" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/kj-lian.png" alt="KJ Lian" class="leader-image" loading="lazy" />
-        <h4>KJ Lian</h4>
-        <p><em>Senior Manager, Data &amp; AI (Public Sector), AWS</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/kj-lian-4a9a341/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/manish-bhatt.jpg" alt="Manish Bhatt" class="leader-image" loading="lazy" />
-        <h4>Manish Bhatt</h4>
-        <p><em>Security Researcher, AWS</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/manishbhatt132123/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" class="leader-image" loading="lazy" />
-        <h4>Niv Hoffman</h4>
+        <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" class="leader-image" loading="lazy" />
+        <h4>Akram Sheriff</h4>
         <p><em>Co-Lead, Agentic Skills Top 10</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 
     <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/ast10-founders/pamela-gupta.jpg" alt="Pamela Gupta" class="leader-image" loading="lazy" />
-        <h4>Pamela Gupta</h4>
-        <p><em>Founder &amp; CEO, OutSecure / Trusted AI</em></p>
+        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/dennis-xu.jpg" alt="Dennis Xu" class="leader-image" loading="lazy" />
+        <h4>Dennis Xu</h4>
+        <p><em>Research VP, AI, Gartner</em></p>
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/pamela-gupta-779355b/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/sushmitha-janapareddy.jpg" alt="Sushmitha Janapareddy" class="leader-image" loading="lazy" />
-        <h4>Sushmitha Janapareddy</h4>
-        <p><em>Director - Security Integrations, American Express</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/sushmitha-janapareddy/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
-        </div>
-    </div>
-
-    <div class="founding-member-profile">
-        <img src="/www-project-agentic-skills-top-10/assets/images/aivss-founders/vineeth-sai-narajala.jpg" alt="Vineeth Sai Narajala" class="leader-image" loading="lazy" />
-        <h4>Vineeth Sai Narajala</h4>
-        <p><em>Application Security, AWS</em></p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/vineethsai/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
+            <a href="https://www.linkedin.com/in/dennis-xu-b52aa519/" target="_blank"><img src="/www-project-agentic-skills-top-10/assets/images/badge-linkedin.svg" alt="LinkedIn" /></a>
         </div>
     </div>
 </div>
