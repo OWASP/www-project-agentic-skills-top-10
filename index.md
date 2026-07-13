@@ -947,6 +947,9 @@ The [OWASP AIVSS (Agentic AI Vulnerability Scoring System)](https://owasp.org/ww
 - **SecurityScorecard** (Feb 2026) — 135,000+ OpenClaw instances publicly exposed; 53,000+ correlated with prior breach activity.
 - **Snyk: 280+ Leaky Skills** (Feb 5, 2026) — API key and PII exposure across ClawHub.
 - **Snyk: Why Your Skill Scanner Is Just False Security** (Feb 11, 2026) — Pattern-matching scanner limitations.
+- **Air Security: The Story of Skills** (Jun 22, 2026) — Researcher-built malicious skill reached 26,000+ agents via a trusted marketplace and social media; every scanner cleared it.
+- **Air Security: The Circus of Skills** (Jun 24, 2026) — 142,836 skills scanned for untrusted external instruction sources; 17,822 (12.4%, 6.7M installs) affected.
+- **Air Security: SkillJacking** (Jul 2, 2026) — 925 skills resting on instantly hijackable dependencies (~134K agents); top skills.sh video-generation skill taken over via a deleted GitHub account.
 
 ### Industry Reports
 
