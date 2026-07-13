@@ -21,6 +21,7 @@ External code dependencies are a known, well-mitigated problem in traditional so
 
 - **Vendor acknowledgment (Anthropic, Agent Skills documentation)**: Anthropic's own security guidance warns that "Skills that fetch data from external URLs pose particular risk, as fetched content may contain malicious instructions," and that "even trustworthy Skills can be compromised if their external dependencies change over time" — the platform vendor documenting both the injection and the rug-pull variants of this exact risk.
 - **POC for agent takeover using external instructions (Air Security, The Story of Skills (June 22, 2026))**: Air's research shows how a skill pointing to malicious external instructions can lead to full agent compromise.
+- **Ecosystem-wide measurement of untrusted instruction sources (Air Security, The Circus of Skills (June 24, 2026))**: a scan of 142,836 live skills found 17,822 (~12.4%, 6.7M installs) reference at least one external instruction source — unvetted domains, zero-reputation GitHub repos, packages, free-tier hosts — that a reviewer has no good reason to trust won't turn malicious.
 
 ## Attack Scenarios
 
@@ -80,6 +81,7 @@ The referenced document tells the agent to read still more external resources. B
 
 - [Anthropic: Agent Skills — Security considerations](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Air Security: The Story of Skills](https://www.air.security/blog-posts/the-story-of-skills)
+- [Air Security: The Circus of Skills](https://www.air.security/blog-posts/the-circus-of-skills)
 
 ---
 
