@@ -48,6 +48,7 @@ done
 # Check frontmatter in AST files
 echo ""
 echo "📝 Frontmatter validation:"
+frontmatter_errors=0
 for file in ast*.md; do
     if [ -f "$file" ]; then
         # Check if file starts with --- using portable method
@@ -56,6 +57,7 @@ for file in ast*.md; do
             echo "   ✅ $file has frontmatter"
         else
             echo "   ❌ $file missing frontmatter"
+            frontmatter_errors=$((frontmatter_errors + 1))
         fi
     fi
 done
@@ -115,14 +117,14 @@ echo "🎯 Validation Summary:"
 echo "   - Project structure: ✅"
 echo "   - Content files: $ast_count AST files found"
 echo "   - Required files: $(ls -1 "${required_files[@]}" 2>/dev/null | wc -l)/${#required_files[@]} present"
-echo "   - Frontmatter: All AST files have frontmatter"
+echo "   - Frontmatter: $( [ "$frontmatter_errors" -eq 0 ] && echo "✅ All AST files have frontmatter" || echo "❌ $frontmatter_errors AST file(s) missing frontmatter" )"
 echo "   - Internal links: Checked for broken links"
 echo "   - Content completeness: $( [ $todo_count -eq 0 ] && echo "✅" || echo "⚠️" )"
 echo "   - Artifact hygiene: $( [ $artifact_count -eq 0 ] && echo "✅" || echo "❌" )"
 
 echo ""
 echo "✨ Validation complete!"
-if [ $broken_links -gt 0 ] || [ $todo_count -gt 0 ] || [ $artifact_count -gt 0 ]; then
+if [ "$frontmatter_errors" -gt 0 ] || [ "$broken_links" -gt 0 ] || [ "$todo_count" -gt 0 ] || [ "$artifact_count" -gt 0 ]; then
     echo "⚠️  Some issues found - please review above"
     exit 1
 else
