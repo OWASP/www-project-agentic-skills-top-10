@@ -2,19 +2,32 @@
 """Offline checker for the AST09 denied-before-dispatch admission-receipt vector.
 
 The AST09 Admission receipt is seven fields and carries no signature (a signature is
-documented only on the Outcome receipt). Tamper detection here is the content-derived
-identifier: the attempt_id is a hash over the admission content, so altering any field
-in the preimage makes the stored attempt_id fail to recompute.
+documented only on the Outcome receipt). The content-derived identifier is what makes an
+alteration detectable, and its reach is bounded: attempt_id is a hash over FIVE of the seven
+fields (agent_id, action_type, scope, policy_version, timestamp_ms). It does not commit
+`decision` and it does not commit itself. Rewriting DENY to ALLOW leaves an attempt_id that
+still recomputes, so this checker asserts the decision directly rather than relying on the
+identifier to carry it.
 
 Verifies, from the record bytes alone, with no runtime call and no network:
 
   1. the seven required fields are present
-  2. decision is DENY
-  3. attempt_id recomputes from the content preimage (RFC 8785 / JCS, then sha256)
+  2. decision is DENY, asserted directly because the identifier does not cover it
+  3. every preimage value is inside this canonicalizer's supported domain
+  4. attempt_id recomputes from the five-field preimage (RFC 8785 / JCS, then sha256)
 
-Denied-before-dispatch property (AST09 Key Properties): a DENY admission record with
-no outcome receipt for a given attempt_id evidences the action was blocked before
-dispatch.
+Canonicalization domain, stated at module level because copying jcs() out of this file
+without it is a real hazard: the function below is correct for THIS vector's value space,
+which is four ASCII-keyed strings and one integer. It is not a general RFC 8785
+implementation. It does not handle floats, non-ASCII property names requiring UTF-16
+code-unit ordering, or integers outside the I-JSON safe range. Step 3 enforces that
+boundary rather than assuming it.
+
+What absence does and does not show: a DENY admission record with no outcome receipt for its
+attempt_id is consistent with the action having been blocked before dispatch. It does not
+establish it. That would require an authenticated commitment that the set of outcome receipts
+examined was complete over a defined window. This checker reads one record and makes no
+completeness claim.
 
 Standard library only. There is no signature to verify, so there is no cryptography
 dependency and no INCOMPLETE path.
@@ -91,7 +104,25 @@ def check_receipt(path):
         failures.append("decision is %r, expected DENY" % decision)
     print("%s decision is DENY (got %r)" % ("OK  " if ok_decision else "FAIL", decision))
 
-    # 3. attempt_id recomputes from the content preimage (sole tamper-detection mechanism)
+    # 3. preimage values inside this canonicalizer's supported domain (see module docstring)
+    domain_errors = []
+    for k in ATTEMPT_ID_PREIMAGE_FIELDS:
+        if k not in rec:
+            continue
+        v = rec[k]
+        if k == "timestamp_ms":
+            if isinstance(v, bool) or not isinstance(v, int):
+                domain_errors.append("%s must be an integer" % k)
+            elif abs(v) > 2 ** 53 - 1:
+                domain_errors.append("%s is outside the I-JSON safe integer range" % k)
+        elif not isinstance(v, str):
+            domain_errors.append("%s must be a string (got %s)" % (k, type(v).__name__))
+    failures.extend(domain_errors)
+    print("%s preimage values inside the supported canonicalization domain%s" % (
+        "OK  " if not domain_errors else "FAIL",
+        "" if not domain_errors else " (%s)" % "; ".join(domain_errors)))
+
+    # 4. attempt_id recomputes from the five-field preimage. Reach is bounded; see module docstring.
     if all(k in rec for k in ATTEMPT_ID_PREIMAGE_FIELDS):
         preimage = {k: rec[k] for k in ATTEMPT_ID_PREIMAGE_FIELDS}
         expected = sha256_hex(jcs(preimage))
@@ -106,9 +137,11 @@ def check_receipt(path):
 
     # Denied-before-dispatch property, printed for both receipts.
     print()
-    print("Denied-before-dispatch property (AST09): a DENY admission record with no")
-    print("outcome receipt for a given attempt_id evidences the action was blocked")
-    print("before dispatch.")
+    print("What this record shows: a DENY admission decision, internally consistent.")
+    print("Absence of an outcome receipt for this attempt_id is consistent with the")
+    print("action having been blocked before dispatch. It does not establish it: that")
+    print("needs an authenticated commitment that the outcome-receipt set examined was")
+    print("complete over a defined window.")
     print("attempt_id: %s" % rec.get("attempt_id"))
 
     # Honest, single exit code. Any named failure is exit 1; a full pass is exit 0.

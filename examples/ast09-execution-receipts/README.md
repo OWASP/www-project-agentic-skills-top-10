@@ -29,8 +29,10 @@ alone.
 ## What it demonstrates
 
 The AST09 Key Property that denied-before-dispatch carries equal audit weight: a DENY admission
-record with no outcome receipt for its `attempt_id` evidences the action was blocked before
-dispatch. The checker validates the record from the bytes alone, with no call to any runtime:
+record is an auditable artifact in its own right, whether or not execution followed. Absence of an
+outcome receipt for its `attempt_id` is consistent with the action having been blocked before
+dispatch; it does not establish it, which would require an authenticated commitment that the set
+of outcome receipts examined was complete over a defined window. The checker validates the record from the bytes alone, with no call to any runtime:
 the seven required fields are present, decision is DENY, and `attempt_id` recomputes from the
 content preimage, which is the only integrity check available in a signature-free admission record,
 subject to the limits stated above.
@@ -52,8 +54,8 @@ deterministic content-derived scheme that lets a verifier recompute the identifi
 dropped or altered record satisfies the property). The `agent_id` is synthetic and `timestamp_ms`
 is a fixed deterministic value, not a wall-clock read.
 
-This five-field derivation is a seal: it commits `policy_version`, which nothing else in a
-signature-free Admission receipt protects. It cannot serve as a pairing key, because a party
+This five-field derivation commits agent_id, action_type, scope, policy_version and timestamp_ms,
+and nothing else: it does not commit `decision` and it does not commit itself. It cannot serve as a pairing key, because a party
 recomputing the identifier from the executed request would need `policy_version`, which the
 executing party need not know. The four-field derivation in `proposals/ast-fixture-corpus` is a
 pairing key for exactly that reason. Both fit the guidance's "content-derived identifier" wording.
