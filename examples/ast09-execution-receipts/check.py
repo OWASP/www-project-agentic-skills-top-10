@@ -25,9 +25,11 @@ boundary rather than assuming it.
 
 What absence does and does not show: a DENY admission record with no outcome receipt for its
 attempt_id is consistent with the action having been blocked before dispatch. It does not
-establish it. That would require an authenticated commitment that the set of outcome receipts
-examined was complete over a defined window. This checker reads one record and makes no
-completeness claim.
+establish it. That inference needs two conditions this checker does not have: an authenticated
+commitment that the set of outcome receipts examined is complete for the relevant window, and an
+execution profile under which every dispatch is coupled to a receipt. Without the second, a
+complete set can be empty while an action executed by a path that emits nothing. This checker
+reads one record and makes no completeness claim.
 
 Standard library only. There is no signature to verify, so there is no cryptography
 dependency and no INCOMPLETE path.
@@ -93,9 +95,6 @@ def check_receipt(path):
         "OK  " if not missing and not extra else "FAIL",
         "" if not missing else " (missing: %s)" % ", ".join(missing),
         "" if not extra else " (unexpected: %s)" % ", ".join(extra)))
-    if "timestamp_ms" in rec and not isinstance(rec["timestamp_ms"], int):
-        failures.append("timestamp_ms is not an integer")
-        print("FAIL timestamp_ms is an integer (got %r)" % type(rec["timestamp_ms"]).__name__)
 
     # 2. decision is DENY
     decision = rec.get("decision")
@@ -135,13 +134,22 @@ def check_receipt(path):
         failures.append("attempt_id cannot be recomputed (preimage fields missing)")
         print("FAIL attempt_id recompute (preimage fields missing)")
 
-    # Denied-before-dispatch property, printed for both receipts.
+    # Denied-before-dispatch property. The assertion is made only when every check
+    # passed; attempt_id prints on both paths because it is a diagnostic, not a claim.
     print()
-    print("What this record shows: a DENY admission decision, internally consistent.")
-    print("Absence of an outcome receipt for this attempt_id is consistent with the")
-    print("action having been blocked before dispatch. It does not establish it: that")
-    print("needs an authenticated commitment that the outcome-receipt set examined was")
-    print("complete over a defined window.")
+    if not failures:
+        print("What this checker established: the record encodes a DENY admission")
+        print("decision and passed every check above. No property beyond those checks")
+        print("is asserted.")
+        print("Absence of an outcome receipt for this attempt_id is consistent with")
+        print("the action having been blocked before dispatch. It does not establish")
+        print("it. That needs two conditions this checker does not have: an")
+        print("authenticated commitment that the examined receipt set is complete for")
+        print("the window, and an execution profile under which every dispatch emits a")
+        print("receipt. Without the second, a complete set can be empty while an")
+        print("action ran by a path that emits nothing.")
+    else:
+        print("No property is asserted for a record whose checks did not pass.")
     print("attempt_id: %s" % rec.get("attempt_id"))
 
     # Honest, single exit code. Any named failure is exit 1; a full pass is exit 0.

@@ -31,8 +31,10 @@ alone.
 The AST09 Key Property that denied-before-dispatch carries equal audit weight: a DENY admission
 record is an auditable artifact in its own right, whether or not execution followed. Absence of an
 outcome receipt for its `attempt_id` is consistent with the action having been blocked before
-dispatch; it does not establish it, which would require an authenticated commitment that the set
-of outcome receipts examined was complete over a defined window. The checker validates the record from the bytes alone, with no call to any runtime:
+dispatch; it does not establish it. That inference needs two conditions: an authenticated
+commitment that the set of outcome receipts examined is complete for the relevant window, and an
+execution profile under which every dispatch is coupled to a receipt. Without the second, a
+complete set can be empty while an action executed by a path that emits nothing. The checker validates the record from the bytes alone, with no call to any runtime:
 the seven required fields are present, decision is DENY, and `attempt_id` recomputes from the
 content preimage, which is the only integrity check available in a signature-free admission record,
 subject to the limits stated above.
