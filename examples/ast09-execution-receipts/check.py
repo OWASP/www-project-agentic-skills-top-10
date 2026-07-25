@@ -37,7 +37,7 @@ dependency and no INCOMPLETE path.
 Usage:
   python3 check.py deny-admission-receipt.json
   python3 check.py deny-admission-receipt.tampered.json
-  python3 check.py --selftest     # run both bundled receipts and assert the exit contract
+  python3 check.py --selftest     # run six cases and assert exit code plus named output
 
 Exit codes:
   0  all checks pass
@@ -48,10 +48,12 @@ Exit codes:
 """
 
 import hashlib
+import io
 import json
 import os
 import subprocess
 import sys
+import tempfile
 
 REQUIRED_FIELDS = [
     "attempt_id", "agent_id", "action_type", "scope",
@@ -72,12 +74,43 @@ def sha256_hex(s):
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
 
+def _reject_duplicate_names(pairs):
+    """RFC 8785 forbids duplicate property names, and json.load would silently keep the
+    last, so two parsers could disagree about what this record says."""
+    seen = set()
+    for k, _ in pairs:
+        if k in seen:
+            raise ValueError("duplicate property name %s: RFC 8785 forbids duplicates"
+                             % json.dumps(k))
+        seen.add(k)
+    return dict(pairs)
+
+
+def _reject_lone_surrogates(value, where="the record"):
+    """No unpaired surrogate has a UTF-8 encoding. Reject the whole document up front,
+    property names included, so no later step can fail on an unprintable value."""
+    if isinstance(value, str):
+        if any(0xD800 <= ord(c) <= 0xDFFF for c in value):
+            raise ValueError("unpaired surrogate in %s: no UTF-8 encoding exists" % where)
+    elif isinstance(value, dict):
+        for k, v in value.items():
+            _reject_lone_surrogates(k, "a property name")
+            _reject_lone_surrogates(v, "property %s" % json.dumps(k))
+    elif isinstance(value, list):
+        for v in value:
+            _reject_lone_surrogates(v, where)
+
+
 def check_receipt(path):
     """Run every check on one receipt and return an int exit code:
     0 all pass, 1 a check failed (reasons named)."""
     try:
         with open(path, encoding="utf-8") as f:
-            rec = json.load(f)
+            rec = json.load(f, object_pairs_hook=_reject_duplicate_names)
+        if not isinstance(rec, dict):
+            print("FAIL  top-level JSON value must be an object, got %s" % type(rec).__name__)
+            return 1
+        _reject_lone_surrogates(rec)
     except Exception as e:
         print("FAIL  could not read or parse %s: %s" % (path, e))
         return 1
@@ -122,7 +155,9 @@ def check_receipt(path):
         "" if not domain_errors else " (%s)" % "; ".join(domain_errors)))
 
     # 4. attempt_id recomputes from the five-field preimage. Reach is bounded; see module docstring.
-    if all(k in rec for k in ATTEMPT_ID_PREIMAGE_FIELDS):
+    if domain_errors:
+        print("SKIP attempt_id recompute (preimage outside the supported domain)")
+    elif all(k in rec for k in ATTEMPT_ID_PREIMAGE_FIELDS):
         preimage = {k: rec[k] for k in ATTEMPT_ID_PREIMAGE_FIELDS}
         expected = sha256_hex(jcs(preimage))
         ok_attempt = rec.get("attempt_id") == expected
@@ -166,28 +201,94 @@ def check_receipt(path):
     return rc
 
 
+def _run_case(label, argpath, expect_exit, expect_out=(), forbid_out=()):
+    res = subprocess.run([sys.executable, os.path.abspath(__file__), argpath],
+                         capture_output=True, text=True)
+    problems = []
+    if res.returncode != expect_exit:
+        problems.append("expected exit %d, got %d" % (expect_exit, res.returncode))
+    if res.stderr.strip():
+        problems.append("stderr is not empty; a crash is not a named failure")
+    if "Traceback" in res.stderr:
+        problems.append("traceback present")
+    for s in expect_out:
+        if s not in res.stdout:
+            problems.append("missing from output: %s" % json.dumps(s))
+    for s in forbid_out:
+        if s in res.stdout:
+            problems.append("must not appear in output: %s" % json.dumps(s))
+    print("  %s  %-34s %s" % ("PASS" if not problems else "FAIL", label,
+                              "" if not problems else "; ".join(problems)))
+    return not problems
+
+
 def selftest():
-    """Run both bundled receipts as subprocesses and assert the exit-code contract:
-    exit 0 on the valid receipt, exit 1 on the tampered receipt. Fail loudly (nonzero)
-    if either is wrong. Uses real subprocess exit codes, so it tests exactly what a
-    shell sees."""
+    """Run six cases as subprocesses and assert exit code, empty stderr, and named output.
+
+    Exit code alone cannot separate a named rejection from an uncaught exception, because
+    both leave the process with status 1. Each case therefore also pins a string the output
+    must contain, and the tampered case pins one it must not.
+
+    Two bundled receipts cover the pass and mismatch paths. Four hostile records are built
+    in a temporary directory and removed afterwards, so the cases added here contribute no
+    new files to the repository."""
     here = os.path.dirname(os.path.abspath(__file__))
-    me = os.path.abspath(__file__)
-    cases = [("deny-admission-receipt.json", 0), ("deny-admission-receipt.tampered.json", 1)]
-    print("== self-test: exit-code contract ==")
-    all_ok = True
-    for fname, expect in cases:
-        res = subprocess.run([sys.executable, me, os.path.join(here, fname)],
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        got = res.returncode
-        ok = got == expect
-        all_ok = all_ok and ok
-        print("  %s  %-38s expected exit %d, got exit %d" % ("PASS" if ok else "FAIL", fname, expect, got))
-    if all_ok:
+    print("== self-test: exit code, empty stderr, and named output ==")
+    results = []
+
+    results.append(_run_case(
+        "valid fixture", os.path.join(here, "deny-admission-receipt.json"), 0,
+        expect_out=("What this checker established",)))
+    results.append(_run_case(
+        "tampered fixture", os.path.join(here, "deny-admission-receipt.tampered.json"), 1,
+        expect_out=("No property is asserted",),
+        forbid_out=("What this checker established",)))
+
+    with tempfile.TemporaryDirectory() as tmp:
+        # Written as raw text: a duplicate name cannot survive a dict, so it has to
+        # reach the parser as bytes.
+        dup = os.path.join(tmp, "duplicate-name.json")
+        with io.open(dup, "w", encoding="utf-8") as f:
+            f.write('{"attempt_id":"x","agent_id":"a","action_type":"t",'
+                    '"scope":"s","scope":"s","policy_version":"p",'
+                    '"decision":"DENY","timestamp_ms":1}')
+        results.append(_run_case(
+            "duplicate property name", dup, 1,
+            expect_out=("duplicate property name",)))
+
+        # A lone surrogate is expressible in JSON source but has no UTF-8 encoding.
+        sur = os.path.join(tmp, "lone-surrogate.json")
+        with io.open(sur, "w", encoding="utf-8") as f:
+            f.write('{"attempt_id":"x","agent_id":"\\ud800","action_type":"t",'
+                    '"scope":"s","policy_version":"p","decision":"DENY","timestamp_ms":1}')
+        results.append(_run_case(
+            "unpaired surrogate", sur, 1,
+            expect_out=("unpaired surrogate",)))
+
+        # A float is perfectly hashable, so this exercises the domain gate itself
+        # rather than riding a crash path.
+        flt = os.path.join(tmp, "float-timestamp.json")
+        with io.open(flt, "w", encoding="utf-8") as f:
+            f.write('{"attempt_id":"x","agent_id":"a","action_type":"t","scope":"s",'
+                    '"policy_version":"p","decision":"DENY","timestamp_ms":1.5}')
+        results.append(_run_case(
+            "float timestamp_ms", flt, 1,
+            expect_out=("must be an integer", "SKIP attempt_id recompute")))
+
+        arr = os.path.join(tmp, "top-level-array.json")
+        with io.open(arr, "w", encoding="utf-8") as f:
+            f.write ('[]')
+        results.append(_run_case(
+            "top-level array", arr, 1,
+            expect_out=("top-level JSON value must be an object",)))
+
+    if all(results):
         print("SELF-TEST PASS")
         return 0
-    print("SELF-TEST FAILED: the exit-code contract is violated "
-          "(the valid receipt must exit 0 and the tampered receipt must exit 1).")
+    print("SELF-TEST FAILED: %d of %d cases did not hold. Each case pins an exit code, an "
+          "empty stderr, and named output; a case that fails only on output means the "
+          "checker still exits correctly while no longer saying why."
+          % (len([r for r in results if not r]), len(results)))
     return 1
 
 

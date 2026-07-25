@@ -44,7 +44,7 @@ subject to the limits stated above.
 ```
 python3 check.py deny-admission-receipt.json           # ALL CHECKS PASS, exit 0
 python3 check.py deny-admission-receipt.tampered.json  # FAIL (attempt_id), exit 1
-python3 check.py --selftest                            # asserts valid exit 0, tampered exit 1
+python3 check.py --selftest                            # six cases: exit, stderr, named output
 ```
 
 ## Field derivation
@@ -52,9 +52,10 @@ python3 check.py --selftest                            # asserts valid exit 0, t
 `attempt_id` is the lowercase sha256 hex over the RFC 8785 (JCS) canonical bytes of
 `{agent_id, action_type, scope, policy_version, timestamp_ms}`, which is one derivation consistent
 with the guidance's "content-derived identifier" wording and not a normative requirement (any
-deterministic content-derived scheme that lets a verifier recompute the identifier and detect a
-dropped or altered record satisfies the property). The `agent_id` is synthetic and `timestamp_ms`
-is a fixed deterministic value, not a wall-clock read.
+deterministic content-derived scheme that lets a verifier recompute the identifier satisfies the
+derivation property; a mismatch shows inconsistency between the stored identifier and the fields
+it commits, while detecting that a record was omitted belongs to the record set). The `agent_id`
+is synthetic and `timestamp_ms` is a fixed deterministic value, not a wall-clock read.
 
 This five-field derivation commits agent_id, action_type, scope, policy_version and timestamp_ms,
 and nothing else: it does not commit `decision` and it does not commit itself. It cannot serve as a pairing key, because a party
