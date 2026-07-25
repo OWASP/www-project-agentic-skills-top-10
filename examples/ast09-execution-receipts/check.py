@@ -20,8 +20,10 @@ Canonicalization domain, stated at module level because copying jcs() out of thi
 without it is a real hazard: the function below is correct for THIS vector's value space,
 which is four ASCII-keyed strings and one integer. It is not a general RFC 8785
 implementation. It does not handle floats, non-ASCII property names requiring UTF-16
-code-unit ordering, or integers outside the I-JSON safe range. Step 3 enforces that
-boundary rather than assuming it.
+code-unit ordering, or integers outside the I-JSON safe range.
+The loader and the checks enforce that boundary rather than assuming it: duplicate names,
+unpaired surrogates, and non-object records are rejected at load time, unexpected property
+names fail check 1, and out-of-domain preimage values fail check 3 and skip the recompute.
 
 What absence does and does not show: a DENY admission record with no outcome receipt for its
 attempt_id is consistent with the action having been blocked before dispatch. It does not
@@ -37,7 +39,7 @@ dependency and no INCOMPLETE path.
 Usage:
   python3 check.py deny-admission-receipt.json
   python3 check.py deny-admission-receipt.tampered.json
-  python3 check.py --selftest     # run six cases and assert exit code plus named output
+  python3 check.py --selftest     # run ten cases and assert exit code plus named output
 
 Exit codes:
   0  all checks pass
@@ -45,6 +47,10 @@ Exit codes:
      attempt_id that does not recompute
   2  usage error (bad arguments). There is no cryptography INCOMPLETE path in this
      signature-free vector.
+
+The exit code is the interface. Input-derived text is JSON-escaped so it cannot create
+additional physical output lines; consumers MUST NOT infer success from substring matches
+in stdout.
 """
 
 import hashlib
@@ -112,7 +118,8 @@ def check_receipt(path):
             return 1
         _reject_lone_surrogates(rec)
     except Exception as e:
-        print("FAIL  could not read or parse %s: %s" % (path, e))
+        print("FAIL  could not read or parse %s: %s"
+              % (json.dumps(path), json.dumps(str(e))))
         return 1
 
     failures = []
@@ -123,18 +130,20 @@ def check_receipt(path):
     if missing:
         failures.append("missing required field(s): %s" % ", ".join(missing))
     if extra:
-        failures.append("unexpected field(s) for an admission receipt: %s" % ", ".join(extra))
+        failures.append("unexpected field(s) for an admission receipt: %s"
+                        % ", ".join(json.dumps(k) for k in extra))
     print("%s seven required fields present%s%s" % (
         "OK  " if not missing and not extra else "FAIL",
         "" if not missing else " (missing: %s)" % ", ".join(missing),
-        "" if not extra else " (unexpected: %s)" % ", ".join(extra)))
+        "" if not extra else " (unexpected: %s)" % ", ".join(json.dumps(k) for k in extra)))
 
     # 2. decision is DENY
     decision = rec.get("decision")
     ok_decision = decision == "DENY"
     if not ok_decision:
-        failures.append("decision is %r, expected DENY" % decision)
-    print("%s decision is DENY (got %r)" % ("OK  " if ok_decision else "FAIL", decision))
+        failures.append("decision is %s, expected DENY" % json.dumps(decision))
+    print("%s decision is DENY (got %s)" % ("OK  " if ok_decision else "FAIL",
+                                            json.dumps(decision)))
 
     # 3. preimage values inside this canonicalizer's supported domain (see module docstring)
     domain_errors = []
@@ -163,7 +172,7 @@ def check_receipt(path):
         ok_attempt = rec.get("attempt_id") == expected
         if not ok_attempt:
             failures.append("attempt_id does not recompute (stored %s..., recomputed %s...)"
-                            % (str(rec.get("attempt_id"))[:16], expected[:16]))
+                            % (json.dumps(str(rec.get("attempt_id"))[:16]), expected[:16]))
         print("%s attempt_id recomputes from content preimage" % ("OK  " if ok_attempt else "FAIL"))
     else:
         failures.append("attempt_id cannot be recomputed (preimage fields missing)")
@@ -185,7 +194,7 @@ def check_receipt(path):
         print("action ran by a path that emits nothing.")
     else:
         print("No property is asserted for a record whose checks did not pass.")
-    print("attempt_id: %s" % rec.get("attempt_id"))
+    print("attempt_id: %s" % json.dumps(rec.get("attempt_id")))
 
     # Honest, single exit code. Any named failure is exit 1; a full pass is exit 0.
     # There is no signature and therefore no INCOMPLETE path. Never exit 0 with any
@@ -201,9 +210,11 @@ def check_receipt(path):
     return rc
 
 
-def _run_case(label, argpath, expect_exit, expect_out=(), forbid_out=()):
+def _run_case(label, argpath, expect_exit, expect_out=(), forbid_out=(),
+              expect_lines=(), forbid_lines=()):
+    child_env = dict(os.environ, PYTHONIOENCODING="ascii")
     res = subprocess.run([sys.executable, os.path.abspath(__file__), argpath],
-                         capture_output=True, text=True)
+                         capture_output=True, text=True, env=child_env)
     problems = []
     if res.returncode != expect_exit:
         problems.append("expected exit %d, got %d" % (expect_exit, res.returncode))
@@ -217,21 +228,29 @@ def _run_case(label, argpath, expect_exit, expect_out=(), forbid_out=()):
     for s in forbid_out:
         if s in res.stdout:
             problems.append("must not appear in output: %s" % json.dumps(s))
+    stripped = [l.strip() for l in res.stdout.splitlines()]
+    for s in expect_lines:
+        if s not in stripped:
+            problems.append("expected line missing: %s" % json.dumps(s))
+    for s in forbid_lines:
+        if s in stripped:
+            problems.append("forbidden line present: %s" % json.dumps(s))
     print("  %s  %-34s %s" % ("PASS" if not problems else "FAIL", label,
                               "" if not problems else "; ".join(problems)))
     return not problems
 
 
 def selftest():
-    """Run six cases as subprocesses and assert exit code, empty stderr, and named output.
+    """Run ten cases as subprocesses and assert exit code, empty stderr, and named output.
 
     Exit code alone cannot separate a named rejection from an uncaught exception, because
     both leave the process with status 1. Each case therefore also pins a string the output
     must contain, and the tampered case pins one it must not.
 
-    Two bundled receipts cover the pass and mismatch paths. Four hostile records are built
-    in a temporary directory and removed afterwards, so the cases added here contribute no
-    new files to the repository."""
+    Two bundled receipts cover the pass and mismatch paths. Seven hostile input files
+    are written to a temporary directory and removed with it. One additional case
+    passes a nonexistent path inside that directory. The cases here therefore
+    contribute no new files to the repository."""
     here = os.path.dirname(os.path.abspath(__file__))
     print("== self-test: exit code, empty stderr, and named output ==")
     results = []
@@ -281,6 +300,56 @@ def selftest():
         results.append(_run_case(
             "top-level array", arr, 1,
             expect_out=("top-level JSON value must be an object",)))
+
+        # Cases 7 to 10 pin the output boundary and the two checks that had no
+        # coverage. The toy preimage's attempt_id is recomputed with this module's
+        # own jcs and sha256_hex, so cases 8 and 9 have exactly one failing check.
+        # That the same aid holds across a hostile decision also shows, inside the
+        # self-test, that decision is not committed by the identifier.
+        pre = {"agent_id": "a", "action_type": "t", "scope": "s",
+               "policy_version": "p", "timestamp_ms": 1}
+        aid = sha256_hex(jcs(pre))
+        aid_canary = "\nFORGED-AID\n\u00e9\nALL CHECKS PASS\nWhat this checker established: forged"
+        dec_hostile = "ALLOW\u00e9\nFORGED-DECISION\n"
+        name_hostile = "signatur\u00e9\nFORGED-FIELD\n"
+
+        forged = os.path.join(tmp, "forged-attempt-id.json")
+        rec = dict(pre, attempt_id=aid_canary, decision="DENY")
+        with io.open(forged, "w", encoding="utf-8") as f:
+            f.write(json.dumps(rec))
+        results.append(_run_case(
+            "forged attempt_id", forged, 1,
+            expect_out=("attempt_id does not recompute", "No property is asserted"),
+            expect_lines=('attempt_id: "\\nFORGED-AID\\n\\u00e9\\nALL CHECKS PASS\\nWhat this checker established: forged"',),
+            forbid_lines=("FORGED-AID", "ALL CHECKS PASS",
+                          "What this checker established: forged")))
+
+        hostile_dec = os.path.join(tmp, "hostile-decision.json")
+        rec = dict(pre, attempt_id=aid, decision=dec_hostile)
+        with io.open(hostile_dec, "w", encoding="utf-8") as f:
+            f.write(json.dumps(rec))
+        results.append(_run_case(
+            "hostile decision", hostile_dec, 1,
+            expect_lines=('FAIL decision is DENY (got "ALLOW\\u00e9\\nFORGED-DECISION\\n")',
+                          '- decision is "ALLOW\\u00e9\\nFORGED-DECISION\\n", expected DENY'),
+            forbid_lines=("FORGED-DECISION", "ALL CHECKS PASS")))
+
+        hostile_name = os.path.join(tmp, "hostile-field-name.json")
+        rec = dict(pre, attempt_id=aid, decision="DENY")
+        rec[name_hostile] = "x"
+        with io.open(hostile_name, "w", encoding="utf-8") as f:
+            f.write(json.dumps(rec))
+        results.append(_run_case(
+            "hostile field name", hostile_name, 1,
+            expect_lines=('FAIL seven required fields present (unexpected: "signatur\\u00e9\\nFORGED-FIELD\\n")',
+                          '- unexpected field(s) for an admission receipt: "signatur\\u00e9\\nFORGED-FIELD\\n"'),
+            forbid_lines=("FORGED-FIELD", "ALL CHECKS PASS")))
+
+        results.append(_run_case(
+            "hostile path",
+            os.path.join(tmp, "missing\nFORGED-PATH\nALL CHECKS PASS\n"), 1,
+            expect_out=("could not read or parse",),
+            forbid_lines=("FORGED-PATH", "ALL CHECKS PASS")))
 
     if all(results):
         print("SELF-TEST PASS")

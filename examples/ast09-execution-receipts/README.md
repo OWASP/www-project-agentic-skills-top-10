@@ -44,8 +44,12 @@ subject to the limits stated above.
 ```
 python3 check.py deny-admission-receipt.json           # ALL CHECKS PASS, exit 0
 python3 check.py deny-admission-receipt.tampered.json  # FAIL (attempt_id), exit 1
-python3 check.py --selftest                            # six cases: exit, stderr, named output
+python3 check.py --selftest                            # ten cases: exit, stderr, named output
 ```
+
+The exit code is the interface. Input-derived text is JSON-escaped so it cannot create
+additional physical output lines; consumers MUST NOT infer success from substring matches
+in stdout.
 
 ## Field derivation
 
