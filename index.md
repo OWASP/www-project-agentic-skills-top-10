@@ -43,7 +43,6 @@ description: "Comprehensive guide to the top 10 security risks in AI agent skill
 - [Skill Development Guide](skill-development-guide.md)
 - [Platform Comparison](platform-comparison.md)
 - [Community & Contribution](community-contribution.md)
-- [Training & Certification](training-certification.md)
 - [Incident Response Playbook](incident-response.md)
 - [Security Metrics & Monitoring](metrics-monitoring.md)
 - [Getting Started](#getting-started)

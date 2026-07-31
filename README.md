@@ -27,7 +27,6 @@
 - **📚 Skill Development Guide**: [skill-development-guide.md](skill-development-guide.md)
 - **⚖️ Platform Comparison**: [platform-comparison.md](platform-comparison.md)
 - **👥 Community & Contribution**: [community-contribution.md](community-contribution.md)
-- **🎓 Training & Certification**: [training-certification.md](training-certification.md)
 - **🚨 Incident Response Playbook**: [incident-response.md](incident-response.md)
 - **📊 Security Metrics & Monitoring**: [metrics-monitoring.md](metrics-monitoring.md)
 - **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
