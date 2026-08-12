@@ -46,7 +46,7 @@ Provide a clear and concise description of your contribution.
 Describe the specific changes you'd like to make to the documentation.
 
 ## Checklist
-- [ ] I have read the [CONTRIBUTING.md](CONTRIBUTING.md) guidelines
+- [ ] I have read the [CONTRIBUTING.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/CONTRIBUTING.md) guidelines
 - [ ] My contribution follows the project's style and structure
 - [ ] I have tested any code examples provided
 - [ ] I have included references for any claims made
