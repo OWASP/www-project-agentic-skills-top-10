@@ -40,7 +40,7 @@ Brief description of the changes in this PR.
 - [ ] Index page summary table updated
 
 ## Checklist
-- [ ] I have read and followed the [CONTRIBUTING.md](CONTRIBUTING.md) guidelines
+- [ ] I have read and followed the [CONTRIBUTING.md](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/CONTRIBUTING.md) guidelines
 - [ ] My changes follow the project's style and structure
 - [ ] I have tested the changes locally
 - [ ] I have updated any relevant documentation
