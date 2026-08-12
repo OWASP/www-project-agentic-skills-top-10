@@ -401,6 +401,15 @@ The SARIF `artifacts[]` + `hashes` mechanism makes this deterministic. A scanner
 
 A consumer merges N reports by grouping `artifacts[]` across runs on `hashes["sha-256"]`, attaching each run's results via `artifactLocation.index`, and partitioning by `layer` — no content re-hashing and no coordination between the tools.
 
+The digest join is an artifact identity mechanism, not a risk-score mechanism.
+Consumers SHOULD preserve scanner-layer attribution when merging reports by
+artifact digest. A digest match establishes that findings concern the same
+artifact bytes; it does not by itself define an aggregate risk score, prove
+absence of findings from scanner layers that did not run or were truncated, or
+imply that the artifact is safe. If a registry or dashboard wants a single
+policy verdict, that verdict should be produced by an explicit consumer policy
+over the layer-preserved findings rather than by the merge step itself.
+
 ```json
 {
   "runs": [
