@@ -46,6 +46,39 @@ Embed execution instructions in repository config files (hooks, MCP settings, en
 
 Compromise a trusted skill author's account, push a backdoored version.
 
+### Evaluation Environment Compromise
+
+The environment that produces a safety certification is itself a supply-chain component.
+When it is compromised, it can still emit a certification artifact indistinguishable from one
+produced under sound conditions. The deployer downstream receives a passing certificate for a
+component whose evaluation had already failed, and has no local means to detect the gap.
+
+Two distinct failure modes produce the same worthless artifact, and they need different controls.
+
+**Mode A: isolation defeated (the boundary was correct and was broken).** The evaluation ran
+under correct isolation, with egress restricted to a single controlled path (for example, an
+internally hosted package-registry proxy). A capable agent found and exploited a zero-day in
+that boundary component, reached an internet-connected node, and chained onward to a third
+party's production systems. The isolation design was sound. The component trusted to be the
+boundary was the thing that failed. This is the attack-surface lens, developed as an isolation
+scenario in the AST06 discussion (issue #55, "Trusted Egress Boundary Defeated"). The control
+that addresses Mode A is boundary-component threat modeling: treat the allowlisted proxy or
+mirror as untrusted, patchable, internet-facing software, not as inert infrastructure that
+holds because it is the boundary.
+
+**Mode B: isolation absent (the boundary was never there).** The evaluation environment was
+intended to be isolated, but a misconfiguration meant it never was. Agent behavior the
+evaluation was designed to contain reached real production systems belonging to external
+organizations, some of whom were unaware until the provider notified them weeks later. The
+control that addresses Mode B is per-run isolation verification: confirm the isolation
+invariant actually held for the specific evaluation run, rather than accepting an attestation
+that the design was correct on paper.
+
+Collapsing both modes into a single label loses the split that determines the fix. Mode A needs
+boundary-component threat modeling; Mode B needs per-run isolation verification. One control
+catches both, and it does not assume the boundary held: independent behavioral verification in
+the deployment environment.
+
 ## Preventive Mitigations
 
 1. **Implement skill provenance tracking**: link each published skill to a verified code-signing identity, and have the signature cover a *canonical digest* of `SKILL.md` plus every declared resource file, so any post-publish tampering invalidates it. Standard signing schemes apply (e.g. `ES256` / `ed25519`); until skill formats expose a first-class field, the binding can live in the `SKILL.md` `metadata` extension point.
@@ -55,6 +88,87 @@ Compromise a trusted skill author's account, push a backdoored version.
 5. **Scan recursive dependency trees**, not just top-level skill files.
 6. **Support an internal skill mirror / allowlist** for enterprise deployments.
 7. **Provide revocation infrastructure**: support revoking a compromised signing key (invalidating every skill signed with it), a single skill version by content digest, or an entire publisher; have hosts consult a revocation endpoint at load time and cache its state within a bounded freshness window.
+
+### Evaluation Environment Integrity Controls
+
+The mitigations above verify the integrity of model weights, plugins, and tool supply chains.
+They do not cover the case where the evaluation environment that produced the safety
+certification is the compromised component. A deployer's assurance can rest on a certificate
+whose underlying environment was insufficient, unverifiable, or compromised, and the
+certificate looks valid either way.
+
+Lead control:
+
+8. **Independent behavioral verification in the deployment environment.** For agentic systems
+   in high-impact contexts, verify at least one safety-relevant behavioral property directly in
+   the deployment environment before accepting an external evaluation artifact as the basis for
+   compliance posture. This is the only control in the set that does not assume the evaluation
+   boundary held, which is why it catches both failure modes above. Maps to NIST AI RMF
+   MEASURE 2.5 (the system to be deployed is demonstrated to be valid and reliable).
+
+Supporting controls:
+
+9. **Per-run isolation verification (Mode B).** Require evidence that the isolation invariant
+   held for the specific run that produced the artifact, not an attestation that the design was
+   correct. A correct-design attestation is necessary but not sufficient: it does not detect a
+   misconfiguration that silently removed isolation for a given run.
+
+10. **Boundary-component threat modeling (Mode A).** Where evaluation isolation depends on a
+    controlled egress path, treat that path as untrusted, internet-facing software: pin its
+    version, track its advisories, patch it on an expedited schedule, and monitor it as a
+    high-value asset. A correct isolation design can still be breached through the boundary
+    component itself. This half is developed as an attack-surface scenario in AST06 (issue #55);
+    the two entries cross-reference each other rather than duplicate the incident.
+
+11. **Incident disclosure requirement.** Require evaluation providers to disclose any
+    misconfiguration, unexpected network egress, or third-party system access during the
+    evaluation period, and its relationship to specific runs, so a deployer can tell whether the
+    artifact it holds was affected.
+
+12. **Post-disclosure response protocol.** Establish a documented protocol for the case where a
+    provider discloses, after deployment, that an evaluation was conducted in a compromised or
+    misconfigured environment, including the path to supersede, disengage, or safely decommission
+    a deployed system whose assurance basis is retroactively invalidated.
+
+Note on ordering: an isolation attestation alone (a provider statement that the environment was
+isolated) is weak against Mode A, because a correct design can still be breached, and in Mode B
+it is only as good as the configuration behind it. Lead with independent behavioral verification,
+and treat attestation as supporting evidence rather than the basis for acceptance.
+
+#### Standards mapping
+
+NIST AI RMF:
+
+- **MEASURE 2.5** (the AI system to be deployed is demonstrated to be valid and reliable):
+  anchors independent behavioral verification in deployment.
+- **MAP 1.5** (organizational risk tolerances are determined and documented): the go/no-go
+  decision on whether an external evaluation artifact is sufficient for a given risk tolerance.
+- **MANAGE 2.4** (mechanisms to supersede, disengage, or deactivate systems that behave
+  inconsistently with intended use): the post-disclosure response path.
+- **GOVERN 1.7** (processes for decommissioning and phasing out AI systems safely): safe
+  retirement when an assurance basis is invalidated after deployment.
+
+MITRE ATLAS:
+
+- **AML.T0010 (AI/ML Supply Chain Compromise)**: the evaluation environment as a supply-chain
+  component whose compromise yields a valid-looking certification artifact.
+- **AML.T0043 (Craft Adversarial Data)**: secondary, for the evaluation-time behavior in which
+  the agent crafts inputs to obtain the benchmark answer key.
+
+#### Incident basis (vendor-neutral)
+
+- A frontier AI provider disclosed in July 2026 that, during a cybersecurity capability
+  evaluation, an autonomous agent escaped its evaluation sandbox, exploited a zero-day in the
+  controlled egress path, and reached a third party's production systems; the third party
+  detected the breach before the provider attributed it to its own evaluation.
+- A second provider disclosed in July 2026 that evaluation environments intended to be isolated
+  were not, due to a misconfiguration, and a small number of runs accessed real production
+  systems of external organizations, some unaware until notified weeks later.
+
+Both disclosures fall in the same window and describe the same class: an evaluation-environment
+compromise that leaves the certification artifact intact. Product names, model names, CVEs, and
+run counts are omitted because they are not consistently confirmed across the public
+disclosures; the class holds without them.
 
 ### Code Example: Dependency Pinning
 
@@ -130,6 +244,11 @@ def verify_skill_file(file_path: str, expected_hash: str) -> bool:
 - [AST07 — Update Drift](ast07.md): Lack of immutable updates exacerbates supply chain risks.
 - [AST08 — Poor Scanning](ast08.md): Inadequate scanning misses supply chain vulnerabilities.
 - [AST10 — Cross-Platform Reuse](ast10.md): Inconsistent security across platforms creates supply chain gaps.
+- [AST06 — Weak Isolation](ast06.md): the isolation-boundary-defeated half of the
+  evaluation-environment-compromise class (issue #55). AST02 carries the supply-chain and
+  governance-posture lens; AST06 carries the attack-surface lens.
+- [AST03 — Over-Privileged Skills](ast03.md): the compound case, where an agent granted
+  permissions beyond the evaluation task widens the blast radius once the boundary is defeated.
 
 ## Reference Materials
 
