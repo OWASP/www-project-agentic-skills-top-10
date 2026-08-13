@@ -8,14 +8,13 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 
 ## Summary
 
-
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
+| [TealTiger](https://github.com/agentguard-ai/tealtiger) | Apache-2.0 | AST03, AST04, AST08, AST09 | Python, TypeScript |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
-
 
 ---
 
@@ -129,7 +128,7 @@ Wraps any tool-call boundary: pre-execution admission emit + post-execution outc
 
 **AST01 — Malicious Skills:** Partial. Capability-delta detection flags a previously-approved skill that gains dangerous behavior (new shell / network / exfiltration surface) in an update, but SkilLock performs no first-party malware or intent classification (no signatures or heuristics) and cannot judge a never-seen skill as malicious on first sight.  
 **AST02 — Supply Chain Compromise:** Partial. Per-file content digests of bundled scripts detect tampered or newly-added scripts on update; SkilLock does not verify registry provenance or upstream signatures of the skill source itself.  
-**AST05 — Untrusted External Instructions:** Partial. The `SKL-NETWORK` detector inventories the external hosts and URLs a skill references — useful for spotting and tracking external sources — but SkilLock does not pin, hash-verify, or sandbox the content fetched from them. (The deserialization concern, now folded into AST04, is likewise out of scope: frontmatter is parsed with a safe YAML library, but SkilLock does not analyze or sandbox deserialization the skills themselves perform.)  
+**AST05 — Untrusted External Instructions:** Partial. The `SKL-NETWORK` detector inventories the external hosts and URLs a skill references — useful for spotting and tracking external sources — but SkilLock does not pin, hash-verify, or sandbox the content fetched from them.  
 **AST06 — Weak Isolation:** Not addressed. SkilLock is a post-install, CI-time review tool and provides no runtime sandboxing or process isolation (a runtime guard is explicitly out of scope for v1).
 
 ### Known Limitations
@@ -141,6 +140,47 @@ Wraps any tool-call boundary: pre-execution admission emit + post-execution outc
 ### Framework Integration
 
 CLI (`scan`, `lock`, `init --baseline`, `diff`, `verify`, `ci`) plus a GitHub Action that posts the capability delta as a PR comment and uploads SARIF v2.1.0 to GitHub Code Scanning. Supports Claude Code and Codex skills (same `SKILL.md` format). Runs on ubuntu and macos GitHub-hosted runners (amd64 + arm64).
+
+---
+
+## TealTiger
+
+**Description:** Runtime governance middleware for AI agents. Evaluates every tool call against deterministic policies (allowlists, argument constraints, cost budgets, PII patterns, secret patterns) before execution. Produces typed JSON decision receipts with correlation IDs and exports evidence in SARIF v2.1.0, JUnit XML, and JSON formats. No LLM in the governance path — all evaluation is regex and policy rules.
+
+**License:** Apache-2.0  
+**Repository:** [https://github.com/agentguard-ai/tealtiger](https://github.com/agentguard-ai/tealtiger)  
+**Install:** `pip install langchain-tealtiger` (Python, LangChain) or `npm install tealtiger` (TypeScript)  
+**Dependencies:** Python — `tealtiger` core (zero external service dependencies). TypeScript — `tealtiger` core.
+
+### AST Risks Addressed
+
+**AST03 — Over-Privileged Skills:** Tool allowlist and blocklist enforcement at the call boundary. Argument-level validation inspects `tool_call["args"]` against per-tool constraints (blocked terms, max lengths, domain restrictions) before the tool handler executes. Immutable FREEZE rules block specified tools regardless of governance mode, preventing privilege escalation through mode switching. Model/tool registry (TealRegistry) enforces allowlisting with provenance verification.
+
+**AST04 — Insecure Metadata:** PII detection across 40+ regex patterns (SSN, credit card, IBAN, email, phone, AWS keys, passport numbers) applied at four stages: input messages, model output, tool arguments, and tool results. Action is configurable per stage: BLOCK (reject), REDACT (replace with placeholder), or FLAG (log without blocking). Secret scanning (TealSecrets) covers 500+ credential patterns with confidence scoring. Confidence scores (0.0–1.0) per detection allow threshold tuning.
+
+**AST08 — Poor Scanning:** Multi-stage deterministic scanning at `before_model`, `wrap_tool_call`, `after_tool`, and `after_model` hook points. Prompt injection detection uses pattern matching (instruction override, role manipulation, jailbreak patterns, system prompt extraction). Secret scanning covers 500+ credential patterns (API keys, tokens, database URLs, private keys). Detection is regex-based only — no semantic or behavioral analysis.
+
+**AST09 — No Governance:** Every evaluation produces a typed decision receipt: `{correlation_id, trace_id, action, risk_score, reason_code, stage, tool_name, triggered_policies, evaluation_time_ms, timestamp}`. Receipts export as SARIF v2.1.0 (for GitHub Code Scanning), JUnit XML (for CI gates), or JSON/JSONL (for audit sinks). Three governance modes — ENFORCE, MONITOR, REPORT_ONLY — support progressive rollout without code changes. Per-agent cost budget enforcement with hard stop prevents runaway spend. Circuit breaker (TealCircuit) halts calls to failing tools.
+
+### Risks Not Addressed
+
+**AST01 — Malicious Skills:** Partial. Tool allowlists prevent execution of unauthorized tools, but TealTiger does not scan, classify, or detect malicious intent in skill code or definitions. Pair with a pre-install scanner (e.g., SkillSpector) for first-sight detection.  
+**AST02 — Supply Chain Compromise:** Not addressed. Does not verify upstream provenance of skills or sign skill packages.  
+**AST05 — Untrusted External Instructions:** Not addressed. Does not inspect, pin, or sandbox external content fetched at runtime.  
+**AST06 — Weak Isolation:** Not addressed. Runs in-process alongside the agent. Does not provide containerization or process isolation. A compromised process can bypass enforcement.  
+**AST07 — Update Drift:** Not addressed. Does not pin skill versions or enforce update policies.  
+**AST10 — Cross-Platform Reuse:** Not addressed. Decision receipts are framework-agnostic JSON but the tool does not contribute to the Universal Skill Format.
+
+### Known Limitations
+
+- Runs in-process. A compromised agent process can bypass governance by not invoking the middleware. Pair with isolation (AST06) for defense-in-depth.
+- All detection is regex/pattern-based. Semantic attacks, novel obfuscation, and natural-language manipulation are not detected. Under 5ms per evaluation is the trade-off for deterministic-only analysis.
+- Cost tracking uses model-specific token pricing but relies on `usage_metadata` reported by the provider. If the provider does not report usage, cost enforcement degrades to call-count limits.
+- PII confidence scores are pattern-based. False positives occur on data that resembles PII patterns (e.g., formatted reference numbers matching credit card regex).
+
+### Framework Integration
+
+Middleware integration with LangChain (`langchain-tealtiger`), AG2 (`ag2-tealtiger`), CrewAI, Haystack, and n8n. LangChain integration is listed in the official LangChain middleware integrations page. Typical integration is one middleware instance passed to `create_agent()`. Also available as a standalone Python/TypeScript library for custom agent architectures. Supports 12 LLM providers (OpenAI, Anthropic, Gemini, Bedrock, Azure OpenAI, Cohere, Mistral, DeepSeek, Groq, Together, xAI, HuggingFace TGI).
 
 ---
 
@@ -219,6 +259,4 @@ CLI and Docker; scans Git repos, URLs, zip files, directories, or single files. 
 ### Framework Integration
 
 [Which agent frameworks it works with and how.]
-
 ```
-
