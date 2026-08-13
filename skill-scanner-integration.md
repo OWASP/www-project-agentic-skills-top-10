@@ -394,12 +394,14 @@ No single scanner covers every AST10 risk: a drift detector flags that a skill's
 
 The SARIF `artifacts[]` + `hashes` mechanism makes this deterministic. A scanner that emits a content digest for each scanned file lets a consumer (a registry, a PR bot, a dashboard) join findings from independent tools on that digest:
 
-- `run.artifacts[]` — one entry per scanned file, each carrying `location.uri` and `hashes["sha-256"]` (bare lowercase 64-char hex of the file bytes). The SHA-256 is the **join key**: two reports describe the same artifact iff their digests match.
+- `run.artifacts[]` — one entry per scanned file, each carrying `location.uri` and `hashes["sha-256"]` (bare lowercase 64-char hex over the file's **raw octets**, taken before any character decoding, so it equals `sha256sum` of the file). The SHA-256 is the **join key**: two reports describe the same artifact iff their digests match.
 - `result … physicalLocation.artifactLocation.index` — every finding points into `artifacts[]`, so it resolves to the exact bytes it was raised against and self-invalidates when the file changes.
 - `result.properties.layer` — a short string naming the class of scanner that produced the finding (e.g. `drift`, `content`, `atr`), so merged findings stay attributable. Consumers should treat an unknown layer as opaque rather than dropping the finding.
 - `run.tool.driver.name` + `version` — provenance, so a merged report records which tool and version produced each layer.
 
 A consumer merges N reports by grouping `artifacts[]` across runs on `hashes["sha-256"]`, attaching each run's results via `artifactLocation.index`, and partitioning by `layer` — no content re-hashing and no coordination between the tools.
+
+The "raw octets" qualifier carries weight out of proportion to its length. A scanner that reads its input as text and hashes the decoded string agrees with `sha256sum` on every well-formed UTF-8 file, so the divergence is invisible in ordinary testing — including against ASCII, multi-byte text, and a BOM. But decoding substitutes U+FFFD for each invalid sequence *before* hashing, and that substitution is many-to-one: two files differing only in their invalid bytes collapse to a single digest. A clean verdict on one then replays as authoritative for the other, and the join **succeeds** rather than failing loudly. Testing this requires a fixture built for it — one file carrying a lone continuation byte and a WTF-8-encoded lone surrogate — because every well-formed sample passes under either reading.
 
 ```json
 {
