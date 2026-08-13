@@ -19,3 +19,6 @@ jobs:
 
       - name: Run repository validation script
         run: bash ./validate.sh
+
+      - name: Run validation regression tests
+        run: bash ./tests/test_validate.sh
