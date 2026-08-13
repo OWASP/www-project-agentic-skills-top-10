@@ -201,6 +201,8 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 
 - **Jun 3**: Trail of Bits publishes "The Sorry State of Skill Distribution" — every public skill scanner tested (ClawHub's VirusTotal + LLM guard model, Cisco's `skill-scanner`, the skills.sh scanners) is bypassed in under an hour, via payload padding that forces truncation, logic hidden in binary and archive formats, and prompt-injecting the scanner's own LLM judge.
 
+- **Jun 8**: Bluebear Security publishes "Slopsquatting Through Missing Dependencies" — a scan of 45 repositories (69,520 combined stars) finds 72 exported skills and plugins referencing packages that do not exist (50 npm, 18 PyPI, 4 Cargo), named in dependency manifests, README install instructions, and setup scripts; each unregistered name is a slot an attacker can claim so future installs pull attacker-controlled code without the skill ever changing.
+
 - **Jun 22–24**: Air Security publishes "The Story of Skills" and "The Circus of Skills" — a researcher-built malicious skill reaches over 26,000 agents while every scanner clears it, its payload served from an attacker-controlled external documentation URL; a follow-up scan of 142,836 live skills finds 17,822 (12.4%, 6.7M installs) resting on at least one untrusted external instruction source.
 
 ### July 2026
@@ -521,6 +523,7 @@ changelog:
 - **SecurityScorecard** (Feb 2026) — 135,000+ OpenClaw instances publicly exposed; 53,000+ correlated with prior breach activity.
 - **Snyk: 280+ Leaky Skills** (Feb 5, 2026) — API key and PII exposure across ClawHub.
 - **Snyk: Why Your Skill Scanner Is Just False Security** (Feb 11, 2026) — Pattern-matching scanner limitations.
+- **Bluebear Security: Slopsquatting Through Missing Dependencies** (Jun 8, 2026) — 72 skills and plugins across 45 repositories reference nonexistent npm/PyPI/Cargo packages, named in manifests, READMEs, and setup scripts; unregistered names are open slots for attacker-controlled code.
 - **Air Security: The Story of Skills** (Jun 22, 2026) — Researcher-built malicious skill reached 26,000+ agents via a trusted marketplace and social media; every scanner cleared it.
 - **Air Security: The Circus of Skills** (Jun 24, 2026) — 142,836 skills scanned for untrusted external instruction sources; 17,822 (12.4%, 6.7M installs) affected.
 - **Air Security: SkillJacking** (Jul 2, 2026) — 925 skills resting on instantly hijackable dependencies (~134K agents); top skills.sh video-generation skill taken over via a deleted GitHub account.
