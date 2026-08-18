@@ -1,55 +1,50 @@
-# AST09 denied-before-dispatch: execution-receipt vector
+# AST09 denied-before-dispatch: signed admission vector
 
-A runnable, vendor-neutral test vector for the AST09 "Execution Receipts: Implementation
-Guidance" section. It demonstrates the denied-before-dispatch case: a single DENY admission
-record, offline-verifiable from its own bytes, with no outcome receipt and no runtime call.
-
-## No-signature design
-
-The AST09 Admission receipt is the seven documented fields and carries no signature (a signature
-is documented only on the Outcome receipt). This vector therefore contains no signature and no
-keypair. Tamper detection is the content-derived identifier: `attempt_id` is a hash over the
-admission content, so altering any preimage field makes the stored `attempt_id` fail to recompute.
+A runnable, vendor-neutral vector for the AST09 execution-receipt guidance. It
+demonstrates a signed DENY admission record, exact-action binding, out-of-band
+issuer-key pinning, and the difference between a recomputable hash and an
+authenticated record.
 
 ## Files
 
-- `deny-admission-receipt.json`: a valid DENY admission record with exactly the seven documented
-  fields (`attempt_id`, `agent_id`, `action_type`, `scope`, `policy_version`, `decision`,
-  `timestamp_ms`).
-- `deny-admission-receipt.tampered.json`: the same record with `scope` altered, so the
-  content-derived `attempt_id` no longer recomputes.
-- `check.py`: a standalone offline checker (standard library only).
+- `deny-admission-receipt.json`: a valid, Ed25519-signed DENY admission.
+- `deny-admission-receipt.tampered.json`: action bytes altered without updating
+  the digest or signature.
+- `deny-admission-receipt.rehashed-forgery.json`: action bytes altered and the
+  public digest recomputed. The signature still fails, proving that a content
+  hash alone is not a malicious-tamper control.
+- `check.mjs`: a standalone Node.js checker using only `node:crypto`.
 
 ## What it demonstrates
 
-The AST09 Key Property that denied-before-dispatch carries equal audit weight: a DENY admission
-record with no outcome receipt for its `attempt_id` evidences the action was blocked before
-dispatch. The checker validates the record from the bytes alone, with no call to any runtime:
-the seven required fields are present, decision is DENY, and `attempt_id` recomputes from the
-content preimage, which is the sole tamper-detection mechanism in a signature-free admission record.
+The checker proves that a relying-party-pinned issuer signed a DENY statement for
+the exact action digest. It does not prove the enforcer was on every execution
+path, that no external effect occurred, or that the record population is
+complete. Missing outcome evidence is `INDETERMINATE` unless a separately
+authenticated closed-population mechanism establishes completeness.
 
 ## Run
 
-```
-python3 check.py deny-admission-receipt.json           # ALL CHECKS PASS, exit 0
-python3 check.py deny-admission-receipt.tampered.json  # FAIL (attempt_id), exit 1
-python3 check.py --selftest                            # asserts valid exit 0, tampered exit 1
+```sh
+node check.mjs deny-admission-receipt.json                   # PASS, exit 0
+node check.mjs deny-admission-receipt.tampered.json          # FAIL, exit 1
+node check.mjs deny-admission-receipt.rehashed-forgery.json  # FAIL, exit 1
+node check.mjs --selftest                                    # asserts all three
 ```
 
 ## Field derivation
 
-`attempt_id` is the lowercase sha256 hex over the RFC 8785 (JCS) canonical bytes of
-`{agent_id, action_type, scope, policy_version, timestamp_ms}`, which is one derivation consistent
-with the guidance's "content-derived identifier" wording and not a normative requirement (any
-deterministic content-derived scheme that lets a verifier recompute the identifier and detect a
-dropped or altered record satisfies the property). The `agent_id` is synthetic and `timestamp_ms`
-is a fixed deterministic value, not a wall-clock read.
+`attempt_id` is a stable occurrence identifier. `action_digest` is separately
+derived as SHA-256 over the deterministic JSON encoding used by this fixture.
+The signature covers every field except `signature`. Production profiles should
+name one canonicalization scheme explicitly, generate attempt IDs at the trusted
+executor boundary, and pin issuer keys outside the record.
 
 ## Claim boundary
 
-The checker proves record integrity and decision binding, meaning the record is intact and the
-DENY decision is carried in a record whose identifier is bound to the requested scope and policy
-version; it does not prove that the policy decision itself was correct, which is a separate question.
+The checker proves signature integrity, issuer-key pinning, exact-action digest
+binding, and the carried DENY statement. It does not prove policy correctness,
+trusted time, actual blocking, execution, completeness, or Article 12 compliance.
 
 ## License
 

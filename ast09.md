@@ -94,34 +94,58 @@ Audit logging (Mitigation 4) requires tamper-evident records to be compliance-gr
 
 ### Bilateral Receipt Pattern
 
-Every skill execution produces two records, linked by a content-derived identifier:
+Every admitted skill execution produces two independently verifiable records. A stable
+attempt identifier joins the lifecycle; a separate digest binds both records to the exact
+canonical action. Do not use one content hash for both purposes: identifiers correlate an
+occurrence, while action digests detect substitution.
 
-**Admission receipt** — produced before execution:
-- `attempt_id`: shared identifier across both records
+**Admission receipt** — produced and signed before execution:
+- `attempt_id`: stable identifier for this occurrence, shared across both records
 - `agent_id`: identity of the executing agent
-- `action_type`: the skill or tool being invoked
-- `scope`: resource boundary (e.g., `file:read`, `email:send`)
+- `executor_id` and `audience`: the boundary and relying party for which the record is valid
+- `action` and `action_digest`: complete canonical executor action and its digest
 - `policy_version`: the governance policy in effect at decision time
 - `decision`: `ALLOW`, `DENY`, or `ESCALATE`
 - `timestamp_ms`: epoch milliseconds (integer)
+- `issuer`, `key_id`, and `signature`: verified under a relying-party-pinned issuer key
 
-**Outcome receipt** — produced after execution:
+**Outcome receipt** — produced and signed after an admitted attempt:
 - `attempt_id`: same as admission receipt
-- `action_ref`: content-derived join key, independently recomputable
-- `terminal_state`: `COMMITTED` or `FAILED`
-- `signature`: over the canonical field set
+- `action_digest`, `executor_id`, and `audience`: exact match to admission
+- `terminal_state`: `EXECUTED`, `FAILED_BEFORE_EFFECT`, or `INDETERMINATE`
+- authenticated provider or executor evidence used to reconcile the effect
+- `issuer`, `key_id`, and `signature`: verified under a separately pinned outcome key where feasible
 
 ### Key Properties
 
-**Denied-before-dispatch carries equal audit weight**: a DENY decision with no execution should produce an admission receipt. Absence of an outcome receipt for a given `attempt_id` proves the action was blocked.
+**Denied-before-dispatch is first-class evidence, but absence is not proof**: a DENY
+decision should produce a signed admission receipt. That receipt proves only that the
+pinned issuer recorded DENY for the exact action. A missing outcome receipt is unknown,
+not proof of blocking: the emitter may have crashed, omitted the record, lost the response,
+or executed outside the instrumented path. Absence can become evidence only inside an
+authenticated, closed population with a completeness mechanism.
 
-**`attempt_id` is mandatory in both records**: without it, an auditor cannot confirm the admitted action and the executed action were the same.
+**Admission is consumed at the real boundary**: for an ALLOW decision, atomically reserve
+and consume the exact action at the executor boundary before effect. A dashboard click,
+policy callback, or post-call receipt alone does not enforce this property.
+
+**`attempt_id` and `action_digest` are mandatory in both records**: matching identifiers
+join an occurrence; matching exact-action digests prevent a different action from being
+substituted under that identifier.
+
+**Trust is pinned out of band**: an embedded public key can prove self-consistency, not
+that the relying party trusts the issuer. Verifiers pin accepted issuer, executor, and
+provider keys independently of the receipt.
 
 **`policy_version` must be bound at decision time**: a policy change between admission and execution creates an audit gap if the version is not recorded with the decision.
 
 ### EU AI Act Article 12 Relevance
 
-Article 12 (enforcement August 2, 2026) requires high-risk AI systems to maintain logs enabling post-hoc verification of system operation. Bilateral receipts with independent verifiability satisfy this requirement in a way that operator-controlled logs do not: a regulator or auditor can verify the receipt without access to the operator's infrastructure.
+Article 12 requires certain high-risk AI systems to support logging and post-hoc
+traceability. Signed bilateral receipts can support those controls by making specific
+issuer statements independently checkable. They do not by themselves establish source
+truth, execution, log completeness, legal compliance, or audit sufficiency; those depend
+on deployment scope, key governance, enforcement placement, retention, and applicable law.
 
 
 *Last updated: June 2026*
