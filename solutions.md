@@ -73,13 +73,13 @@ Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typica
 
 ### AST Risks Addressed
 
-**AST03 — Over-Privileged Skills:** Each receipt binds the action to the `scope` field at decision time. A scope mismatch between the admission receipt (what was authorized) and the outcome receipt (what executed) produces non-matching `action_ref` hashes, detectable without trusting the runtime. The denied-before-dispatch path is first-class: a DENY decision produces an admission receipt; absence of an outcome receipt with that `attempt_id` proves the action was blocked rather than silently dropped.
+**AST03 — Over-Privileged Skills:** Each receipt binds the action to the `scope` field at decision time. A scope mismatch between the admission receipt (what was authorized) and the outcome receipt (what the emitter reports) produces non-matching `action_ref` hashes. The denied-before-dispatch path is first-class: a DENY decision produces an admission receipt. A missing outcome receipt remains unknown unless a separate closed-population completeness mechanism establishes that an outcome could not have been omitted.
 
 **AST04 — Insecure Metadata:** The signed bilateral receipt covers `agent_id`, `action_type`, `scope`, `policy_version`, and `timestamp_ms` under one Ed25519 signature. Modifying any field invalidates the signature; the canonical preimage is recomputable from the receipt fields by any third party.
 
 **AST07 — Update Drift:** `policy_version` is bound at decision time inside the admission receipt. A policy change between admission and execution is detectable because the receipt records the version that authorized the action, not the version in effect at audit time.
 
-**AST09 — No Governance:** Hash-chained receipts produce a tamper-evident audit trail where each receipt references the prior receipt's digest. The chain is exportable as a structured package and verifiable offline against the agent's published Ed25519 public key — directly supporting the operator-independent verification property that EU AI Act Article 12 (enforcement August 2, 2026) requires.
+**AST09 — No Governance:** Hash-chained receipts produce an independently checkable record where each receipt references the prior receipt's digest. A verifier must pin the accepted issuer key and a current chain head out of band; an embedded or merely published key proves self-consistency, not relying-party trust. This record can support logging and traceability controls, including an Article 12 compliance program, but does not by itself establish execution, completeness, or legal compliance.
 
 ### Risks Not Addressed
 
@@ -221,4 +221,3 @@ CLI and Docker; scans Git repos, URLs, zip files, directories, or single files. 
 [Which agent frameworks it works with and how.]
 
 ```
-

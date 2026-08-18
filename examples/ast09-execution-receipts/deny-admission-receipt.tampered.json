@@ -1,9 +1,24 @@
 {
-  "attempt_id": "862404587c4a1e4d253b358346de47d6edc45ed81681b566cf50323c0f5fd7a0",
-  "agent_id": "agent:example:ast09-deny-0001",
-  "action_type": "filesystem.delete",
-  "scope": "file:delete:TAMPERED",
-  "policy_version": "governance-policy-1.4.0",
+  "receipt_type": "admission",
+  "attempt_id": "attempt_01JAST09DENY0000000000000",
+  "agent_id": "agent_invoice_review",
+  "executor_id": "executor_mail_01",
+  "audience": "mail-gateway.example.test",
+  "action": {
+    "action_type": "email.send",
+    "arguments": {
+      "to": "attacker@example.test",
+      "subject": "Quarterly report"
+    }
+  },
+  "action_digest": "sha256:ec2afcab55f39c3a5c41940f34d14f261e5c1b8aee8567936d2e60d53d1d4aba",
+  "policy_version": "policy-2026-06-01",
   "decision": "DENY",
-  "timestamp_ms": 1751587200000
+  "timestamp_ms": 1782864000000,
+  "issuer": "https://governance.example.test",
+  "key_id": "ast09-demo-key-1",
+  "signature": {
+    "algorithm": "Ed25519",
+    "value": "GwjydFm9i0Yze3LZ-eh4ZzFVsW_UOfp5xkqk118_dMNm4XYiT8N26Sj635M_fzB8r26QQlbPVqhnQRKvPBcGBQ"
+  }
 }

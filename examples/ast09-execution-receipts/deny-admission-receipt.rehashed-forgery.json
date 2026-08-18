@@ -7,11 +7,11 @@
   "action": {
     "action_type": "email.send",
     "arguments": {
-      "to": "security@example.test",
+      "to": "attacker@example.test",
       "subject": "Quarterly report"
     }
   },
-  "action_digest": "sha256:ec2afcab55f39c3a5c41940f34d14f261e5c1b8aee8567936d2e60d53d1d4aba",
+  "action_digest": "sha256:13fa09e6816623c3cab76803bf9312a5fbe72306afa81ae615bd322d71d14265",
   "policy_version": "policy-2026-06-01",
   "decision": "DENY",
   "timestamp_ms": 1782864000000,
