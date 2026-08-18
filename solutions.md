@@ -12,6 +12,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [EMILIA Protocol](https://github.com/emiliaprotocol/emilia-protocol)| Apache-2.0 | AST03, AST04, AST07, AST09 | TypeScript, JavaScript, Python, Go |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
@@ -59,6 +60,54 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 ### Framework Integration
 
 Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typical integration requires approximately 20 lines of code per framework.
+
+---
+
+## EMILIA Protocol
+
+**Description:** Reference implementation for receipt-gated admission of configured consequential actions. It verifies signed human authority for the exact canonical action under relying-party-pinned keys, atomically consumes that authority before entering a protected adapter, and records separately authenticated admission and outcome evidence.
+
+**License:** Apache-2.0
+
+**Repository:** [https://github.com/emiliaprotocol/emilia-protocol](https://github.com/emiliaprotocol/emilia-protocol)
+
+**Install:** `npm install @emilia-protocol/gate @emilia-protocol/issue @emilia-protocol/verify`
+
+**Dependencies:** The Gate package has 3 direct runtime dependencies: `@noble/curves` and 2 EMILIA packages. The issue and verify packages have no runtime dependencies.
+
+### AST Risks Addressed
+
+**AST03 — Over-Privileged Skills:** A Gate admission is bound to the complete canonical action, executor, audience, assurance tier, expiry, and configured relying-party policy. An action that differs from the approved bytes is refused. The same approval cannot authorize a second admitted occurrence after its authority is consumed.
+
+**AST04 — Insecure Metadata:** Authority and evidence objects are signed over canonical encodings and verified under keys pinned by the relying party. Embedded presenter keys do not establish trust. The implementation distinguishes trusted executor observations from presenter-supplied claims.
+
+**AST07 — Update Drift:** Admissions bind policy and key-state commitments at decision time. Expiry, issuer revocation, supersession, action drift, and stale status are checked before consumption. Protected adapters can re-read the trusted action before entry and refuse drift.
+
+**AST09 — No Governance:** Every admission decision produces machine-readable evidence, and accepted authority is consumed before the protected effect boundary. Outcome handling distinguishes `EXECUTED`, `FAILED_BEFORE_EFFECT`, and `INDETERMINATE`; an unknown outcome is frozen for reconciliation instead of being retried as fresh work. Evidence packets can be verified offline under relying-party-pinned trust roots.
+
+### Risks Not Addressed
+
+**AST01 — Malicious Skills:** Does not classify skill intent or scan skill source. Pair with a pre-install scanner.
+
+**AST02 — Supply Chain Compromise:** Does not establish the provenance or integrity of the skill package being invoked. Use signed artifacts, dependency controls, and a separate supply-chain verifier.
+
+**AST05 — Untrusted External Instructions:** Exact-action admission can stop unapproved action substitution, but it does not make untrusted instructions safe or prove that an agent interpreted them correctly.
+
+**AST06 — Weak Isolation:** Does not provide a process, container, network, or credential sandbox. The effect path must be exclusively mediated by a protected adapter for admission enforcement to apply.
+
+**AST08 — Poor Scanning:** Not a malware, prompt-injection, or behavioral scanner.
+
+**AST10 — Cross-Platform Reuse:** The authority and evidence objects are portable, but each runtime still needs an adapter that derives the trusted exact action and owns the consequence boundary.
+
+### Known Limitations
+
+- Integrators must pin acceptable issuers and providers independently of presented records, supply durable atomic consumption storage, and ensure the protected effect cannot bypass Gate.
+- Signed evidence establishes who signed a bounded statement. It does not by itself establish source truth, external physical effect, population completeness, trusted time, audit sufficiency, or legal compliance.
+- The repository is a reference implementation, not a hosted sandbox or general policy-control service. Concrete effect adapters remain deployment-specific.
+
+### Framework Integration
+
+Published packages cover OpenAI Agents, LangChain, MCP, and direct Gate adapters. The repository includes hostile conformance vectors for action substitution, replay, revocation, drift, concurrent admission, and unknown outcomes.
 
 ---
 
