@@ -207,6 +207,10 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 
 - **Jul 2**: Air Security publishes "SkillJacking" — 925 skills serving ~134K agents sit on instantly hijackable dependencies (deleted GitHub accounts, unregistered packages, expired domains, freed cloud-app slots); researchers take over the most popular video-generation skill on skills.sh (11,483 installs) by re-registering its deleted owner account.
 
+### August 2026
+
+- **Aug 2026**: Metano publishes "Sleeper Skills" — a review of ClawHub and SkillsMP finds 50+ skills carrying self-update capability (28K+ downloads, 23K+ stars); 56 show self-update, self-modification, dormant-patcher or persistent-state behavior, and 9 can change their installed content or standing instructions with no per-change consent and no user-facing notice. The update channel is declared inside the reviewed artifact — an installer that overwrites its own `SKILL.md` before use, a skill that writes what it "learns" back into its own instructions, and a skill whose bytes never change while it reloads instructions from an operator-controlled host — so a `sha256:` pin binds the updater rather than what it installs.
+
 ---
 
 ## Summary Table
@@ -524,6 +528,7 @@ changelog:
 - **Air Security: The Story of Skills** (Jun 22, 2026) — Researcher-built malicious skill reached 26,000+ agents via a trusted marketplace and social media; every scanner cleared it.
 - **Air Security: The Circus of Skills** (Jun 24, 2026) — 142,836 skills scanned for untrusted external instruction sources; 17,822 (12.4%, 6.7M installs) affected.
 - **Air Security: SkillJacking** (Jul 2, 2026) — 925 skills resting on instantly hijackable dependencies (~134K agents); top skills.sh video-generation skill taken over via a deleted GitHub account.
+- **Metano: Sleeper Skills** (Aug 2026) — 50+ skills across ClawHub and SkillsMP carry self-update capability (28K+ downloads, 23K+ stars); 9 can replace their own content or standing instructions with no per-change consent and no user-facing notice, via update channels declared in the reviewed artifact itself.
 
 ### Industry Reports
 
