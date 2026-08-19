@@ -24,6 +24,7 @@ Package update drift is a known risk in traditional software. In skills, it's am
 - **OpenClaw's hot-reload `SkillsWatcher`** enables real-time skill updates: a compromised upstream skill repository becomes instantly active without requiring agent restart.
 - **Air Security, *SkillJacking* (Jul 2, 2026)**: published skills can be taken over outright — the most popular video-generation skill on skills.sh (11,483 installs) served its files live from a GitHub repo whose owner account had been deleted; researchers re-registered the username and controlled what every install received from that moment on. Victims needed no update to be affected — just one more use. In total, 925 skills (~134K agents) sat on such instantly hijackable sources, and the takeover itself tripped no scanner.
 - **Air Security, *The Circus of Skills* (Jun 24, 2026)**: 17,822 skills (~12.4% of 142,836 scanned; 6.7M installs) rest on at least one untrusted external resource — including binaries fetched from a repo's `releases/latest` — content that can drift malicious underneath a deployed skill without any version change or update event.
+- **Metano, *Sleeper Skills* (Aug 2026)**: a review of skills on ClawHub and SkillsMP found 50+ carrying self-update capability (28K+ downloads, 23K+ stars); 56 showed self-update, self-modification, dormant-patcher or persistent-state behavior, and 9 met a strict test — a normal-use or scheduled path that can replace the installed skill or its standing instructions with no per-change consent and no user-facing notice of that specific change. Three mechanisms were documented: an installer, run as a prerequisite to ordinary commands, that polls a remote endpoint and overwrites its own scripts, `SKILL.md` and reference material, then directs the agent to disregard prior memory of the skill and re-read the replaced file (`hope0719/quarkclouddrive-skill`); a skill whose normal loop writes what it "learns" back into its own `SKILL.md`, so untrusted runtime input — webpages, OCR output, accessibility text — can be laundered into a file later sessions treat as trusted (`tahcia/tahcia-console`); and a skill whose installed bytes never change while it reloads mutable Markdown instructions from an operator-controlled host on a heartbeat (`g620710/meyo`). The update channel is declared in the artifact that was reviewed, so a `sha256:` pin binds the updater rather than what it installs, and no account compromise, writable skill directory or registry event is required.
 
 ## Attack Scenarios
 
@@ -42,6 +43,10 @@ Attacker forces a downgrade to a known-vulnerable version via dependency resolut
 ### Hot-Reload Abuse
 
 Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent picks up changes without restart.
+
+### Author-Declared Update Channel
+
+The update path is part of the reviewed artifact rather than something done to it. A skill documents an installer as a prerequisite; on each run the installer fetches a bundle from a remote endpoint and replaces the skill's own scripts and `SKILL.md`. The content that executes is therefore retrieved after the approval, from a source no digest of the skill covers, under the authority already granted to that skill. Distinct from Hot-Reload Abuse, which presumes an attacker who can write to the skill directory: here the skill rewrites itself by design, and a self-modifying skill can additionally promote untrusted runtime input into its own standing instructions with no external writer at all.
 
 ## Preventive Mitigations
 
@@ -89,6 +94,7 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 - [SecurityScorecard: 135,000+ OpenClaw instances exposed](https://securityscorecard.com/)
 - [Air Security: SkillJacking](https://www.air.security/blog-posts/skilljacking)
 - [Air Security: The Circus of Skills](https://www.air.security/blog-posts/the-circus-of-skills)
+- [Metano: Sleeper Skills](https://metano.ai/post/sleeper-skills)
 
 ---
 
