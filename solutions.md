@@ -15,6 +15,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
+| [HOL Guard](https://github.com/hashgraph-online/hol-guard)| Apache-2.0 | AST01, AST02, AST03, AST04, AST05, AST07, AST08, AST09 | Python   |
 
 
 ---
@@ -184,6 +185,51 @@ CLI (`scan`, `lock`, `init --baseline`, `diff`, `verify`, `ci`) plus a GitHub Ac
 ### Framework Integration
 
 CLI and Docker; scans Git repos, URLs, zip files, directories, or single files. Emits SARIF v2.1.0 for GitHub Code Scanning and other SARIF consumers, plus JSON and Markdown. Integrates into CI/CD as a pre-merge or pre-publish gate keyed on the risk score.
+
+---
+
+## HOL Guard
+
+**Description:** Local-first runtime and supply-chain security for AI agents, tools, plugins, skills, MCP servers, package installs, and agent configuration. It evaluates supported actions and artifacts for risks such as prompt injection, unsafe commands, malicious packages, and secret exposure, then applies policy, approvals, and security receipts.
+
+**License:** Apache-2.0  
+**Repository:** [https://github.com/hashgraph-online/hol-guard](https://github.com/hashgraph-online/hol-guard)  
+**Install:** `pipx install hol-guard`  
+**Dependencies:** 10 declared base dependencies in the stable package, including `cryptography`, `keyring`, `cisco-ai-skill-scanner`, `litellm` (conditional), and `mcp`
+
+### AST Risks Addressed
+
+**AST01 — Malicious Skills:** Reviews plugins and skills before trust is granted, and ships the `plugin-scanner` CLI for analyzing agent ecosystem packages before release. The stable package declares `cisco-ai-skill-scanner` as a dependency.
+
+**AST02 — Supply Chain Compromise:** Reviews package installs, plugins, skills, MCP servers, hooks, and agent configuration before trust is granted. Guard records a baseline and can pause on new or changed artifacts before launch.
+
+**AST03 — Over-Privileged Skills:** Evaluates supported agent tool calls against the active policy and can block known threats or route ambiguous actions to a native prompt, local approval center, or Guard Cloud approval workflow.
+
+**AST04 — Insecure Metadata:** Tracks local inventory and agent configuration changes, reviews plugins, skills, MCP servers, hooks, and configuration before trust, and records attributable inventory changes for later review.
+
+**AST05 — Untrusted External Instructions:** For adapters that expose prompt events, screens prompt and tool intent for instructions that attempt to expose secrets, evade controls, or trigger destructive behavior.
+
+**AST07 — Update Drift:** Can record a trusted baseline, review subsequent changes before launch, and queue changed artifacts for approval rather than silently extending trust.
+
+**AST08 — Poor Scanning:** Includes `plugin-scanner verify .` for package analysis and `hol-guard supply-chain scan` for local supply-chain review, alongside runtime checks for supported shell, file, MCP, prompt, and tool-result events.
+
+**AST09 — No Governance:** Applies an explicit policy boundary, supports human approvals, and records attributable security receipts and inventory changes. Optional Guard Cloud adds synchronized evidence, team policies, fleet visibility, and shared approval workflows.
+
+### Risks Not Addressed
+
+**AST06 — Weak Isolation:** HOL Guard is not a process or container isolation boundary. It uses the strongest hook, proxy, approval, launch-time, or evidence surface exposed by each supported agent.
+
+**AST10 — Cross-Platform Reuse:** HOL Guard integrates with multiple agent runtimes, but it does not define or normalize a universal portable skill format.
+
+### Known Limitations
+
+- Enforcement depth varies by agent and event type. Some integrations have a pre-action boundary; others rely on native approval, managed proxies, launch-time checks, or post-action evidence.
+- Prompt-injection screening depends on adapters exposing prompt events.
+- It is not a substitute for process or container isolation.
+
+### Framework Integration
+
+Integrates with Codex, Claude Code, GitHub Copilot CLI, Cursor, Gemini CLI, Hermes, OpenClaw, OpenCode, Antigravity, Kimi Code, Grok, Pi / oh-my-pi, and ZCode through native hooks, managed proxies, reversible launch overlays, or agent-specific approval/evidence surfaces.
 
 ---
 
