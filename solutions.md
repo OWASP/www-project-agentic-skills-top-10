@@ -15,6 +15,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
+| [Vaara](https://github.com/vaaraio/vaara)| AGPL-3.0-or-later | AST01, AST02, AST03, AST07, AST08, AST09 | Python, TypeScript |
 
 
 ---
@@ -184,6 +185,47 @@ CLI (`scan`, `lock`, `init --baseline`, `diff`, `verify`, `ci`) plus a GitHub Ac
 ### Framework Integration
 
 CLI and Docker; scans Git repos, URLs, zip files, directories, or single files. Emits SARIF v2.1.0 for GitHub Code Scanning and other SARIF consumers, plus JSON and Markdown. Integrates into CI/CD as a pre-merge or pre-publish gate keyed on the risk score.
+
+---
+
+## Vaara
+
+**Description:** Policy-gated tool calls for AI agents with a hash-chained, tamper-evident audit trail. Every tool call is classified, scored and decided before the call body runs. The decision and its outcome are written as separate signed records, and receipts verify offline against a pinned public key with no Vaara installed.
+
+**License:** AGPL-3.0-or-later (commercial licence available)
+**Repository:** [https://github.com/vaaraio/vaara](https://github.com/vaaraio/vaara)
+**Install:** `pip install vaara`
+**Dependencies:** 0 in the base install (standard library only; signing, server and proxy features are opt-in extras)
+
+### AST Risks Addressed
+
+**AST01 — Malicious Skills:** The deny decision is taken before the tool call body executes, so a blocked action does not run. Each decision produces a signed record and each outcome a second one, hash-chained, so an altered or removed entry is detectable by anyone recomputing the chain.
+
+**AST02 — Supply Chain Compromise:** Records carry an external time anchor (RFC 3161, and EU qualified timestamps from trusted-list providers), so a chain cannot be regenerated and backdated. The published SEP-2828 conformance corpus is pinned byte for byte by per-file SHA-256 plus a single corpus digest, and its checkers import no Vaara code, so an implementer verifies against the corpus rather than against the producer.
+
+**AST03 — Over-Privileged Skills:** Tool calls are gated by per-tenant policy before execution. A call outside policy raises rather than returning a value, so the action does not happen.
+
+**AST07 — Update Drift:** The policy in force is bound into the record by hash, so a record names which policy decided it and a later policy change is visible as a different hash instead of as silent drift.
+
+**AST08 — Poor Scanning:** Optional trained classifier over tool-call parameters (XGBoost, 236 hand-features plus sentence embeddings), shipped as a pinned model whose SHA-256 is verified before it is loaded. Benchmark on a held-out fold: 84.7% recall at 4.1% false positive rate. Methodology and per-source breakdown are published in the repository.
+
+**AST09 — No Governance:** Append-only hash-chained audit trail per tenant, with retention enforcement and a signed, self-describing export package for record-keeping obligations. Receipts stay with the operator, and a third party verifies an exported bundle offline against a pinned public key without contacting the operator or the vendor.
+
+### Risks Not Addressed
+
+**AST04 — Insecure Metadata:** Does not parse or validate skill manifests from untrusted sources.
+**AST06 — Weak Isolation:** Runs in-process or as a proxy. Provides no containerization or sandbox isolation, and a compromised process can bypass in-process enforcement.
+**AST10 — Cross-Platform Reuse:** Does not implement the Universal Skill Format.
+
+### Known Limitations
+
+- The keyless conformance checks cover wire shape, the record's self-proving digest, and cross-record set properties. They do not cover signature verification, issuer trust, or time-anchor verification, each of which needs external material.
+- A hash chain makes rewriting and reordering detectable. Removal from the end of a chain is detectable only against a retained or externally witnessed head.
+- The classifier is opt-in and adds a dependency. Base installs run without it.
+
+### Framework Integration
+
+Python decorator or context manager, plus shipped integrations for CrewAI, LangChain, OpenAI Agents SDK, Claude Code hooks, and MCP as either a proxy or a server. Guardrail vendors (NeMo Guardrails, Guardrails AI, LLM Guard, Rebuff, Bedrock Guardrails, Azure AI Content Safety, GCP Model Armor) plug in as scorers behind the same decision path.
 
 ---
 
