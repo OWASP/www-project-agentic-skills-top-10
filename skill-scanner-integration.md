@@ -115,10 +115,40 @@ claude plugin marketplace add jhkchan/ast10-agent-skills
 claude plugin install ast10@ast10-agent-skills
 ```
 
+It emits **SARIF 2.1.0** (`--sarif`, since v1.1.0), and the mapping keeps the decidability
+contract rather than flattening it into "no findings":
+
+| `kind` | meaning |
+| --- | --- |
+| `fail` | detected — `error` for a named scenario, `warning` for an enabling precondition only |
+| `pass` | the check ran and cleared, reported rather than omitted |
+| `open` | tiered `agent-judgable`: decidable from the package, but not by a static check |
+| `notApplicable` | tiered `out-of-artifact`: the defining condition is not in the package at any depth |
+
+#### GitHub Actions — code-scanning upload
+
+```yaml
+- run: npx ast10-agent-skills audit ./skills/my-skill --sarif > ast10.sarif
+- uses: github/codeql-action/upload-sarif@v3
+  if: always()          # keep the upload even when the gate step below fails
+  with:
+    sarif_file: ast10.sarif
+- run: npx ast10-agent-skills audit ./skills/my-skill --fail-on-detect
+```
+
+`if: always()` matters: gate in a step *after* the upload, or a failing gate skips the upload
+and the findings never reach code scanning. Auditing several packages in one workflow run needs
+`--sarif-category` per package, since two uploads sharing a category in one run fail the run.
+
+Note before adopting the gate: `--fail-on-detect` fires on **any** detection, including
+`artifact-signal-only` and `category-precondition` rows that decide no named scenario. A package
+that simply declares no permissions block trips three of them, so the gate will fail most skills
+in the wild until they carry a USF manifest. Uploading the SARIF without the gate, and reading
+the `fail` rows at `error` level, is the gentler starting point.
+
 Limits the project states about itself: its fixture corpus is self-authored, so the reported
-F1 is a discrimination claim about that corpus rather than a field performance rate; and it
-emits terminal and JSON output but **not SARIF**, so SkillSpector remains the better fit for
-code-scanning upload today.
+F1 is a discrimination claim about that corpus rather than a field performance rate, and the
+`audit` and `route` verbs need Python 3.11+ and PyYAML alongside Node.
 
 ### OWASP AST10 Scanner Status
 
