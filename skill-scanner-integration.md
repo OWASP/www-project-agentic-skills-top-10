@@ -81,11 +81,51 @@ scanning** tab and can gate merges; the 0–100 risk score is a natural threshol
 workflow (see AST09). It maps to **AST01, AST02, AST03, AST04, AST08, AST09, and AST10** — see
 [solutions.md](solutions.md) for the full coverage breakdown.
 
+### ast10-agent-skills (open source, AST-native)
+
+[ast10-agent-skills](https://github.com/jhkchan/ast10-agent-skills) (Apache-2.0) is an
+independent community implementation organised around this taxonomy directly: ten per-category
+detector skills plus an advisory router that walks the "Which AST Does My Finding Belong To?"
+decision tree, so findings arrive already keyed to AST01-AST10 instead of being mapped
+afterwards. **It is not an OWASP project and carries no OWASP endorsement.**
+
+Its distinguishing property is a per-scenario decidability contract. Each of the 62 named
+scenarios is tiered `static-detectable`, `agent-judgable` or `out-of-artifact` with a written
+reason, and every run closes by naming what it did *not* decide:
+
+```
+AST01  Malicious Skills  10 check(s): 1 finding, 0 signals, 0 observed properties
+  FINDING   AST01-obfuscated-payload-exec             decides AST08-S02
+            scripts/setup.py: encoded blob decoded into an execution sink
+  declared, not decided by this run (agent-judgable): AST01-S01, AST01-S03, AST01-S04
+```
+
+Where a category has no statically decidable scenario it publishes no score at all, rather
+than a padded one. Measured against the current scenario registry, 20 of the 62 scenarios are
+decidable from a package's own bytes, 8 need a judgement call on the artifact, and 34 are not
+decidable from the artifact at all.
+
+```bash
+# no clone required; audit and route need Python 3.11+ and PyYAML
+npx ast10-agent-skills audit ./my-skill
+npx ast10-agent-skills coverage
+
+# or as a Claude Code plugin: 11 skills plus 14 slash commands
+claude plugin marketplace add jhkchan/ast10-agent-skills
+claude plugin install ast10@ast10-agent-skills
+```
+
+Limits the project states about itself: its fixture corpus is self-authored, so the reported
+F1 is a discrimination claim about that corpus rather than a field performance rate; and it
+emits terminal and JSON output but **not SARIF**, so SkillSpector remains the better fit for
+code-scanning upload today.
+
 ### OWASP AST10 Scanner Status
 
-An OWASP-maintained `@owasp/ast10-scanner` package is not currently published.
-Until one exists, use the open-source scanners listed above and map their
-findings to the AST01-AST10 taxonomy in reports and CI output.
+An OWASP-maintained `@owasp/ast10-scanner` package is not currently published, and
+the scanners listed above are independent projects rather than OWASP ones.
+`ast10-agent-skills` already reports in AST01-AST10 terms; SkillSpector's findings
+still need mapping to the taxonomy in reports and CI output.
 
 ### Platform-Specific Scanners
 
@@ -453,6 +493,7 @@ This pattern is descriptive about reporting, not prescriptive about detection �
 ## Available Tools and Resources
 
 - **NVIDIA SkillSpector**: [GitHub Repository](https://github.com/NVIDIA/SkillSpector) — open-source (Apache-2.0) agent-skill security scanner
+- **ast10-agent-skills**: [GitHub](https://github.com/jhkchan/ast10-agent-skills) · [npm](https://www.npmjs.com/package/ast10-agent-skills) — independent community implementation (Apache-2.0) reporting natively in AST01-AST10 terms; not an OWASP project
 - **VS Code Security Linting**: [Marketplace](https://marketplace.visualstudio.com)
 
 ## Contributing
