@@ -53,7 +53,7 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 4. **Subscribe to registry security advisories** and auto-alert on CVE matches for installed skills.
 5. **Enforce a human-in-the-loop approval step** for any skill update in enterprise environments.
 6. **Maintain an inventory of installed skills** with version, hash, and last-verified timestamp.
-7. **Re-evaluate the loaded state at invocation, not only at update.** Record the content hash of the skill and of every external resource it resolves, at every read of the instruction surface rather than once at install. Where an action was authorized against a recorded state, a change in that state invalidates the authorization and requires a fresh one before execution.
+7. **Re-evaluate the loaded state at invocation, not only at update.** Record the content hash of the skill and of every external resource it resolves, at every read of the instruction surface rather than once at install. Where an action was authorized against a recorded state, any later divergence from the state recorded at the time of that authorization invalidates it and requires a fresh one before execution, whether the divergence arrived through an update or without one.
 
 ## OWASP Mapping
 
