@@ -13,6 +13,8 @@ type: documentation
 
 Skills are installed and forgotten. Without immutable pinning and automated update verification, deployed skills drift out of sync with known-good versions — either because patches are not applied (leaving known vulnerabilities open) or because auto-update mechanisms blindly apply upstream changes that may themselves be malicious.
 
+Drift also occurs with no update at all. Content a skill resolves at runtime can change while the pinned skill does not, and an authorization granted earlier can still be standing after the content it was granted against has moved. The consequence is not uniform. Where the authorized action is read-only or reversible, re-running under changed content is recoverable. Where it is irreversible, an approval given over one version cannot carry to another, because what executes is not what was approved.
+
 ## Why It's Unique to Skills
 
 Package update drift is a known risk in traditional software. In skills, it's amplified by two factors: (1) skills are often installed by individuals without enterprise patch management, and (2) a "fix" version of a skill is itself unverifiable without cryptographic pinning — the attacker can push a "v1.0.1" that looks like a patch but contains a new payload.
@@ -51,6 +53,7 @@ Skill directory is writable; attacker modifies `SKILL.md` mid-session; agent pic
 4. **Subscribe to registry security advisories** and auto-alert on CVE matches for installed skills.
 5. **Enforce a human-in-the-loop approval step** for any skill update in enterprise environments.
 6. **Maintain an inventory of installed skills** with version, hash, and last-verified timestamp.
+7. **Re-evaluate the loaded state at invocation, not only at update.** Record the content hash of the skill and of every external resource it resolves, at every read of the instruction surface rather than once at install. Where an action was authorized against a recorded state, any later divergence from the state recorded at the time of that authorization invalidates it and requires a fresh one before execution, whether the divergence arrived through an update or without one.
 
 ## OWASP Mapping
 
