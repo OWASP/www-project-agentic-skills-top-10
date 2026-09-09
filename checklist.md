@@ -102,6 +102,13 @@ A practical checklist for evaluating AI agent skills against the [OWASP Agentic 
 | 6.5 | Is the skill isolated from other skills and agents (per-skill namespacing)? | Process-level isolation confirmed; no shared memory or filesystem between skills |
 | 6.6 | Are WebSocket connections rate-limited and authenticated (including from localhost)? | Rate limiting and auth confirmed on all control channels |
 | 6.7 | Is skill hot-reload / workspace precedence restricted in production? | Workspace skill overrides require explicit user confirmation *(see also 7.5 — update drift angle)* |
+| 6.8 | Are reachable shared services included in the isolation model? | Allowed operations, identities, destinations, and task/run/tenant boundaries documented |
+| 6.9 | Is mutable service state separated between domains that must remain isolated? | Cross-domain write/read and enumeration tests enforce policy; required package retrieval still works |
+| 6.10 | Is retrieval-only access denied publication and administration privileges? | Forbidden operations rejected; service state unchanged |
+| 6.11 | Is an intermediary contained under assumed service-process compromise? | Independent controls block protected resources and unauthorized destinations; service identity cannot change those controls |
+| 6.12 | Are shared dependencies retested after recovery? | Old unauthorized access is unusable; service and sandbox restrictions verified again |
+
+See [AST06 shared-service isolation tests](examples/ast06-shared-service-isolation.md) for acceptance criteria.
 
 **Motivated by**: 135,000+ OpenClaw instances publicly exposed with no default firewall or authentication (SecurityScorecard). ClawJacked (CVE-2026-28363, CVSS 9.9): browser tab brute-forces localhost WebSocket to hijack local agent.
 
