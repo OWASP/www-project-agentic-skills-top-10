@@ -12,9 +12,11 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [WraithVector](https://github.com/wraithvector0/wraithvector-openclaw) | MIT | AST03, AST06, AST09 | Python |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
+ 
 
 
 ---
@@ -61,6 +63,43 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typical integration requires approximately 20 lines of code per framework.
 
 ---
+
+
+
+## WraithVector
+
+**Description:** Agent Authority Management gateway for AI agents. Sits between agents and tool execution, enforcing role-based permissions before every action and producing cryptographically hash-chained audit records for every decision — ALLOW or BLOCK.
+
+**License:** MIT  
+**Repository:** https://github.com/wraithvector0/wraithvector-openclaw  
+**Install:** Clone the repository and follow the installation instructions in the README.  
+**Dependencies:** requests
+
+### AST Risks Addressed
+
+**AST03 — Over-Privileged Skills:** Role-based tool permission enforcement at runtime. Each agent role has an explicit allowlist of tools. Actions outside the approved scope are blocked before execution. Fail-closed by default.
+
+**AST06 — Weak Isolation:** Fail-closed enforcement — if the governance layer fails or is unreachable, execution is blocked. No fail-open fallback.
+
+**AST09 — No Governance:** Per-agent audit logging with hash-chained decision records. Every ALLOW and BLOCK is stored with agent ID, role, action, timestamp, and SHA-256 chain hash linking to the previous decision. PDF evidence export supported.
+
+### Risks Not Addressed
+
+**AST01 — Malicious Skills:** Does not scan skill manifests for malicious content.  
+**AST02 — Supply Chain Compromise:** Does not implement registry transparency or dependency pinning.  
+**AST05 — Untrusted External Instructions:** Does not currently provide dedicated controls for untrusted external instructions.
+**AST07 — Update Drift:** No policy version pinning or TTL expiry.  
+**AST08 — Poor Scanning:** No semantic or behavioral scanning.  
+**AST10 — Cross-Platform Reuse:** OpenClaw-specific plugin. Universal Skill Format not yet implemented.
+
+### Known Limitations
+
+- Enforcement runs as a plugin hook. A compromised process can bypass it.
+- No containerization or sandbox isolation.
+
+### Framework Integration
+
+Integrates with OpenClaw via the before-tool-call hook for runtime policy enforcement and audit logging.
 
 ## Nobulex
 
@@ -186,6 +225,7 @@ CLI (`scan`, `lock`, `init --baseline`, `diff`, `verify`, `ci`) plus a GitHub Ac
 CLI and Docker; scans Git repos, URLs, zip files, directories, or single files. Emits SARIF v2.1.0 for GitHub Code Scanning and other SARIF consumers, plus JSON and Markdown. Integrates into CI/CD as a pre-merge or pre-publish gate keyed on the risk score.
 
 ---
+
 
 ## Template for New Entries
 
