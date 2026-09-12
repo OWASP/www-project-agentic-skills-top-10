@@ -4,22 +4,26 @@ title: API Documentation
 tags: api, documentation, integration
 level: 2
 type: documentation
-pitch: Programmatic access to OWASP AST10 data and tools
-description: "RESTful API documentation for accessing OWASP AST10 security data, risk assessments, and integration tools."
+pitch: Proposed programmatic interface for OWASP AST10 data and tools (specification draft — not yet deployed)
+description: "Proposed RESTful API specification for OWASP AST10 security data, risk assessments, and integration tools. Design draft only — no live endpoints are deployed yet."
 ---
 
 # OWASP AST10 API Documentation
 
 The OWASP AST10 API provides programmatic access to security data, risk assessment tools, and integration capabilities for AI agent skill security.
 
+> **⚠️ Status: Proposed specification — not yet deployed.**
+> This page describes a *planned* API design published for community feedback. The base URL, dashboard, SDK packages, and support addresses below are **illustrative placeholders and are not live** — requests to them will fail. For example, `https://owasp.org/ast10/dashboard` returns **404** and the `https://api.owasp.org/ast10/v1` host does not resolve. No version of this API is currently running. Track implementation status in the [project issues](https://github.com/OWASP/www-project-agentic-skills-top-10/issues).
+
 ## Base URL
 ```
 https://api.owasp.org/ast10/v1
 ```
+*Placeholder host — not yet deployed; this address does not resolve.*
 
 ## Authentication
 
-All API requests require authentication using API keys. Get your API key from the [OWASP AST10 Dashboard](https://owasp.org/ast10/dashboard).
+Once the service is deployed, API requests will require authentication using API keys issued from an OWASP AST10 dashboard. **That dashboard does not exist yet** — the previously documented URL (`https://owasp.org/ast10/dashboard`) returns 404. The flow below is illustrative of the planned design.
 
 ```bash
 curl -H "Authorization: Bearer YOUR_API_KEY" \
@@ -231,7 +235,7 @@ Submit a skill for comprehensive security scanning.
   "skill_url": "https://example.com/skill.yaml",
   "callback_url": "https://your-app.com/webhook/scan-complete",
   "scan_options": {
-    "rules": ["AST01", "AST03", "AST05"],
+    "rules": ["AST01", "AST03", "AST04"],
     "timeout": 300,
     "sandbox": true
   }
@@ -294,9 +298,11 @@ When a scan completes, we'll POST to your callback URL:
 
 ### Rate Limits
 
+*Proposed tiers — illustrative only; no live service enforces these today.*
+
 - **Free Tier**: 100 requests/hour, 1,000/month
 - **Professional**: 1,000 requests/hour, 100,000/month
-- **Enterprise**: Unlimited (contact sales)
+- **Enterprise**: Unlimited
 
 Rate limit headers are included in all responses:
 ```
@@ -329,6 +335,8 @@ Common error codes:
 - `INTERNAL_ERROR`: Server error
 
 ### SDKs and Libraries
+
+*Proposed client libraries. These packages are **not yet published** — `@owasp/ast10-sdk` (npm), `ast10_sdk` (PyPI), and `ast10-sdk-go` do not exist on their registries yet. The snippets below illustrate the intended interface.*
 
 #### JavaScript/Node.js
 ```javascript
@@ -394,11 +402,12 @@ func main() {
 
 ### Support
 
-- **Documentation**: [Full API Reference](https://api.owasp.org/ast10/docs)
-- **Community Forum**: [OWASP AST10 Discussions](https://github.com/OWASP/www-project-agentic-skills-top-10/discussions)
+This is a proposed specification — there is no live API support channel yet. Use the project's GitHub repository for questions and to follow implementation:
+
 - **Issue Tracking**: [GitHub Issues](https://github.com/OWASP/www-project-agentic-skills-top-10/issues)
-- **Email Support**: api-support@owasp.org
+
+(The previously listed `https://api.owasp.org/ast10/docs` reference site and `api-support@owasp.org` mailbox are not deployed and do not work.)
 
 ---
 
-*API documentation is versioned. Current version: v1.1.0. Last updated: March 2026*
+*This is a draft API specification published for community review — not a released service. No version of this API is currently deployed.*

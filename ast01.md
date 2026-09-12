@@ -23,6 +23,7 @@ Unlike traditional malicious packages, malicious skills exploit both the *code l
 - Five of the top seven most-downloaded ClawHub skills at peak infection were confirmed malware.
 - Three lines of markdown in a `SKILL.md` file were sufficient to exfiltrate SSH keys (Snyk, Feb 2026).
 - Skills impersonating "Google," "Solana wallet tracker," "YouTube Summarize Pro," and "Polymarket Trader" — all designed to match high-demand searches.
+- A USENIX Security 2026 measurement study analyzed 98,380 skills across public marketplaces and confirmed 157 malicious skills carrying 632 vulnerabilities (avg. 4.03 per skill); 73.2% of malicious skills implemented shadow features hidden from the user, and 54.1% traced to a single publisher cluster (Liu et al., arXiv:2602.06547).
 
 ## Attack Scenarios
 
@@ -47,18 +48,23 @@ Malicious skills write backdoor instructions into the agent's identity file, sur
 
 Skills that inject malicious context into `MEMORY.md`, causing the agent to execute attacker commands in future sessions.
 
+### Identity Cloning and Impersonation
+
+A malicious skill reads and exfiltrates the agent's identity artifacts — `SOUL.md`, `MEMORY.md`, persona definitions, and configuration — so an attacker can replicate the agent's behavioral state in another environment and impersonate it, or inject a modified persona so the agent acts as a trusted identity while performing privileged actions. Because identity in agentic systems is behavioral and contextual (not just credentials), cloning these files reproduces the agent's effective identity.
+
 ### WebSocket Hijacking
 
 Skills that establish persistent WebSocket connections to attacker C2 servers, enabling real-time command execution.
 
 ## Preventive Mitigations
 
-1. **Require cryptographic signatures (ed25519)** on all published skills; reject unsigned installs.
+1. **Require cryptographic signatures (ed25519)** on all published skills; reject unsigned installs. Bind each signature to a *resolvable, revocable publisher identity* (a key id, a publisher identifier such as a domain or `did:web`, and a published verification key) — not just a bare key — so a compromised signer can be revoked. A signature proves **authorship, not safety**: a verified publisher can still ship malicious content, so signing composes with behavioral scanning (mitigation 3) and reputation (mitigation 6) rather than replacing them.
 2. **Implement Merkle root signing** for skill registries.
 3. **Scan skills at publish time and at install time** using behavioral analysis (not just pattern matching).
 4. **Isolate skill execution** in containers or sandboxes.
 5. **Audit skill actions** through structured logging.
 6. **Implement skill reputation systems** based on community feedback and automated testing.
+7. **Protect agent identity artifacts** (`SOUL.md`, `MEMORY.md`, persona/config files): restrict read and write access, sign or version-control them, and treat any skill request to access them as elevated-risk (see AST03). This limits both persistence backdoors and identity cloning.
 
 ### Code Example: Signature Verification
 
@@ -302,9 +308,11 @@ instructions: |
 ## Related Risks
 
 - [AST02 — Supply Chain Compromise](ast02.md): Often the delivery mechanism for malicious skills.
-- [AST03 — Over-Privileged Skills](ast03.md): Malicious skills exploit excessive permissions.
+- [AST03 — Over-Privileged Skills](ast03.md): Malicious skills exploit excessive permissions, including logic-layer injection of privileged actions (LPCI).
 - [AST04 — Insecure Metadata](ast04.md): Brand impersonation enables malicious skill distribution.
+- [AST05 — Untrusted External Instructions](ast05.md): A malicious author can hide the payload in referenced external content, keeping the skill body clean.
 - [AST08 — Poor Scanning](ast08.md): Ineffective detection allows malicious skills to proliferate.
+- [AST10 — Cross-Platform Reuse](ast10.md): Identity artifacts cloned or ported across platforms lose their original protections, aiding impersonation.
 
 ## Reference Materials
 
@@ -352,6 +360,8 @@ For confirmed malicious skill incidents:
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
 - [Check Point Research: Caught in the Hook](https://research.checkpoint.com/2026/rce-and-api-token-exfiltration-through-claude-code-project-files/)
 - [Antiy CERT: ClawHavoc Campaign Analysis](https://www.antiy.com/)
+- [Atta et al. — DIRF: A Framework for Digital Identity Protection and Clone Governance in Agentic AI Systems (arXiv:2508.01997)](https://arxiv.org/abs/2508.01997)
+- ["Do Not Mention This to the User": Detecting and Understanding Malicious Agent Skills in the Wild (USENIX Security 2026)](https://arxiv.org/abs/2602.06547)
 
 ---
 

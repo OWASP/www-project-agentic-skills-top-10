@@ -1,0 +1,42 @@
+name: Build Top 10 PPTX
+
+# V1 publication review is being handled through the Google Doc only. Keep this
+# generator available for manual draft checks, but do not automatically publish
+# PPTX artifacts from repository pushes or releases during the v1 review cycle.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip "python-pptx==1.0.2" "Pillow>=10,<14"
+
+      - name: Build deck
+        run: python tools/build_pptx.py --out dist/OWASP-Agentic-Skills-Top10.pptx
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OWASP-Agentic-Skills-Top10-pptx
+          path: dist/OWASP-Agentic-Skills-Top10.pptx
+          if-no-files-found: error
+
+      - name: Job summary
+        run: |
+          echo "### OWASP Agentic Skills Top 10 — slide deck built :bar_chart:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Download **OWASP-Agentic-Skills-Top10-pptx** from the *Artifacts* section of this run." >> "$GITHUB_STEP_SUMMARY"

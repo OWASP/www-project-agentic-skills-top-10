@@ -13,6 +13,8 @@
 
 - **🌐 Website**: [https://owasp.github.io/www-project-agentic-skills-top-10/](https://owasp.github.io/www-project-agentic-skills-top-10/)
 - **📖 Documentation**: [Full Documentation](https://owasp.github.io/www-project-agentic-skills-top-10/)
+- **Tutorial Videos**: [Play the AST10 tutorial videos](http://owasp.org/www-project-agentic-skills-top-10/videos?video=ast01)
+- **Public Review v1 Google Doc**: [Submit comments in Google Docs](https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?tab=t.0)
 - **🐙 GitHub Repository**: [https://github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
 - **🏛️ OWASP Project Page**: [https://owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10)
 - **📋 Security Checklist**: [checklist.md](checklist.md)
@@ -25,11 +27,12 @@
 - **📚 Skill Development Guide**: [skill-development-guide.md](skill-development-guide.md)
 - **⚖️ Platform Comparison**: [platform-comparison.md](platform-comparison.md)
 - **👥 Community & Contribution**: [community-contribution.md](community-contribution.md)
-- **🎓 Training & Certification**: [training-certification.md](training-certification.md)
 - **🚨 Incident Response Playbook**: [incident-response.md](incident-response.md)
 - **📊 Security Metrics & Monitoring**: [metrics-monitoring.md](metrics-monitoring.md)
 - **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **🛠️ Maintenance**: [MAINTENANCE.md](MAINTENANCE.md)
+
+For the v1 publication cycle, please submit document review comments in the Google Doc above. Earlier comments, issues, and pull requests remain available in GitHub for transparency and historical reference.
 
 ---
 
@@ -105,8 +108,8 @@ Most production agent deployments satisfy all three conditions.
 | [AST01](ast01.md) | Malicious Skills | Critical | Cryptographic signing, behavioral scanning |
 | [AST02](ast02.md) | Supply Chain Compromise | Critical | Transparency logs, dependency pinning |
 | [AST03](ast03.md) | Over-Privileged Skills | High | Least-privilege manifests, runtime enforcement |
-| [AST04](ast04.md) | Insecure Metadata | High | Schema validation, provenance tracking |
-| [AST05](ast05.md) | Unsafe Deserialization | High | Safe parsers, sandboxed loading |
+| [AST04](ast04.md) | Insecure Metadata | High | Schema validation, safe parsers, sandboxed loading |
+| [AST05](ast05.md) | Untrusted External Instructions | High | Source inventory, content pinning and inlining, continuous rescanning |
 | [AST06](ast06.md) | Weak Isolation | High | Containerization, process isolation |
 | [AST07](ast07.md) | Update Drift | Medium | Immutable pinning, hash verification |
 | [AST08](ast08.md) | Poor Scanning | Medium | Multi-tool pipeline, semantic analysis |
@@ -238,8 +241,8 @@ You are free to share and adapt this material for any purpose, provided you give
 **Project Lead**: Ken Huang — OWASP AIVSS Lead, Agentic AI Security Researcher
 
 - **📧 Email**: ken.huang@owasp.org
-- **🐙 GitHub**: [@kenhuang](https://github.com/kenhuang)
-- **🔗 LinkedIn**: [Ken Huang](https://linkedin.com/in/kenhuang)
+- **🐙 GitHub**: [@kenhuangus](https://github.com/kenhuangus)
+- **🔗 LinkedIn**: [Ken Huang](https://www.linkedin.com/in/kenhuang8)
 
 For questions, suggestions, or to get involved:
 - Open an [issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues) on GitHub
@@ -383,8 +386,8 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 | **AST01** | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
 | **AST02** | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
 | **AST03** | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
-| **AST04** | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
-| **AST05** | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
+| **AST04** | Insecure Metadata | High | All | Static analysis, safe parsers, sandboxed loading | Fake "Google" skill impersonation; YAML payload delivery in SKILL.md |
+| **AST05** | Untrusted External Instructions | High | All | Source inventory, content pinning and inlining, continuous rescanning | Anthropic docs warn fetched URLs "may contain malicious instructions"; Air's "Story of Skills" PoC bypassed all scanners and proved a possible takeover of 26,000 agents via untrusted external instructions |
 | **AST06** | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
 | **AST07** | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
 | **AST08** | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
@@ -402,8 +405,8 @@ Each of the 10 risks is documented in a separate file. Click on the risk name to
 | [AST01](ast01.md) | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
 | [AST02](ast02.md) | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
 | [AST03](ast03.md) | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
-| [AST04](ast04.md) | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
-| [AST05](ast05.md) | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
+| [AST04](ast04.md) | Insecure Metadata | High | All | Static analysis, safe parsers, sandboxed loading | Fake "Google" skill impersonation; YAML payload delivery in SKILL.md |
+| [AST05](ast05.md) | Untrusted External Instructions | High | All | Source inventory, content pinning and inlining, continuous rescanning | Anthropic docs warn fetched URLs "may contain malicious instructions"; Air's "Story of Skills" PoC bypassed all scanners and proved a possible takeover of 26,000 agents via untrusted external instructions |
 | [AST06](ast06.md) | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
 | [AST07](ast07.md) | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
 | [AST08](ast08.md) | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
@@ -522,16 +525,18 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 ### For Skill Developers
 
 1. **Least privilege**: Declare a minimal permission manifest; request only what your skill genuinely needs (AST03).
-2. **Safe parsing**: Use safe YAML/JSON loaders; never deserialize untrusted skill configs without sandboxing (AST05).
+2. **Safe parsing**: Use safe YAML/JSON loaders; never deserialize untrusted skill configs without sandboxing (AST04).
 3. **Sign your skills**: Implement ed25519 signing before publication; include `content_hash` in your manifest (AST01/AST02).
 4. **Pin dependencies**: Lock all nested dependencies to immutable hashes — never version ranges (AST07).
 5. **Honest metadata**: Accurately declare `risk_tier`, permissions, and `requires`; do not understate scope (AST04).
 6. **Protect identity files**: Never request write access to `SOUL.md`, `MEMORY.md`, or `AGENTS.md` unless your skill's core function requires it — and document why (AST03).
+7. **Pin or inline external instruction sources**: A live link is mutable and can be rug-pulled, so don't trust it as-is. Either hash-pin the referenced content and re-verify it on every load, or inline it into the skill so it ships immutable and reviewable (AST05).
+8. **Use high-reputation external sources**: When you can neither pin nor inline, fetch only from high-trust, stable sources to reduce the risk of malicious content (AST05).
 
 ### For Platform Developers
 
 1. **Default sandbox**: Make container/Docker isolation the default for skill execution; make host-mode an explicit opt-in (AST06).
-2. **Safe deserialization**: Disable dangerous YAML/JSON tags in all skill loaders by default; validate against a schema before execution (AST05).
+2. **Safe deserialization**: Disable dangerous YAML/JSON tags in all skill loaders by default; validate against a schema before execution (AST04).
 3. **Registry scanning**: Implement behavioral scanning at publish time and at install time; pattern matching alone is insufficient (AST08).
 4. **Provenance infrastructure**: Support the Universal Skill Format; implement Merkle-root transparency logs for your registry (AST01/AST02/AST10).
 5. **Audit logging**: Emit structured logs for all skill actions (file access, shell commands, network calls, memory writes) (AST09).
@@ -543,11 +548,11 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 
 | Role | Primary Concerns | Key AST Risks |
 |------|-----------------|---------------|
-| **AI Platform Developers** | Secure skill runtimes, registries, installers, and CI/CD integration | AST01, AST02, AST05, AST06, AST08 |
-| **AppSec / Product Security** | Govern skills in enterprise deployments; review skill PRs | AST03, AST04, AST07, AST09 |
+| **AI Platform Developers** | Secure skill runtimes, registries, installers, and CI/CD integration | AST01, AST02, AST04, AST05, AST06, AST08 |
+| **AppSec / Product Security** | Govern skills in enterprise deployments; review skill PRs | AST03, AST04, AST05, AST07, AST09 |
 | **Skill Authors** | Write safe manifests, scripts, and metadata; ship signable packages | AST03, AST04, AST05, AST07 |
-| **GRC / Compliance** | Map skill risks to NIST AI RMF, ISO 42001, EU AI Act | AST09, AST10 |
-| **CISOs / Security Leadership** | Understand blast radius, incident scope, and governance gaps | AST02, AST06, AST09 |
+| **GRC / Compliance** | Map skill risks to NIST AI RMF, ISO 42001, EU AI Act | AST05, AST09, AST10 |
+| **CISOs / Security Leadership** | Understand blast radius, incident scope, and governance gaps | AST02, AST05, AST06, AST09 |
 | **Developers / Engineers** | Safely install and use skills without introducing unreviewed risk | AST01, AST02, AST07 |
 
 ---
@@ -654,7 +659,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 ### Standards and Frameworks
 - **OWASP AIVSS Project** (2025) — https://aivss.owasp.org
 - **OWASP LLM Top 10** (2025) — https://owasp.org/www-project-top-10-for-large-language-model-applications/
-- **OWASP Agentic AI Top 10** (Dec 2025) — https://owasp.org/www-project-agentic-ai-threats/
+- **OWASP Top 10 for Agentic Applications** (2026) — https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
 - **NIST AI RMF** — https://airc.nist.gov/
 - **ISO/IEC 42001** (AI Management System) — https://www.iso.org/standard/81230.html
 - **EU AI Act** (enforced Aug 2026) — https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689
@@ -663,6 +668,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 ### Academic and Technical
 
 - **"Prompt Injection Attacks on Agentic Coding Assistants"** (arXiv:2601.17548)
+- **"Do Not Mention This to the User": Detecting and Understanding Malicious Agent Skills in the Wild** (arXiv:2602.06547, USENIX Security 2026) — large-scale measurement: 98,380 skills analyzed, 157 confirmed malicious, 632 vulnerabilities. https://arxiv.org/abs/2602.06547
 - **snyk-labs/toxicskills-goof** — Real malicious skill samples for scanner testing. https://github.com/snyk-labs/toxicskills-goof
 - **openclaw/openclaw Issue #10827** — Skill supply-chain security: provenance tracking and permission manifests proposal. https://github.com/openclaw/openclaw/issues/10827
 

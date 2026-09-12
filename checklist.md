@@ -31,6 +31,7 @@ A practical checklist for evaluating AI agent skills against the [OWASP Agentic 
 | 2.4 | Has a Software Bill of Materials (SBOM) been generated for the skill and its dependencies? | SBOM available in a standard format (CycloneDX, SPDX) |
 | 2.5 | Are repository configuration files (hooks, `.claude/settings.json`, env overrides) treated as executable code with trust gates? | Config files reviewed and approved; not auto-executed on clone/open |
 | 2.6 | Has the recursive dependency tree been scanned (not just top-level skill files)? | Deep scan report covering transitive dependencies |
+| 2.7 | Before installation or configuration mutation, does the installer emit a reviewable pre-mutation receipt? | Privacy-safe plan showing skills/agents selected, config files, hooks, MCP servers, env/network access, backups, external commands, approver, and `writes_started=false` before any write occurs |
 
 **Motivated by**: Claude Code CVE-2025-59536 (CVSS 8.7) — repo config files trigger RCE at project open before user dialog. ClawHub had no automated scanning at time of ClawHavoc.
 
@@ -63,23 +64,30 @@ A practical checklist for evaluating AI agent skills against the [OWASP Agentic 
 | 4.4 | Has metadata been validated against a security schema? | Schema validation passed; no unexpected or undeclared fields |
 | 4.5 | Is the declared `risk_tier` consistent with the actual permission scope? | Cross-reference: a skill declaring `L0` (safe) with `shell: true` is a red flag |
 | 4.6 | Has brand/trademark impersonation been checked? | Skill name does not impersonate a known brand without affiliation |
+| 4.7 | Are all YAML files parsed with safe loaders (`yaml.safe_load`, not `yaml.load`)? | No unsafe YAML tags (`!!python/object`, `!!python/apply`) in skill files |
+| 4.8 | Are skill config files parsed and validated in an isolated subprocess or container before execution? | Deserialization happens in sandboxed context with no access to host resources |
+| 4.9 | Is an allowlist of permitted YAML/JSON keys enforced? | Unexpected or undeclared fields are rejected |
+| 4.10 | Are `requirements.txt`, `package.json`, and `pyproject.toml` within skill packages treated as untrusted code? | Dependency installation sandboxed; not executed with agent privileges |
+| 4.11 | Has schema validation (JSON Schema, Pydantic, or equivalent) been applied before any deserialization of skill-provided data? | Validation step confirmed in skill loader pipeline |
+| 4.12 | Is deserialization performed with minimum privileges (not elevated agent context)? | Privilege drop confirmed before parsing |
 
-**Motivated by**: Malicious "Google," "Solana Wallet Tracker," and "Polymarket Trader" skills on ClawHub — none affiliated with named brands. ASCII smuggling confirmed in Snyk's toxicskills-goof samples.
+**Motivated by**: Malicious "Google," "Solana Wallet Tracker," and "Polymarket Trader" skills on ClawHub — none affiliated with named brands. ASCII smuggling confirmed in Snyk's toxicskills-goof samples. PyYAML `!!python/object` allows arbitrary code execution on load; ClawHavoc staged downloads triggered a secondary payload during the dependency-install phase.
 
 ---
 
-## AST05 — Unsafe Deserialization `High`
+
+## AST05 — Untrusted External Instructions `High`
 
 | # | Check | Evidence to look for |
 |---|-------|---------------------|
-| 5.1 | Are all YAML files parsed with safe loaders (`yaml.safe_load`, not `yaml.load`)? | No unsafe YAML tags (`!!python/object`, `!!python/apply`) in skill files |
-| 5.2 | Are skill config files parsed and validated in an isolated subprocess or container before execution? | Deserialization happens in sandboxed context with no access to host resources |
-| 5.3 | Is an allowlist of permitted YAML/JSON keys enforced? | Unexpected or undeclared fields are rejected |
-| 5.4 | Are `requirements.txt`, `package.json`, and `pyproject.toml` within skill packages treated as untrusted code? | Dependency installation sandboxed; not executed with agent privileges |
-| 5.5 | Has schema validation (JSON Schema, Pydantic, or equivalent) been applied before any deserialization of skill-provided data? | Validation step confirmed in skill loader pipeline |
-| 5.6 | Is deserialization performed with minimum privileges (not elevated agent context)? | Privilege drop confirmed before parsing |
+| 5.1 | Does the skill reference external documentation, URLs, or remote files at runtime? | Inventory of every external reference in `SKILL.md` and bundled files |
+| 5.2 | Is each externally referenced document pinned to a content hash and re-verified on load? | Pin recorded at review time; load refuses unpinned or drifted content |
+| 5.3 | Could referenced documentation be inlined into the signed skill package instead of fetched? | Prefer inlined, reviewable copies; runtime fetch eliminated where possible |
+| 5.4 | Are runtime fetches restricted to a vetted allowlist of trusted, stable domains? | Egress allowlist enforced; no fetches from arbitrary or lapsed hosts |
+| 5.5 | Have references been followed transitively, including the chains they point to? | Full reference graph reviewed as part of the skill's attack surface |
+| 5.6 | Is there fleet-wide visibility of which skills fetch from which external sources? | Inventory enables tracing a compromised source to every affected skill |
 
-**Motivated by**: PyYAML `!!python/object` allows arbitrary code execution on load. ClawHavoc staged downloads: safe SKILL.md triggered secondary payload during dependency install phase.
+**Motivated by**: Anthropic's Agent Skills documentation warns that skills fetching external URLs risk content that "may contain malicious instructions" and can be "compromised if their external dependencies change over time." Air's research "The Story of Skills" distributed a skill with untrusted external instructions to 26,000 agents, showing a full proof of concept of potential agent takeover.
 
 ---
 
@@ -124,6 +132,7 @@ A practical checklist for evaluating AI agent skills against the [OWASP Agentic 
 | 8.4 | Was scanning performed in an isolated environment that prevents skill interference? | Scan environment instrumented; skill cannot detect or influence scanning context |
 | 8.5 | Has dynamic behavioral testing been performed in a sandboxed runtime? | Observed behavior log: file access, network calls, shell commands match declared scope |
 | 8.6 | Are scan results from skill-based scanners treated as advisory only (not sole gate)? | No reliance on a single scanner — especially not a scanner that is itself a skill |
+| 8.7 | Has the skill been scanned by an agent-skill-aware scanner before installation? | Pre-install scan report (e.g., NVIDIA SkillSpector) with risk score below threshold; critical/high findings triaged and resolved |
 
 **Motivated by**: 13.4% of critical-severity skills not caught by pattern matching (Snyk). ClawHub's "Skill Defender" scanner — itself a skill — was used by attackers as a false-trust signal. Alice Caterpillar flagged several published skills as actively malicious that were in use by over 6,000 OpenClaw users at time of detection ([Yahoo Finance](https://finance.yahoo.com/news/alice-releases-caterpillar-catching-malicious-191600442.html)).
 
@@ -176,11 +185,12 @@ The following open-source tools can be used to automate checklist verification:
 
 | Tool | Purpose | Relevant AST Risks |
 |------|---------|-------------------|
-| [Semgrep](https://github.com/semgrep/semgrep) | Code pattern analysis, custom rules | AST01, AST04, AST05 |
-| [Bandit](https://github.com/PyCQA/bandit) | Python-specific security analysis | AST01, AST05 |
+| [Semgrep](https://github.com/semgrep/semgrep) | Code pattern analysis, custom rules | AST01, AST04 |
+| [Bandit](https://github.com/PyCQA/bandit) | Python-specific security analysis | AST01, AST04 |
 | [Gitleaks](https://github.com/gitleaks/gitleaks) | Credential and secret detection | AST03, AST08 |
 | [TruffleHog](https://github.com/trufflesecurity/trufflehog) | Secret scanning across repos and history | AST03, AST08 |
 | [Caterpillar](https://github.com/alice-dot-io/caterpillar) | Dynamic SAST for AI agents — continuous behavioral analysis | AST01, AST03, AST08 |
+| [SkillSpector](https://github.com/NVIDIA/SkillSpector) | Agent-skill security scanner (NVIDIA, Apache-2.0) — static + optional LLM semantic, OSV.dev CVE lookups, SARIF output | AST01, AST02, AST03, AST04, AST08, AST09, AST10 |
 | [Snyk](https://snyk.io/) | Dependency and supply chain scanning | AST02, AST07 |
 | [Pipelock](https://github.com/luckyPipewrench/pipelock) | Runtime network proxy — DLP, injection detection, tool poisoning, process sandbox (Landlock/seccomp) | AST01, AST03, AST04, AST06, AST07, AST08 |
 
@@ -193,6 +203,7 @@ The following open-source tools can be used to automate checklist verification:
 See [trust-boundary-model.md](./trust-boundary-model.md) for full framework.
 
 - [ ] **B1**: Are agent permissions explicitly declared and minimal before session start?
+- [ ] **B1**: Do skill/plugin installers produce a pre-mutation receipt before writing agent settings, hooks, MCP config, commands, or instruction files?
 - [ ] **B1**: Is developer context (MEMORY.md, issue content) sanitized before agent ingestion?
 - [ ] **B2**: Are all AI-generated dependency names validated against live registries?
 - [ ] **B2**: Is AI-generated code passing SAST before repository commit?

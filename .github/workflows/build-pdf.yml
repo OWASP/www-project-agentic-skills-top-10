@@ -1,0 +1,49 @@
+name: Build Top 10 PDF
+
+# V1 publication review is being handled through the Google Doc only. Keep this
+# generator available for manual draft checks, but do not automatically publish
+# PDF artifacts from repository pushes or releases during the v1 review cycle.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install system libraries (WeasyPrint)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 \
+            libffi-dev libcairo2 fonts-dejavu-core
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip "weasyprint==69.0" "markdown>=3.6,<4"
+
+      - name: Build PDF
+        run: python tools/build_pdf.py --out dist/OWASP-Agentic-Skills-Top10.pdf
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OWASP-Agentic-Skills-Top10-pdf
+          path: dist/OWASP-Agentic-Skills-Top10.pdf
+          if-no-files-found: error
+
+      - name: Job summary
+        run: |
+          echo "### OWASP Agentic Skills Top 10 — PDF built :page_facing_up:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Download **OWASP-Agentic-Skills-Top10-pdf** from the *Artifacts* section of this run." >> "$GITHUB_STEP_SUMMARY"

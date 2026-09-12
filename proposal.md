@@ -21,7 +21,7 @@
 ## Project Links (Planned)
 
 - **GitHub**: [github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
-- **OWASP Page**: [owasp.org/projects/agentic-skills-top-10](https://owasp.org/projects/agentic-skills-top-10)
+- **OWASP Page**: [owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10/)
 
 
 ## Goals & Success Metrics

@@ -88,4 +88,40 @@ Multi-agent pipeline means a compromised upstream skill propagates malicious ins
 
 ---
 
-*Last updated: March 2026*
+## Execution Receipts: Implementation Guidance
+
+Audit logging (Mitigation 4) requires tamper-evident records to be compliance-grade. A log an operator controls can be edited after the fact; a receipt a verifier can independently check cannot.
+
+### Bilateral Receipt Pattern
+
+Every skill execution produces two records, linked by a content-derived identifier:
+
+**Admission receipt** — produced before execution:
+- `attempt_id`: shared identifier across both records
+- `agent_id`: identity of the executing agent
+- `action_type`: the skill or tool being invoked
+- `scope`: resource boundary (e.g., `file:read`, `email:send`)
+- `policy_version`: the governance policy in effect at decision time
+- `decision`: `ALLOW`, `DENY`, or `ESCALATE`
+- `timestamp_ms`: epoch milliseconds (integer)
+
+**Outcome receipt** — produced after execution:
+- `attempt_id`: same as admission receipt
+- `action_ref`: content-derived join key, independently recomputable
+- `terminal_state`: `COMMITTED` or `FAILED`
+- `signature`: over the canonical field set
+
+### Key Properties
+
+**Denied-before-dispatch carries equal audit weight**: a DENY decision with no execution should produce an admission receipt. Absence of an outcome receipt for a given `attempt_id` proves the action was blocked.
+
+**`attempt_id` is mandatory in both records**: without it, an auditor cannot confirm the admitted action and the executed action were the same.
+
+**`policy_version` must be bound at decision time**: a policy change between admission and execution creates an audit gap if the version is not recorded with the decision.
+
+### EU AI Act Article 12 Relevance
+
+Article 12 (enforcement August 2, 2026) requires high-risk AI systems to maintain logs enabling post-hoc verification of system operation. Bilateral receipts with independent verifiability satisfy this requirement in a way that operator-controlled logs do not: a regulator or auditor can verify the receipt without access to the operator's infrastructure.
+
+
+*Last updated: June 2026*

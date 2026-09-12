@@ -3,3 +3,6 @@
 /favicon.ico
 _site/
 improvement.md
+.gstack/
+dist/
+__pycache__/

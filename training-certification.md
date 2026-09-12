@@ -1,4 +1,5 @@
 ---
+published: false
 layout: col-sidebar
 title: Training & Certification Program
 tags: training, certification, education

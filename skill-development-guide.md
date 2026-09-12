@@ -206,6 +206,40 @@ class SecureStorage:
 - [ ] Documentation is complete
 - [ ] Signature keys are secure
 
+### Pre-Mutation Receipts for Installers and Hooks
+
+Skill and plugin installers increasingly wire several agent surfaces at once: settings files, hooks, commands, MCP servers, subagents, rules, and instruction files. Treat that installer as a supply-chain boundary, not as ordinary setup glue. Before the first write, emit a small receipt that can be reviewed, logged, or declined.
+
+A useful receipt is privacy-safe: it records what will be wired, not raw prompts, secrets, source code, full transcripts, or command output.
+
+```json
+{
+  "schema": "agent.install.plan.v1",
+  "installer": "example-skill-installer",
+  "target_platforms": ["Claude Code", "OpenClaw"],
+  "resources_planned": {
+    "skills": ["security-review"],
+    "hooks": ["PreToolUse: secret-file guard"],
+    "mcp_servers": ["github"],
+    "instruction_files": ["AGENTS.md"],
+    "settings_files": [".claude/settings.json"]
+  },
+  "external_commands_planned": ["npm install --package-lock-only"],
+  "network_after_install": ["api.github.com"],
+  "backups_planned": [".claude/settings.json.bak"],
+  "writes_started": false,
+  "next_safe_action": "review plan, then run installer with --apply"
+}
+```
+
+Implementation guidance:
+
+- Provide a `--plan` or `--dry-run` mode that exits before writing.
+- Show the effective mode (`plan`, `apply`, `repair`) and require an explicit transition to mutation.
+- Map every post-install change back to a planned write in the receipt.
+- Exclude secrets, environment dumps, raw prompts, transcripts, customer data, source code, and raw tool output.
+- Store the receipt with the skill inventory or approval record for later audit.
+
 ## Platform-Specific Guidelines
 
 ### OpenClaw Skills

@@ -69,6 +69,10 @@ for file in *.md ast*.md; do
         # Look for markdown links to .md files
         links=$(grep -o '\[.*\]([^)]*\.md)' "$file" | sed 's/.*](\([^)]*\.md\).*/\1/')
         for link in $links; do
+            # Skip external URLs — this check validates internal links only
+            case "$link" in
+                http://*|https://*|//*|mailto:*) continue ;;
+            esac
             # Remove anchor links
             clean_link=$(echo "$link" | cut -d'#' -f1)
             if [ ! -f "$clean_link" ]; then

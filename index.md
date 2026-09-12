@@ -19,11 +19,17 @@ description: "Comprehensive guide to the top 10 security risks in AI agent skill
 
 **Breadcrumb:** [OWASP](https://owasp.org/) > [Projects](https://owasp.org/projects/) > Agentic Skills Top 10
 
+**Public review (v1):** Please review and comment on the merged v1 draft in the [Google Doc](https://docs.google.com/document/d/1A5d2OnT8h8oZo7MSde4TOT3sg3AkXJgTGQwVrAga1aE/edit?usp=drivesdk). Previous GitHub issues and pull requests remain available for historical reference, but v1 publication comments should be submitted in the Google Doc.
+
+**Tutorial videos:** Use the [AST10 tutorial video library](/www-project-agentic-skills-top-10/videos?video=ast01) to play each risk video from selectable cards or share direct links with `?video=ast01` through `?video=ast10`.
+
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [📊 Visual Top 10 Overview](/www-project-agentic-skills-top-10/top10)
+- [Tutorial Videos](/www-project-agentic-skills-top-10/videos?video=ast01)
 - [The Problem: A Crisis Already in Progress](#the-problem-a-crisis-already-in-progress)
 - [What Are Agentic Skills?](#what-are-agentic-skills)
 - [Incident Timeline (2026)](#incident-timeline-2026)
@@ -37,7 +43,6 @@ description: "Comprehensive guide to the top 10 security risks in AI agent skill
 - [Skill Development Guide](skill-development-guide.md)
 - [Platform Comparison](platform-comparison.md)
 - [Community & Contribution](community-contribution.md)
-- [Training & Certification](training-certification.md)
 - [Incident Response Playbook](incident-response.md)
 - [Security Metrics & Monitoring](metrics-monitoring.md)
 - [Getting Started](#getting-started)
@@ -192,24 +197,47 @@ The following is a condensed timeline of confirmed real-world incidents involvin
 
 - **NIST / CAISI**: Federal Register RFI on AI Agent Security (published Jan 8, 2026, comments closed Mar 9, 2026) — the first formal US government solicitation specifically addressing AI agent security risks.
 
+### June 2026
+
+- **Jun 3**: Trail of Bits publishes "The Sorry State of Skill Distribution" — every public skill scanner tested (ClawHub's VirusTotal + LLM guard model, Cisco's `skill-scanner`, the skills.sh scanners) is bypassed in under an hour, via payload padding that forces truncation, logic hidden in binary and archive formats, and prompt-injecting the scanner's own LLM judge.
+
+- **Jun 22–24**: Air Security publishes "The Story of Skills" and "The Circus of Skills" — a researcher-built malicious skill reaches over 26,000 agents while every scanner clears it, its payload served from an attacker-controlled external documentation URL; a follow-up scan of 142,836 live skills finds 17,822 (12.4%, 6.7M installs) resting on at least one untrusted external instruction source.
+
+### July 2026
+
+- **Jul 2**: Air Security publishes "SkillJacking" — 925 skills serving ~134K agents sit on instantly hijackable dependencies (deleted GitHub accounts, unregistered packages, expired domains, freed cloud-app slots); researchers take over the most popular video-generation skill on skills.sh (11,483 installs) by re-registering its deleted owner account.
+
 ---
 
 ## Summary Table
 
 Each of the 10 risks is documented in a separate file. Click on the risk name to view the full details.
 
-| # | Risk | Severity | Platforms Affected | Key Mitigation | Real-World Evidence |
-|---|------|----------|--------------------|----------------|---------------------|
-| [AST01](ast01.md) | Malicious Skills | Critical | All | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
-| [AST02](ast02.md) | Supply Chain Compromise | Critical | All | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
-| [AST03](ast03.md) | Over-Privileged Skills | High | All | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
-| [AST04](ast04.md) | Insecure Metadata | High | All | Static analysis, manifest linting | Fake "Google" skill impersonation (ClawHub) |
-| [AST05](ast05.md) | Unsafe Deserialization | High | All | Safe parsers, sandboxed loading | YAML-based payload delivery in SKILL.md |
-| [AST06](ast06.md) | Weak Isolation | High | All | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
-| [AST07](ast07.md) | Update Drift | Medium | All | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
-| [AST08](ast08.md) | Poor Scanning | Medium | All | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
-| [AST09](ast09.md) | No Governance | Medium | All | Skill inventories, agentic identity controls | 53K exposed instances with no SOC visibility |
-| [AST10](ast10.md) | Cross-Platform Reuse | Medium | All | Universal YAML format | Malicious skills ported across ClawHub, skills.sh |
+> 📊 **Prefer a visual map?** See the **[Top 10 Visual Overview](/www-project-agentic-skills-top-10/top10)** — a skill-lifecycle diagram plus a colour-coded card for every risk.
+
+<div class="ast-summary-table" markdown="1" style="overflow-x:auto">
+
+| # | Risk | Severity | Key Mitigation | Real-World Evidence |
+|---|------|----------|----------------|---------------------|
+| [AST01](ast01.md) | Malicious Skills | Critical | Merkle root signing, registry scanning | ClawHavoc (1,184 skills), ToxicSkills (76 payloads) |
+| [AST02](ast02.md) | Supply Chain Compromise | Critical | Registry transparency, provenance tracking | ClawHub collapse, Claude Code CVE-2025-59536 |
+| [AST03](ast03.md) | Over-Privileged Skills | High | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
+| [AST04](ast04.md) | Insecure Metadata | High | Static analysis, safe parsers, sandboxed loading | Fake "Google" skill impersonation; YAML payload delivery in SKILL.md |
+| [AST05](ast05.md) | Untrusted External Instructions | High | Source inventory, content pinning, continuous rescanning | Air PoC bypassed all scanners; 26,000 agents at risk |
+| [AST06](ast06.md) | Weak Isolation | High | Containerization, Docker sandboxing | OpenClaw host-mode execution, 135K exposed instances |
+| [AST07](ast07.md) | Update Drift | Medium | Immutable pinning, hash verification | ClawJacked (CVE-2026-28363), patch-lag exploitation |
+| [AST08](ast08.md) | Poor Scanning | Medium | Semantic + behavioral multi-tool pipeline | Pattern-matcher bypass via natural-language injection |
+| [AST09](ast09.md) | No Governance | Medium | Skill inventories, agentic identity controls | 53K exposed instances with no SOC visibility |
+| [AST10](ast10.md) | Cross-Platform Reuse | Medium | Universal YAML format | Malicious skills ported across ClawHub, skills.sh |
+
+</div>
+
+<style>
+.ast-summary-table table th:nth-child(2),
+.ast-summary-table table td:nth-child(2) { min-width: 180px; }
+.ast-summary-table table th:nth-child(3),
+.ast-summary-table table td:nth-child(3) { min-width: 90px; }
+</style>
 
 ---
 
@@ -240,8 +268,8 @@ graph TD
 | AST01 | Malicious Skills | 7, 3, 6, 4, 5 |
 | AST02 | Supply Chain Compromise | 7, 3, 6, 4 |
 | AST03 | Over-Privileged Skills | 6, 4, 3, 7 |
-| AST04 | Insecure Metadata | 7, 3, 6 |
-| AST05 | Unsafe Deserialization | 3, 4, 6 |
+| AST04 | Insecure Metadata | 7, 3, 4, 6 |
+| AST05 | Untrusted External Instructions | 3, 2, 7, 6 |
 | AST06 | Weak Isolation | 4, 6, 3 |
 | AST07 | Update Drift | 4, 6, 7 |
 | AST08 | Poor Scanning | 5, 6, 3 |
@@ -364,7 +392,7 @@ changelog:
 
 ### For Security Teams
 
-1. Review this document and the [complete Top 10 detail pages](top10.md) for full risk descriptions, attack scenarios, and OWASP mappings.
+1. Review this document and the [complete Top 10 detail pages](/www-project-agentic-skills-top-10/top10) for full risk descriptions, attack scenarios, and OWASP mappings.
 2. Conduct a skill inventory across all agent platforms in use — treat this as an immediate priority given active exploitation confirmed in 2026.
 3. Use the [Security Assessment Checklist](checklist.md) for reviewing installed skills.
 4. Implement the governance framework described in AST09: inventory, approval workflow, audit logging, and agentic identity controls.
@@ -373,7 +401,7 @@ changelog:
 ### For Skill Developers
 
 1. **Least privilege**: Declare a minimal permission manifest; request only what your skill genuinely needs (AST03).
-2. **Safe parsing**: Use safe YAML/JSON loaders; never deserialize untrusted skill configs without sandboxing (AST05).
+2. **Safe parsing**: Use safe YAML/JSON loaders; never deserialize untrusted skill configs without sandboxing (AST04).
 3. **Sign your skills**: Implement ed25519 signing before publication; include `content_hash` in your manifest (AST01/AST02).
 4. **Pin dependencies**: Lock all nested dependencies to immutable hashes — never version ranges (AST07).
 5. **Honest metadata**: Accurately declare `risk_tier`, permissions, and `requires`; do not understate scope (AST04).
@@ -382,7 +410,7 @@ changelog:
 ### For Platform Developers
 
 1. **Default sandbox**: Make container/Docker isolation the default for skill execution; make host-mode an explicit opt-in (AST06).
-2. **Safe deserialization**: Disable dangerous YAML/JSON tags in all skill loaders by default; validate against a schema before execution (AST05).
+2. **Safe deserialization**: Disable dangerous YAML/JSON tags in all skill loaders by default; validate against a schema before execution (AST04).
 3. **Registry scanning**: Implement behavioral scanning at publish time and at install time; pattern matching alone is insufficient (AST08).
 4. **Provenance infrastructure**: Support the Universal Skill Format; implement Merkle-root transparency logs for your registry (AST01/AST02/AST10).
 5. **Audit logging**: Emit structured logs for all skill actions (file access, shell commands, network calls, memory writes) (AST09).
@@ -394,11 +422,11 @@ changelog:
 
 | Role | Primary Concerns | Key AST Risks |
 |------|-----------------|---------------|
-| **AI Platform Developers** | Secure skill runtimes, registries, installers, and CI/CD integration | AST01, AST02, AST05, AST06, AST08 |
-| **AppSec / Product Security** | Govern skills in enterprise deployments; review skill PRs | AST03, AST04, AST07, AST09 |
+| **AI Platform Developers** | Secure skill runtimes, registries, installers, and CI/CD integration | AST01, AST02, AST04, AST05, AST06, AST08 |
+| **AppSec / Product Security** | Govern skills in enterprise deployments; review skill PRs | AST03, AST04, AST05, AST07, AST09 |
 | **Skill Authors** | Write safe manifests, scripts, and metadata; ship signable packages | AST03, AST04, AST05, AST07 |
-| **GRC / Compliance** | Map skill risks to NIST AI RMF, ISO 42001, EU AI Act | AST09, AST10 |
-| **CISOs / Security Leadership** | Understand blast radius, incident scope, and governance gaps | AST02, AST06, AST09 |
+| **GRC / Compliance** | Map skill risks to NIST AI RMF, ISO 42001, EU AI Act | AST05, AST09, AST10 |
+| **CISOs / Security Leadership** | Understand blast radius, incident scope, and governance gaps | AST02, AST05, AST06, AST09 |
 | **Developers / Engineers** | Safely install and use skills without introducing unreviewed risk | AST01, AST02, AST07 |
 
 ---
@@ -423,18 +451,45 @@ changelog:
 
 ### Project Lead
 
-**Ken Huang** — OWASP AIVSS Lead, Agentic AI Security Researcher
-- OpenClaw threat modeling and skill security scanning research
-- RSA / OWASP conference speaker on AI security
+<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;margin:0.75rem 0 0.5rem;">
+  <a href="https://www.linkedin.com/in/kenhuang8" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.4rem;min-width:100px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/ken-huang.jpg" alt="Ken Huang" width="72" height="72" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;">Ken Huang</span>
+  </a>
+</div>
 
 ### Co-Leads
 
-- **Akram Sheriff**
-- **Aonan Guan**
-- **Bhavya Gupta**
-- **Fabio Cerullo**
-- **Hammad Atta**
-- **Iftach Orr**
+<div style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:flex-start;margin:0.75rem 0;">
+  <a href="https://www.linkedin.com/in/hammad-a-51048729/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/hammad-atta.jpg" alt="Hammad Atta" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Hammad Atta</span>
+  </a>
+  <a href="https://www.linkedin.com/in/fcerullo/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/fabio-cerullo.png" alt="Fabio Cerullo" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Fabio Cerullo</span>
+  </a>
+  <a href="https://www.linkedin.com/in/aonanguan/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/aonan-guan.jpg" alt="Aonan Guan" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Aonan Guan</span>
+  </a>
+  <a href="https://www.linkedin.com/in/bhavyagpt/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/bhavya-gupta.png" alt="Bhavya Gupta" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Bhavya Gupta</span>
+  </a>
+  <a href="https://www.linkedin.com/in/niv-hoffman/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/niv-hoffman.png" alt="Niv Hoffman" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Niv Hoffman</span>
+  </a>
+  <a href="https://gr.linkedin.com/in/iftacho" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/iftach-orr.png" alt="Iftach Orr" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Iftach Orr</span>
+  </a>
+  <a href="https://www.linkedin.com/in/akram-sheriff-81749316/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;gap:0.35rem;min-width:88px;">
+    <img src="/www-project-agentic-skills-top-10/assets/images/leaders/akram-sheriff.jpg" alt="Akram Sheriff" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;display:block;" />
+    <span style="font-weight:600;text-align:center;font-size:0.9rem;">Akram Sheriff</span>
+  </a>
+</div>
 
 ### Contribution Model
 
@@ -466,6 +521,9 @@ changelog:
 - **SecurityScorecard** (Feb 2026) — 135,000+ OpenClaw instances publicly exposed; 53,000+ correlated with prior breach activity.
 - **Snyk: 280+ Leaky Skills** (Feb 5, 2026) — API key and PII exposure across ClawHub.
 - **Snyk: Why Your Skill Scanner Is Just False Security** (Feb 11, 2026) — Pattern-matching scanner limitations.
+- **Air Security: The Story of Skills** (Jun 22, 2026) — Researcher-built malicious skill reached 26,000+ agents via a trusted marketplace and social media; every scanner cleared it.
+- **Air Security: The Circus of Skills** (Jun 24, 2026) — 142,836 skills scanned for untrusted external instruction sources; 17,822 (12.4%, 6.7M installs) affected.
+- **Air Security: SkillJacking** (Jul 2, 2026) — 925 skills resting on instantly hijackable dependencies (~134K agents); top skills.sh video-generation skill taken over via a deleted GitHub account.
 
 ### Industry Reports
 
@@ -489,6 +547,7 @@ changelog:
 ### Academic and Technical
 
 - **"Prompt Injection Attacks on Agentic Coding Assistants"** (arXiv:2601.17548)
+- **"Do Not Mention This to the User": Detecting and Understanding Malicious Agent Skills in the Wild** (arXiv:2602.06547, USENIX Security 2026)
 - **snyk-labs/toxicskills-goof** — Real malicious skill samples for scanner testing.
 - **openclaw/openclaw Issue #10827** — Skill supply-chain security: provenance tracking and permission manifests proposal.
 
@@ -497,8 +556,8 @@ changelog:
 ## Resources
 
 - **GitHub**: [github.com/OWASP/www-project-agentic-skills-top-10](https://github.com/OWASP/www-project-agentic-skills-top-10)
-- **OWASP Project Page**: [owasp.org/projects/agentic-skills-top-10](https://owasp.org/projects/agentic-skills-top-10)
-- **Full Risk Documentation**: [top10.md](top10.md)
+- **OWASP Project Page**: [owasp.org/www-project-agentic-skills-top-10](https://owasp.org/www-project-agentic-skills-top-10/)
+- **Full Risk Documentation**: [Visual Top 10 Overview](/www-project-agentic-skills-top-10/top10)
 - **Project Proposal**: [proposal.md](proposal.md)
 - **Security Assessment Checklist**: [checklist.md](checklist.md)
 - **Universal Skill Format Specification**: [universal-skill-format.md](universal-skill-format.md)

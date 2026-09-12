@@ -76,7 +76,7 @@ Locally-bound agent WebSocket is reachable from any browser tab; malicious site 
 - **AST01 (Malicious Skills)**: Weak isolation allows malicious skills to escape sandboxes and access host resources.
 - **AST02 (Supply Chain Compromise)**: Compromised skills can exploit isolation weaknesses to persist.
 - **AST03 (Over-Privileged Skills)**: Host-mode execution bypasses permission controls entirely.
-- **AST05 (Unsafe Deserialization)**: Isolation failures can lead to code execution from deserialized data.
+- **AST04 (Insecure Metadata)**: Isolation failures can lead to code execution from deserialized data.
 - **AST09 (No Governance)**: Lack of isolation enforcement enables shadow deployments.
 
 ## References

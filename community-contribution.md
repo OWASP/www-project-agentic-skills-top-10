@@ -85,17 +85,17 @@ git push origin improve/documentation
 
 **Featured Tools**:
 
-#### AST10 Scanner
+#### Skill scanner rule contributions
 ```bash
-# Contribute to scanner development
-git clone https://github.com/OWASP/ast10-scanner
-cd ast10-scanner
+# Pick an active scanner project used by this guide
+git clone https://github.com/NVIDIA/SkillSpector
+cd SkillSpector
 
 # Add new detection rules
-vim rules/ast01_detection.py
+vim src/skillspector/nodes/analyzers/static_patterns_prompt_injection.py
 
 # Add test cases
-vim tests/test_ast01.py
+vim tests/nodes/analyzers/test_static_patterns.py
 
 # Submit pull request
 ```
@@ -364,7 +364,7 @@ Contributing significantly can lead to:
 
 **Questions?**
 - Check [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines
-- Join [GitHub Discussions](https://github.com/OWASP/www-project-agentic-skills-top-10/discussions)
+- Open a [GitHub issue](https://github.com/OWASP/www-project-agentic-skills-top-10/issues)
 - Email: contributors@owasp.org
 
 Welcome to the OWASP AST10 community! 🛡️

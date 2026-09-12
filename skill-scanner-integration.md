@@ -18,26 +18,74 @@ Automated skill scanning is essential for detecting security vulnerabilities bef
 
 ## Supported Scanning Tools
 
-### AST10-Scanner
-The official OWASP AST10 scanner provides comprehensive vulnerability detection:
+### NVIDIA SkillSpector (open source, recommended)
+
+[SkillSpector](https://github.com/NVIDIA/SkillSpector) (Apache-2.0) is an agent-skill-aware
+security scanner. It runs fast static checks plus optional LLM semantic analysis and returns a
+0–100 risk score with severity labels. It accepts Git repos, URLs, zip files, directories, or
+single files, and emits terminal, JSON, Markdown, or **SARIF** reports.
 
 ```bash
-# Install AST10 Scanner
-npm install -g @owasp/ast10-scanner
+# Install (Python 3.12+)
+git clone https://github.com/NVIDIA/SkillSpector && cd SkillSpector
+make install
 
-# Scan a skill file
-ast10-scan skill.yaml --output report.json
+# Static-only scan of a local skill (no API key required)
+skillspector scan ./my-skill/ --no-llm
 
-# Scan with custom rules
-ast10-scan skill.yaml --rules custom-rules.json --severity high
+# Full scan with optional LLM semantic analysis
+export SKILLSPECTOR_PROVIDER=anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+skillspector scan https://github.com/user/my-skill
+
+# Emit SARIF for CI / code scanning
+skillspector scan ./my-skill/ --no-llm --format sarif --output skillspector.sarif
 ```
 
-#### Features
-- AST10 risk pattern detection
-- Permission analysis
-- Code injection vulnerability scanning
-- Supply chain risk assessment
-- MAESTRO framework compliance checking
+Run it without installing Python via the project's Dockerfile:
+
+```bash
+docker run --rm -v "$PWD:/scan" skillspector scan ./my-skill/ --no-llm
+```
+
+#### GitHub Actions — SkillSpector gate with code-scanning upload
+
+```yaml
+name: Skill Security Scan
+on:
+  pull_request:
+    paths: ['skills/**']
+
+permissions:
+  contents: read
+  security-events: write   # required to upload SARIF
+
+jobs:
+  skillspector:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install git+https://github.com/NVIDIA/SkillSpector
+      - name: Scan skills
+        run: skillspector scan ./skills --no-llm --format sarif --output skillspector.sarif
+      - name: Upload to code scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: skillspector.sarif
+```
+
+Because SkillSpector emits SARIF v2.1.0, findings surface in the GitHub **Security → Code
+scanning** tab and can gate merges; the 0–100 risk score is a natural threshold for an approval
+workflow (see AST09). It maps to **AST01, AST02, AST03, AST04, AST08, AST09, and AST10** — see
+[solutions.md](solutions.md) for the full coverage breakdown.
+
+### OWASP AST10 Scanner Status
+
+An OWASP-maintained `@owasp/ast10-scanner` package is not currently published.
+Until one exists, use the open-source scanners listed above and map their
+findings to the AST01-AST10 taxonomy in reports and CI output.
 
 ### Platform-Specific Scanners
 
@@ -96,33 +144,24 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '18'
+          python-version: '3.12'
 
-      - name: Install AST10 Scanner
-        run: npm install -g @owasp/ast10-scanner
+      - name: Install SkillSpector
+        run: pip install git+https://github.com/NVIDIA/SkillSpector
 
       - name: Scan Skills
-        run: |
-          find skills -name "*.md" -o -name "*.json" -o -name "*.yaml" | \
-          xargs ast10-scan --output security-report.json
+        run: skillspector scan ./skills --no-llm --format sarif --output skillspector.sarif
 
       - name: Upload Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: security-report.json
-
-      - name: Fail on High Severity
-        run: |
-          if jq '.vulnerabilities[] | select(.severity == "high")' security-report.json | grep -q .; then
-            echo "High severity vulnerabilities found!"
-            exit 1
-          fi
+          path: skillspector.sarif
 ```
 
 #### GitLab CI Example
@@ -132,11 +171,11 @@ stages:
 
 security_scan:
   stage: security
-  image: node:18
+  image: python:3.12
   before_script:
-    - npm install -g @owasp/ast10-scanner
+    - pip install git+https://github.com/NVIDIA/SkillSpector
   script:
-    - find skills -name "*.md" -o -name "*.json" -o -name "*.yaml" | xargs ast10-scan --gitlab-report
+    - skillspector scan ./skills --no-llm --format sarif --output gl-sast-report.json
   artifacts:
     reports:
       sast: gl-sast-report.json
@@ -153,12 +192,13 @@ pip install pre-commit
 
 # Create .pre-commit-config.yaml
 repos:
-  - repo: https://github.com/owasp/ast10-scanner
-    rev: v1.0.0
+  - repo: local
     hooks:
-      - id: ast10-scan
+      - id: skillspector-scan
+        name: SkillSpector scan
+        entry: skillspector scan . --no-llm
+        language: system
         files: \.(md|json|yaml)$
-        args: [--severity, high]
 ```
 
 ### Registry Integration
@@ -247,9 +287,9 @@ class SkillScanner:
         if 'sudo' in content or 'admin' in content.lower():
             self.add_vulnerability('AST03', 'medium', 'Privilege escalation patterns detected')
 
-        # AST05: Input validation
+        # AST04: Unsafe deserialization / code injection
         if 'eval(' in content or 'exec(' in content:
-            self.add_vulnerability('AST05', 'high', 'Code injection vulnerabilities detected')
+            self.add_vulnerability('AST04', 'high', 'Code injection vulnerabilities detected')
 
     def scan_json(self, data: Dict):
         """Scan JSON skill files"""
@@ -348,6 +388,48 @@ print(json.dumps(results, indent=2))
 }
 ```
 
+### Multi-Scanner Report Interoperability
+
+No single scanner covers every AST10 risk: a drift detector flags that a skill's capability surface changed, a static content scanner flags hostile patterns, and an agentic-threat-rule engine flags behavioral exploits. When several scanners run over the same skill, their findings should compose into one verdict without re-scanning or manual correlation.
+
+The SARIF `artifacts[]` + `hashes` mechanism makes this deterministic. A scanner that emits a content digest for each scanned file lets a consumer (a registry, a PR bot, a dashboard) join findings from independent tools on that digest:
+
+- `run.artifacts[]` — one entry per scanned file, each carrying `location.uri` and `hashes["sha-256"]` (bare lowercase 64-char hex of the file bytes). The SHA-256 is the **join key**: two reports describe the same artifact iff their digests match.
+- `result … physicalLocation.artifactLocation.index` — every finding points into `artifacts[]`, so it resolves to the exact bytes it was raised against and self-invalidates when the file changes.
+- `result.properties.layer` — a short string naming the class of scanner that produced the finding (e.g. `drift`, `content`, `atr`), so merged findings stay attributable. Consumers should treat an unknown layer as opaque rather than dropping the finding.
+- `run.tool.driver.name` + `version` — provenance, so a merged report records which tool and version produced each layer.
+
+A consumer merges N reports by grouping `artifacts[]` across runs on `hashes["sha-256"]`, attaching each run's results via `artifactLocation.index`, and partitioning by `layer` — no content re-hashing and no coordination between the tools.
+
+```json
+{
+  "runs": [
+    {
+      "tool": { "driver": { "name": "example-drift-scanner", "version": "1.2.0" } },
+      "artifacts": [
+        {
+          "location": { "uri": "SKILL.md" },
+          "hashes": { "sha-256": "64f9e18e...ec3395a" }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "AST07",
+          "level": "error",
+          "message": { "text": "Capability surface changed: network egress added" },
+          "locations": [
+            { "physicalLocation": { "artifactLocation": { "uri": "SKILL.md", "index": 0 } } }
+          ],
+          "properties": { "layer": "drift" }
+        }
+      ]
+    }
+  ]
+}
+```
+
+This pattern is descriptive about reporting, not prescriptive about detection — it says nothing about *how* a tool finds an issue, only how findings bind to the bytes they concern and the layer they belong to, which is the minimum needed for cross-tool composition.
+
 ## Best Practices
 
 ### Scanner Implementation
@@ -370,16 +452,15 @@ print(json.dumps(results, indent=2))
 
 ## Available Tools and Resources
 
-- **AST10 Scanner**: [GitHub Repository](https://github.com/OWASP/ast10-scanner)
-- **ClawHub Security Tools**: [Documentation](https://clawhub.dev/security)
+- **NVIDIA SkillSpector**: [GitHub Repository](https://github.com/NVIDIA/SkillSpector) — open-source (Apache-2.0) agent-skill security scanner
 - **VS Code Security Linting**: [Marketplace](https://marketplace.visualstudio.com)
 
 ## Contributing
 
 To contribute new scanning rules or improve existing scanners:
 
-1. Fork the AST10 Scanner repository
-2. Add your rule or improvement
+1. Fork the scanner repository you use
+2. Add your rule, detector, or report-mapping improvement
 3. Submit a pull request with test cases
 4. Ensure backward compatibility
 

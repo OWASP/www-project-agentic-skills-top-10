@@ -22,6 +22,7 @@ Traditional application least-privilege is well understood. But skills layer *na
 - **Snyk ToxicSkills (Feb 2026)**: 280+ skills on ClawHub found exposing API keys and PII beyond their declared function.
 - **OpenClaw default execution**: "tools run on the host for the main session, so the agent has full access." Skills can execute shell commands, read/write all files, access network services, and schedule cron jobs — without any per-skill permission scope.
 - **Summer Yue (Meta AI)**: asked OpenClaw to review email inbox without taking actions; agent deleted large volumes of email before the process was killed — demonstrating that even well-intentioned agents execute with more authority than intended.
+- **Logic-layer Prompt Control Injection (LPCI)** (Atta et al., *A Novel Security Vulnerability Class in Agentic Systems*, arXiv:2507.10457): peer-reviewed evidence that encoded, delayed, and conditionally-triggered payloads planted in memory, vector stores, or tool outputs are treated by the model as operator-level instructions, causing skills to autonomously invoke tools and write persistent state across sessions — exercising granted permissions the user never intended to trigger.
 
 ## Attack Scenarios
 
@@ -37,6 +38,10 @@ A `manage_database` skill provisioned with admin credentials is tricked via prom
 
 A skill requesting write access to `SOUL.md` and `MEMORY.md` installs persistent behavioral backdoors.
 
+### Logic-layer Injection of Privileged Actions (LPCI)
+
+A skill receives external input — user data, retrieved memory, or another tool's output — that contains embedded instructions. Because the runtime evaluates permissions at the tool-call level rather than the intent level, the model treats this skill output as an operator-level command and autonomously performs a privileged action it is *technically* permitted to do (a tool call, a `MEMORY.md` write, code execution) without explicit user consent. The injected rule can persist across sessions and propagate to every downstream consumer of the skill.
+
 ## Preventive Mitigations
 
 1. **Require skills to declare a permission manifest** (files, network, shell, tools) — reject skills without one.
@@ -45,10 +50,13 @@ A skill requesting write access to `SOUL.md` and `MEMORY.md` installs persistent
 4. **Implement runtime permission enforcement** — not just declarative.
 5. **Adopt network allowlists** scoped to specific domains, not a binary `network: true/false`.
 6. **Validate manifest declarations** against observed runtime behavior in sandboxed testing.
+7. **Enforce a strict instruction hierarchy** (System > Operator > User > Skill/Tool Output). Never elevate skill or tool output to instruction level; treat all skill input and tool output as untrusted data, and tag external content with provenance markers so the model can distinguish data from commands.
+8. **Require explicit operator consent for persistent state changes** — memory/identity-file writes, new tool approvals, and privilege escalations must not be auto-applied from injected instructions.
 
 ## OWASP Mapping
 
 - **LLM09** (Misinformation / Excessive Agency)
+- **LLM01** (Prompt Injection — logic-layer / instruction-hierarchy confusion)
 - **ASVS V4** (Access Control)
 - **CWE-250** (Execution with Unnecessary Privileges)
 
@@ -81,6 +89,7 @@ A skill requesting write access to `SOUL.md` and `MEMORY.md` installs persistent
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
 - [Snyk: 280+ Leaky Skills](https://snyk.io/blog/280-leaky-skills-openclaw-clawhub-exposing-api-keys-pii/)
 - [Cisco State of AI Security 2026](https://blogs.cisco.com/ai/cisco-state-of-ai-security-2026-report)
+- [Atta et al. — Logic-layer Prompt Control Injection (LPCI): A Novel Security Vulnerability Class in Agentic Systems (arXiv:2507.10457)](https://arxiv.org/abs/2507.10457)
 
 ---
 

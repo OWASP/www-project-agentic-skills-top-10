@@ -1,0 +1,9 @@
+{
+  "attempt_id": "862404587c4a1e4d253b358346de47d6edc45ed81681b566cf50323c0f5fd7a0",
+  "agent_id": "agent:example:ast09-deny-0001",
+  "action_type": "filesystem.delete",
+  "scope": "file:delete:TAMPERED",
+  "policy_version": "governance-policy-1.4.0",
+  "decision": "DENY",
+  "timestamp_ms": 1751587200000
+}
