@@ -81,6 +81,27 @@ scanning** tab and can gate merges; the 0–100 risk score is a natural threshol
 workflow (see AST09). It maps to **AST01, AST02, AST03, AST04, AST08, AST09, and AST10** — see
 [solutions.md](solutions.md) for the full coverage breakdown.
 
+### LintLang (structural instruction linting)
+
+[LintLang](https://github.com/hermes-labs-ai/lintlang) (Apache-2.0) performs deterministic,
+local static analysis of natural-language agent instructions. It complements security scanners by
+flagging structural review concerns such as vague or overlapping tool descriptions, missing
+operational limits, conflicting output formats, and tool schema-description inconsistencies.
+
+```bash
+# Run once without installing; replace SKILL.md with the instruction path to review
+uvx --from lintlang==0.6.0 lintlang scan SKILL.md
+
+# Emit SARIF and return nonzero when HIGH or CRITICAL findings remain
+uvx --from lintlang==0.6.0 lintlang scan SKILL.md \
+  --format sarif --fail-on fail > lintlang.sarif
+```
+
+The SARIF file is still written when `--fail-on fail` returns a nonzero finding verdict, so it can
+be preserved or uploaded from an `always()` CI step. LintLang does not execute a skill, detect
+malicious behavior, or certify that a skill is safe; its findings are structural review aids to use
+alongside security scanning and runtime evaluation.
+
 ### OWASP AST10 Scanner Status
 
 An OWASP-maintained `@owasp/ast10-scanner` package is not currently published.
