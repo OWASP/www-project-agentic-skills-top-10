@@ -77,7 +77,8 @@ changelog:
 
 - `permissions.deny_write`: protects identity-critical files unless explicitly overridden.
 - `network.allow` + `network.deny`: supports egress allowlisting and default-deny behavior.
-- `signature` and `content_hash`: allows integrity verification and transparency logging.
+- `signature` and `content_hash`: allows integrity verification and transparency logging via Ed25519 over RFC 8785 JCS canonicalization.
+- `author.identity` and `author.signing_key`: supports cryptographic identity resolution via `did:web`, `did:creduent`, and canonical `agent://` URIs bound via DNSSEC TXT records.
 - `scan_status`: establishes provenance for scanner version, scan date, and verdict.
 - `risk_tier`: enables automated governance policies and approvals.
 
