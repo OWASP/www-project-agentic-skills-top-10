@@ -12,6 +12,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [Creduent](https://github.com/idevsec/creduent)| Apache-2.0 | AST01, AST02, AST04, AST07, AST09, AST10 | Python, TypeScript |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
@@ -59,6 +60,47 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 ### Framework Integration
 
 Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typical integration requires approximately 20 lines of code per framework.
+
+---
+
+## Creduent
+
+**Description:** Open application-layer protocol, reference registry, and SDKs for cryptographic identity, Ed25519 signing, DNSSEC domain binding, and attestation of autonomous AI agents and skills.
+
+**License:** Apache-2.0  
+**Repository:** [https://github.com/idevsec/creduent](https://github.com/idevsec/creduent)  
+**Install:** `pip install creduent` (Python) or `npm install @idevsec/creduent` (TypeScript) or `npm install -g @idevsec/creduent-cli` (CLI)  
+**Dependencies:** Python: `cryptography`, `httpx`, `dnspython`. TypeScript: zero runtime dependencies (uses native Web Crypto API).
+
+### AST Risks Addressed
+
+**AST01 — Malicious Skills:** Ed25519 signatures over RFC 8785 JCS-canonicalized `agent.json` documents and DNSSEC DoH (`_creduent.<domain>`) domain binding verify skill author authenticity and detect tampered payloads.
+
+**AST02 — Supply Chain Compromise:** Decentralized signature verification combined with the Creduent Attestation Registry (`creduent.idevsec.com`) and fail-closed `ProvenanceGuard` (OWASP AISVS v1.0 C9.2.3) prevents unauthorized registry poisoning and un-bound tool execution.
+
+**AST04 — Insecure Metadata:** Decoupled v2.0 schema structure separating cryptographic identity from policy declarations, strict owner contact validation (`mailto:` and `https:`), and JCS canonical signature enforcement prevent metadata tampering and brand impersonation.
+
+**AST07 — Update Drift:** Automated server-side health-sync daemon (`/api/cron/health-sync`) periodically polls registered skill endpoints to re-verify signatures, auto-syncing metadata updates or marking unreachable/tampered agents as degraded or revoked.
+
+**AST09 — No Governance:** Native verification adapters for CrewAI, LangGraph, AutoGen, LangChain, LlamaIndex, Semantic Kernel, Google ADK, and Model Context Protocol (MCP) enable zero-trust verification and central capability audit logs across multi-agent fleets.
+
+**AST10 — Cross-Platform Reuse:** Platform-agnostic `agent.json` identity document specification, bidirectional `did:creduent` / `did:web` W3C DID resolution, and unified CLI tooling normalize security metadata across Python, JavaScript, Node.js, Vercel Edge, and Cloudflare Workers.
+
+### Risks Not Addressed
+
+**AST03 — Over-Privileged Skills:** Out of scope: does not define static permission scopes. Pair with Creduent Delegation Token (CDT / CREDUENT-007) for runtime capability attenuation.  
+**AST05 — Untrusted External Instructions:** Out of scope: does not inspect or sanitize natural language prompts or external documents.  
+**AST06 — Weak Isolation:** Out of scope: runs in-process or via API proxy; does not provide OS-level containerization or eBPF sandboxing.  
+**AST08 — Poor Scanning:** Out of scope: not a code scanner; does not perform static analysis or YARA pattern matching.
+
+### Known Limitations
+
+- Requires domain DNS TXT record configuration (`_creduent.<domain>`) for domain ownership binding.
+- Local verification requires fetching the published `agent.json` document from the host endpoint or registry.
+
+### Framework Integration
+
+Native verification wrappers and tools available for CrewAI, LangGraph (Python and JS), AutoGen, LangChain (Python and JS), LlamaIndex (Python and TS), Microsoft Semantic Kernel, Google Agent Development Kit (ADK), and MCP servers.
 
 ---
 
