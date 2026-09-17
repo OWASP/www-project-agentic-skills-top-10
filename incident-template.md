@@ -52,6 +52,20 @@ Brief description of what happened and why it matters.
 
 What enabled this incident and what failed.
 
+## Runtime Authority (if applicable)
+
+Fill in for incidents where legitimate agents/skills exercised authority beyond user intent. See [Runtime Authority Incident Response](runtime-authority-ir.md).
+
+- Originating principal and consent record:
+- Delegation chain (user → agent → delegated agent → skill → tool):
+- Transition states per hop (inherited/narrowed/rejected/revoked/expanded-authorized/amplified/unverifiable):
+- Authority delta and authorization basis per hop (where a delta exists):
+- First amplification hop and mechanism:
+- Effective runtime authority at time of action:
+- Containment boundary used and revocation verification result:
+- Point-of-effect gating applied and already-executed actions handed to recovery:
+- Stale grants/credentials discovered and invalidated:
+
 ## Preventive Actions
 
 1. 

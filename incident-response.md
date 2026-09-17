@@ -501,6 +501,56 @@ Compromised dependencies could propagate malware.
 
 ---
 
+## Playbook 4: Runtime Authority Escalation
+
+### Scenario
+A legitimate agent or skill exercises legitimate capabilities beyond the authority or intent of the originating user during multi-step execution — including agent-to-agent delegation, tool/skill privilege escalation, and reuse of stale delegated permissions. No malicious artifact exists; the failure is **authority drift** between the user's intent and effective runtime authority.
+
+### When To Use
+- An agent/skill performed actions outside the originating user's requested scope
+- A delegated agent or downstream skill acted beyond its delegator's grant
+- Stale delegation grants or shared credentials remain usable after task completion
+- Emergency revocation of delegated permissions is required and downstream dependencies are unknown
+
+### Detection Indicators
+- ✓ Task–action divergence (actions outside requested semantic scope)
+- ✓ First-write-after-read-chain, especially destructive operations
+- ✓ Delegation depth/breadth beyond task requirements
+- ✓ Stale-grant reuse after issuing task completion
+- ✓ Credential-context mismatch (credential used outside issuance scope)
+
+### Response Summary
+Follow the six-phase workflow (detailed procedures, evidence tables, and templates in the full guide):
+
+```
+Detect      → authority telemetry, task–action divergence alerts
+Reconstruct → back-walk the authority chain; label each hop
+              inherited / narrowed / rejected / revoked /
+              expanded (authorized) / amplified / unverifiable
+Contain     → gate amplified operations at the resource (point of
+              effect); freeze schedules/queues; revoke at the narrowest
+              sufficient boundary; propagate; verify across alternate
+              authority paths
+Scope       → enumerate downstream reachability (agents, skills,
+              tools, credentials, resources, data consumers)
+Preserve    → capture volatile authority state before teardown
+Recover     → least-privilege restoration; verify stale authority is dead
+              across all alternate authority paths
+```
+
+**Key rules**: an unverifiable authority transition is treated as *amplified* for containment and *unknown* for root-cause analysis; and **revocation ≠ undo** — upstream revocation stops future propagation but cannot reach an action that already hit the resource, so gate irreversible operations at the point of effect and hand already-executed actions to recovery.
+
+### Immediate Actions (first 30 minutes)
+1. Freeze scheduled/cron jobs and workflow queues that share the authority chain.
+2. Enable a point-of-effect deny at the resource for the amplified operations — first, when the operations are irreversible. Enforcement covers only paths that actually traverse the gate; verify coverage rather than assuming every subsequent action is blocked.
+3. Snapshot grant/credential/session state before revoking, where execution has already completed.
+4. Revoke at the narrowest sufficient boundary, propagate to all downstream holders, and verify with controlled re-invocations across the revoked path and alternate authority paths (expect denial).
+5. List actions already executed at the resource and hand them to scoping/recovery — revocation does not undo them.
+
+**Full guidance**: [Runtime Authority Incident Response](runtime-authority-ir.md) — authority-chain reconstruction, per-hop evidence collection, downstream impact analysis, and least-privilege recovery procedures.
+
+---
+
 ## Escalation Contacts
 
 ### Internal Escalation
@@ -529,4 +579,4 @@ Compromised dependencies could propagate malware.
 
 ---
 
-*Playbooks updated: March 2026. Review quarterly and after each major incident.*
+*Playbooks updated: August 2026. Review quarterly and after each major incident.*

@@ -28,6 +28,7 @@
 - **⚖️ Platform Comparison**: [platform-comparison.md](platform-comparison.md)
 - **👥 Community & Contribution**: [community-contribution.md](community-contribution.md)
 - **🚨 Incident Response Playbook**: [incident-response.md](incident-response.md)
+- **🔐 Runtime Authority Incident Response**: [runtime-authority-ir.md](runtime-authority-ir.md)
 - **📊 Security Metrics & Monitoring**: [metrics-monitoring.md](metrics-monitoring.md)
 - **🤝 Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **🛠️ Maintenance**: [MAINTENANCE.md](MAINTENANCE.md)
