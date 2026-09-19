@@ -47,7 +47,7 @@ cross-implementation divergence observed in this pattern.
 
 ## Illustrative vectors
 
-Two AST09 vectors accompany this file. All identifiers in them recompute
+Three AST09 vectors accompany this file. All identifiers in them recompute
 under the Python `rfc8785` reference implementation.
 
 1. `vector-ast09-deny-network-egress.json`: a skill attempts egress to a
@@ -59,6 +59,12 @@ under the Python `rfc8785` reference implementation.
 2. `vector-ast09-outcome-pairing-integrity.json`: a runtime presents an
    outcome record whose identifier matches no admission record, a stitched
    pair. Expected: pairing fails. Safe case: a matching pair verifies.
+
+3. `vector-ast09-deny-unapproved-git-remote.json`: a coding-agent skill
+   attempts to push to a repository outside the organization allowlist. Expected:
+   DENY at the pre-dispatch admission gate and no outcome record. Safe case: an
+   allowlisted repository produces ALLOW with a paired outcome expected. Its
+   `codex` extension illustrates one possible request shape; it is not normative.
 
 ## Out of scope
 
