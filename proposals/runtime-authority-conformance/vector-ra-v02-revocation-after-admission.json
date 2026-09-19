@@ -1,0 +1,48 @@
+{
+  "vectorId": "ra-v02-revocation-after-admission",
+  "astControl": "AST07",
+  "threatScenario": "A skill is admitted while delete authority is valid, but that authority is revoked before the protected effect is dispatched. The earlier admission must not authorize the later effect.",
+  "request": {
+    "action_type": "record.delete",
+    "scope": "record:R",
+    "example_extensions": {
+      "_comment": "Runtime-specific request fields are illustrative only, never normative.",
+      "runtime_authority": {
+        "authorization_basis": "grant-delete-R",
+        "authority_at_admission": "VALID",
+        "authority_at_effect": "REVOKED"
+      }
+    }
+  },
+  "authorityContext": {
+    "delegated": false,
+    "admission_authorized": true,
+    "current_authority": "REVOKED"
+  },
+  "expectedEnforcementPoint": "protected-effect dispatch boundary",
+  "expectedDecision": "DENY",
+  "expectedAuditArtifact": {
+    "kind": "runtime_authority_decision",
+    "record": {
+      "action_type": "record.delete",
+      "scope": "record:R",
+      "authority_at_admission": "VALID",
+      "authority_at_effect": "REVOKED",
+      "decision": "DENY",
+      "reason": "authority_revoked"
+    },
+    "property": "A previously valid admission does not authorize a protected effect after the required authority has been revoked."
+  },
+  "safeCase": {
+    "request": {
+      "action_type": "record.delete",
+      "scope": "record:R"
+    },
+    "authorityContext": {
+      "delegated": false,
+      "admission_authorized": true,
+      "current_authority": "VALID"
+    },
+    "expectedDecision": "ALLOW"
+  }
+}

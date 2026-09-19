@@ -1,0 +1,124 @@
+{
+  "profile": "runtime-authority-conformance",
+  "version": "0.1",
+  "related_issue": 71,
+  "vectors": [
+    {
+      "id": "RA-V01",
+      "control": "RA-C01",
+      "name": "unbacked-authority-expansion",
+      "initial_authority": {
+        "read": ["customer_reports"]
+      },
+      "requested_authority": {
+        "read": ["customer_reports"],
+        "delete": ["customer_reports"]
+      },
+      "authorization_basis_for_expansion": null,
+      "expected": "DENY",
+      "assertion": "Effective authority MUST NOT expand without an identifiable authorization basis."
+    },
+    {
+      "id": "RA-V02",
+      "control": "RA-C02",
+      "name": "revocation-after-admission",
+      "events": [
+        "GRANT(delete:R)",
+        "ADMIT(skill)",
+        "REVOKE(delete:R)",
+        "EXECUTE(delete:R)"
+      ],
+      "expected": "DENY",
+      "assertion": "Authority required for a protected effect MUST remain valid at the point of effect."
+    },
+    {
+      "id": "RA-V03",
+      "control": "RA-C03",
+      "name": "alternate-path-bypass",
+      "protected_effect": "E",
+      "events": [
+        "DENY(effect=E,path=A)",
+        "FALLBACK(path=B)",
+        "ATTEMPT(effect=E,path=B)"
+      ],
+      "new_authorization": false,
+      "expected": "DENY",
+      "assertion": "Retry, fallback, alternate-tool selection, or delegation MUST NOT reset an authority denial under unchanged authorization state."
+    },
+    {
+      "id": "RA-V04",
+      "control": "RA-C04",
+      "name": "equivalent-effect-substitution",
+      "resource": "record-42",
+      "operations": [
+        {
+          "path": "A",
+          "operation": "delete_record",
+          "resulting_effect": "record-unavailable"
+        },
+        {
+          "path": "B",
+          "operation": "overwrite_record_empty",
+          "resulting_effect": "record-unavailable"
+        }
+      ],
+      "new_authorization": false,
+      "expected": "DENY",
+      "assertion": "An alternate representation of the same protected effect MUST NOT automatically reset the authority decision."
+    },
+    {
+      "id": "RA-V05",
+      "control": "RA-C05",
+      "name": "concurrent-authority-double-spend",
+      "initial_budget": 10,
+      "concurrent_attempts": [
+        {
+          "actor": "A",
+          "observed_available": 10,
+          "consume": 7
+        },
+        {
+          "actor": "B",
+          "observed_available": 10,
+          "consume": 6
+        }
+      ],
+      "forbidden_committed_total": 13,
+      "expected": "AT_MOST_ONE_CONFLICTING_COMMIT",
+      "assertion": "Committed effects plus outstanding delegated authority MUST remain within the authoritative budget."
+    },
+    {
+      "id": "RA-V06",
+      "control": "RA-C06",
+      "name": "reclaim-versus-late-commit",
+      "generation": "N",
+      "events": [
+        "RESERVE(N)",
+        "LEASE_EXPIRES(N)",
+        "RACE(RECLAIM(N),COMMIT(N))"
+      ],
+      "expected": "EXACTLY_ONE_TERMINAL_TRANSITION",
+      "terminal_states": [
+        "COMMITTED",
+        "RECLAIMED"
+      ],
+      "assertion": "COMMITTED and RECLAIMED MUST be mutually exclusive for the same reservation generation."
+    },
+    {
+      "id": "RA-V07",
+      "control": "RA-C07",
+      "name": "stale-authority-during-partition",
+      "generation": "N",
+      "events": [
+        "RESERVE(N)",
+        "PARTITION(participant)",
+        "AUTHORITATIVE_RECLAIM(N)",
+        "LOCAL_STATE_STILL_RESERVED(N)",
+        "ATTEMPT_COMMIT(N)"
+      ],
+      "current_authority_established": false,
+      "expected": "DENY",
+      "assertion": "A protected effect MUST fail closed when current authority cannot be established."
+    }
+  ]
+}
