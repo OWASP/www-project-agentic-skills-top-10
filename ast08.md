@@ -96,6 +96,7 @@ The scanner is a known, static target. Pad the payload to force context truncati
 - [NVIDIA SkillSpector — open-source security scanner for AI agent skills](https://github.com/NVIDIA/SkillSpector)
 - [OWASP Top 10 - A6 Security Misconfiguration](https://owasp.org/www-project-top-ten/)
 - [Trail of Bits — The Sorry State of Skill Distribution (2026)](https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/)
+- [skillinjection.com — Skill scanner evasion: the 2026 numbers, compared](https://skillinjection.com/skill-scanner-evasion/) — published evasion and detection rates for skill scanners (Poise, SkillCloak, ColluSkill, CompoSkill, SkillsMetric, SkillDetonate, SkillSentry, and others) side by side, with each paper's own success definition
 - [Air Security: The Story of Skills](https://www.air.security/blog-posts/the-story-of-skills)
 
 ---
