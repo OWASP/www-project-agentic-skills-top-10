@@ -78,11 +78,11 @@ Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typica
 
 **AST02 — Supply Chain Compromise:** Decentralized signature verification combined with the Creduent Attestation Registry (`creduent.idevsec.com`) and fail-closed `ProvenanceGuard` (OWASP AISVS v1.0 C9.2.3) prevents unauthorized registry poisoning and un-bound tool execution.
 
-**AST04 — Insecure Metadata:** Decoupled v2.0 schema structure separating cryptographic identity from policy declarations, strict owner contact validation (`mailto:` and `https:`), and JCS canonical signature enforcement prevent metadata tampering and brand impersonation.
+**AST04 — Insecure Metadata:** Decoupled v2.0 schema structure separating cryptographic identity from policy declarations, canonical `actor` process attribution inside the JCS body, strict owner contact validation (`mailto:` and `https:`), and JCS canonical signature enforcement prevent metadata tampering and brand impersonation.
 
 **AST07 — Update Drift:** Automated server-side health-sync daemon (`/api/cron/health-sync`) periodically polls registered skill endpoints to re-verify signatures, auto-syncing metadata updates or marking unreachable/tampered agents as degraded or revoked.
 
-**AST09 — No Governance:** Native verification adapters for CrewAI, LangGraph, AutoGen, LangChain, LlamaIndex, Semantic Kernel, Google ADK, and Model Context Protocol (MCP) enable zero-trust verification and central capability audit logs across multi-agent fleets.
+**AST09 — No Governance:** Explicit key-binding scope metadata (`key_binding_scope: machine | process | human`) and native verification adapters for CrewAI, LangGraph, AutoGen, LangChain, LlamaIndex, Semantic Kernel, Google ADK, and Model Context Protocol (MCP) enable zero-trust verification and central capability audit logs across multi-agent fleets.
 
 **AST10 — Cross-Platform Reuse:** Platform-agnostic `agent.json` identity document specification, bidirectional `did:creduent` / `did:web` W3C DID resolution, and unified CLI tooling normalize security metadata across Python, JavaScript, Node.js, Vercel Edge, and Cloudflare Workers.
 
