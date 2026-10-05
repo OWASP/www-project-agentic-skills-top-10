@@ -33,6 +33,8 @@ author:
   name: "Author Name"
   identity: "did:web:example.com"
   signing_key: "ed25519:pubkey_hex_here"
+  key_binding_scope: "machine" # machine | process | human
+  actor: "claude-code"        # execution head / process identity bound inside JCS body
 
 permissions:
   files:
@@ -77,7 +79,10 @@ changelog:
 
 - `permissions.deny_write`: protects identity-critical files unless explicitly overridden.
 - `network.allow` + `network.deny`: supports egress allowlisting and default-deny behavior.
-- `signature` and `content_hash`: allows integrity verification and transparency logging.
+- `signature` and `content_hash`: allows integrity verification and transparency logging via Ed25519 over RFC 8785 JCS canonicalization.
+- `author.identity` and `author.signing_key`: supports cryptographic identity resolution via `did:web`, `did:creduent`, and canonical `agent://` URIs bound via DNSSEC TXT records.
+- `author.key_binding_scope`: explicitly declares whether the signing key is bound to a `machine` (node host), `process` (isolated worker), or `human` operator to clarify the threat model boundary.
+- `author.actor`: identifies the execution head or agent persona inside the RFC 8785 JCS canonicalized payload, preventing sidecar metadata spoofing (AST04/AST09).
 - `scan_status`: establishes provenance for scanner version, scan date, and verdict.
 - `risk_tier`: enables automated governance policies and approvals.
 
