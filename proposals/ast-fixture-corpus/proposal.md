@@ -45,6 +45,16 @@ Canonicalization for the illustrative vectors below is RFC 8785 (JCS) with
 RFC 3339 strings produces different canonical bytes and is the most common
 cross-implementation divergence observed in this pattern.
 
+Member names are ordered by UTF-16 code units (RFC 8785 section 3.2.3), not by
+Unicode code point. The two orders agree for every BMP name and diverge as
+soon as one name is a surrogate pair: U+1F511 sorts before U+FF3A under
+UTF-16 (D83D < FF3A) and after it under code points (1F511 > FF3A). A
+canonicalizer that sorts by code point produces different bytes and a
+different signature for such a manifest; `vector-ast09-jcs-member-order.json`
+exists to catch exactly that divergence, and `verify-jcs-signature.py
+--self-test` replays it through a code-point-sorting mutant and asserts the
+mismatch.
+
 ## Illustrative vectors
 
 Two AST09 vectors accompany this file. All identifiers in them recompute

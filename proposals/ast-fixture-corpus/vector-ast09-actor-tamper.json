@@ -1,0 +1,95 @@
+{
+  "vectorId": "ast09-actor-tamper-in-body",
+  "astControl": "AST09",
+  "threatScenario": "A skill manifest is re-attributed after signing: the actor string is swapped to a different agent head while the Ed25519 signature is replayed unchanged. Because the actor lives inside the JCS-canonicalized payload, verification must fail rather than accept the new attribution.",
+  "request": {
+    "action_type": "skill.load",
+    "scope": "skill:repo-release-slice@1.4.0",
+    "manifest": {
+      "schema": "owasp.usf/v1",
+      "name": "repo-release-slice",
+      "version": "1.4.0",
+      "author": {
+        "actor": "codex@node-a2022bayarea",
+        "key_binding_scope": "machine",
+        "pubkey": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+      },
+      "permissions": [
+        "fs:read",
+        "net:none"
+      ],
+      "entrypoint": "skill.md"
+    },
+    "signature_ed25519_hex": "c27b0036bd707403e09c36abaac6cb05c735812ce91ab3624651155bd581e917b5897fc32bdbcb354b8182e7a09d825d46b4a7eca247abecc2d96ff3cc297609"
+  },
+  "authorityContext": {
+    "policy_version": "owasp.usf/v1",
+    "delegated": false,
+    "key_binding_scope": "machine",
+    "signer_pubkey_ed25519_hex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+  },
+  "expectedEnforcementPoint": "pre-load manifest signature verification",
+  "expectedDecision": "FAIL_SIGNATURE",
+  "expectedAuditArtifact": {
+    "kind": "manifest_signature_check",
+    "canonicalization": "RFC 8785 (JCS)",
+    "signature_algorithm": "Ed25519 (RFC 8032)",
+    "preimage_fields": [
+      "author.actor",
+      "author.key_binding_scope",
+      "author.pubkey",
+      "entrypoint",
+      "name",
+      "permissions",
+      "schema",
+      "version"
+    ],
+    "presented_actor": "codex@node-a2022bayarea",
+    "signed_actor": "claude-code@node-a2022bayarea",
+    "property": "The actor MUST be a member of the canonicalized payload, not a sidecar header. Any change to it changes the JCS bytes and so invalidates the signature; an implementation that verifies this vector as PASS is binding identity to transport metadata."
+  },
+  "safeCase": {
+    "request": {
+      "action_type": "skill.load",
+      "scope": "skill:repo-release-slice@1.4.0",
+      "manifest": {
+        "schema": "owasp.usf/v1",
+        "name": "repo-release-slice",
+        "version": "1.4.0",
+        "author": {
+          "actor": "claude-code@node-a2022bayarea",
+          "key_binding_scope": "machine",
+          "pubkey": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+        },
+        "permissions": [
+          "fs:read",
+          "net:none"
+        ],
+        "entrypoint": "skill.md"
+      },
+      "signature_ed25519_hex": "c27b0036bd707403e09c36abaac6cb05c735812ce91ab3624651155bd581e917b5897fc32bdbcb354b8182e7a09d825d46b4a7eca247abecc2d96ff3cc297609"
+    },
+    "expectedDecision": "PASS_SIGNATURE",
+    "expectedAuditArtifact": {
+      "kind": "manifest_signature_check",
+      "canonicalization": "RFC 8785 (JCS)",
+      "signature_algorithm": "Ed25519 (RFC 8032)",
+      "preimage_fields": [
+        "author.actor",
+        "author.key_binding_scope",
+        "author.pubkey",
+        "entrypoint",
+        "name",
+        "permissions",
+        "schema",
+        "version"
+      ],
+      "presented_actor": "claude-code@node-a2022bayarea",
+      "signed_actor": "claude-code@node-a2022bayarea"
+    }
+  },
+  "notes": [
+    "The scope downgrade is the same property on a different member: re-signing is required to move key_binding_scope from machine to process, because that field is in the preimage too.",
+    "Deterministic signer for reproduction: Ed25519 seed 000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f."
+  ]
+}

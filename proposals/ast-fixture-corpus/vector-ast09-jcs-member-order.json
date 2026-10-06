@@ -1,0 +1,65 @@
+{
+  "vectorId": "ast09-jcs-member-order-utf16",
+  "astControl": "AST09",
+  "threatScenario": "Two conforming-looking implementations canonicalize one manifest to different bytes, so a signature produced by either is rejected by the other and the provenance chain breaks on a correct manifest. RFC 8785 orders object members by UTF-16 code units; sorting by Unicode codepoint instead reverses the order of any non-BMP member name against a member name in U+E000-U+FFFF.",
+  "request": {
+    "action_type": "skill.load",
+    "scope": "skill:canonicalization-probe",
+    "manifest": {
+      "author": {
+        "actor": "claude-code@node-a2022bayarea"
+      },
+      "🔑key": "non-BMP member name, UTF-16 surrogate pair D83D DD11",
+      "Ｚkey": "BMP member name, UTF-16 code unit FF3A"
+    },
+    "signature_ed25519_hex": "95d1aaf900cd1cd8e66ca0207f6f3f30b18b2d2e1b5e7c0ab63724391551f82f6a7f43417c2f6b8189d43b868db35a927217e60f6bd95cc191f1045695153c08"
+  },
+  "authorityContext": {
+    "policy_version": "owasp.usf/v1",
+    "signer_pubkey_ed25519_hex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+  },
+  "expectedEnforcementPoint": "manifest canonicalization, before signature verification",
+  "expectedDecision": "PASS_SIGNATURE",
+  "expectedAuditArtifact": {
+    "kind": "canonicalization_check",
+    "canonicalization": "RFC 8785 (JCS)",
+    "signature_algorithm": "Ed25519 (RFC 8032)",
+    "preimage_fields": [
+      "author.actor",
+      "🔑key",
+      "Ｚkey"
+    ],
+    "expected_canonical_member_order": [
+      "author",
+      "🔑key",
+      "Ｚkey"
+    ],
+    "codepoint_sort_member_order": [
+      "author",
+      "Ｚkey",
+      "🔑key"
+    ],
+    "expected_canonical_form": "{\"author\":{\"actor\":\"claude-code@node-a2022bayarea\"},\"🔑key\":\"non-BMP member name, UTF-16 surrogate pair D83D DD11\",\"Ｚkey\":\"BMP member name, UTF-16 code unit FF3A\"}",
+    "codepoint_sort_form": "{\"author\":{\"actor\":\"claude-code@node-a2022bayarea\"},\"Ｚkey\":\"BMP member name, UTF-16 code unit FF3A\",\"🔑key\":\"non-BMP member name, UTF-16 surrogate pair D83D DD11\"}",
+    "property": "An implementation that sorts member names by codepoint rather than by UTF-16 code unit produces the codepoint_sort_form above and will report FAIL_SIGNATURE on this valid manifest. The declared preimage is therefore insufficient on its own: a verifier also needs the member-ordering rule to recompute the same bytes."
+  },
+  "safeCase": {
+    "request": {
+      "action_type": "skill.load",
+      "scope": "skill:canonicalization-probe",
+      "manifest": {
+        "author": {
+          "actor": "claude-code@node-a2022bayarea"
+        },
+        "🔑key": "non-BMP member name, UTF-16 surrogate pair D83D DD11",
+        "Ｚkey": "BMP member name, UTF-16 code unit FF3A"
+      },
+      "signature_ed25519_hex": "95d1aaf900cd1cd8e66ca0207f6f3f30b18b2d2e1b5e7c0ab63724391551f82f6a7f43417c2f6b8189d43b868db35a927217e60f6bd95cc191f1045695153c08"
+    },
+    "expectedDecision": "PASS_SIGNATURE",
+    "expectedAuditArtifact": {
+      "kind": "canonicalization_check",
+      "note": "Identical to the threat case by construction: the manifest is valid in both. What the vector separates is a correct verifier from an incorrect one, not a safe request from an unsafe one."
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "vectorId": "ast09-jcs-control-escaping",
+  "astControl": "AST09",
+  "threatScenario": "An actor string contains a C0 control character, so the manifest canonicalizes differently depending on whether the implementation escapes it. RFC 8785 requires \\u0007; emitting the raw byte produces different signed bytes and rejects a valid manifest, and a control character in an attribution field is also how a tampered actor can be made to render as a different name in a log or UI.",
+  "request": {
+    "action_type": "skill.load",
+    "scope": "skill:repo-release-slice@1.4.0",
+    "manifest": {
+      "schema": "owasp.usf/v1",
+      "name": "repo-release-slice",
+      "version": "1.4.0",
+      "author": {
+        "actor": "claude-code\u0007@node-a2022bayarea",
+        "key_binding_scope": "machine",
+        "pubkey": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+      },
+      "permissions": [
+        "fs:read",
+        "net:none"
+      ],
+      "entrypoint": "skill.md"
+    },
+    "signature_ed25519_hex": "a5659ce7127726e811502e0fce94a48727b0bcceb7b878ba26bb2f72665c692d0cced53371aa4a606470ba192643429f44978a845abb3e81e4099d6543439305"
+  },
+  "authorityContext": {
+    "policy_version": "owasp.usf/v1",
+    "delegated": false,
+    "key_binding_scope": "machine",
+    "signer_pubkey_ed25519_hex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+  },
+  "expectedEnforcementPoint": "manifest canonicalization, before signature verification",
+  "expectedDecision": "PASS_SIGNATURE",
+  "expectedAuditArtifact": {
+    "kind": "canonicalization_check",
+    "canonicalization": "RFC 8785 (JCS)",
+    "signature_algorithm": "Ed25519 (RFC 8032)",
+    "preimage_fields": [
+      "author.actor",
+      "author.key_binding_scope",
+      "author.pubkey",
+      "entrypoint",
+      "name",
+      "permissions",
+      "schema",
+      "version"
+    ],
+    "actor_codepoints": [
+      "0x63",
+      "0x6c",
+      "0x61",
+      "0x75",
+      "0x64",
+      "0x65",
+      "0x2d",
+      "0x63",
+      "0x6f",
+      "0x64",
+      "0x65",
+      "0x7",
+      "0x40",
+      "0x6e",
+      "0x6f",
+      "0x64",
+      "0x65",
+      "0x2d",
+      "0x61",
+      "0x32",
+      "0x30",
+      "0x32",
+      "0x32",
+      "0x62",
+      "0x61",
+      "0x79",
+      "0x61",
+      "0x72",
+      "0x65",
+      "0x61"
+    ],
+    "expected_escape_in_canonical_form": "\\u0007",
+    "raw_byte_must_be_absent": "0x07",
+    "property": "The canonical form MUST contain the six characters \\u0007 and MUST NOT contain the raw 0x07 byte. An implementation emitting the raw byte reports FAIL_SIGNATURE on this valid manifest. Separately, a verifier that strips rather than escapes the character silently accepts two distinct actors as one.",
+    "expected_canonical_form": "{\"author\":{\"actor\":\"claude-code\\u0007@node-a2022bayarea\",\"key_binding_scope\":\"machine\",\"pubkey\":\"03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8\"},\"entrypoint\":\"skill.md\",\"name\":\"repo-release-slice\",\"permissions\":[\"fs:read\",\"net:none\"],\"schema\":\"owasp.usf/v1\",\"version\":\"1.4.0\"}"
+  },
+  "safeCase": {
+    "request": {
+      "action_type": "skill.load",
+      "scope": "skill:repo-release-slice@1.4.0",
+      "manifest": {
+        "schema": "owasp.usf/v1",
+        "name": "repo-release-slice",
+        "version": "1.4.0",
+        "author": {
+          "actor": "claude-code\u0007@node-a2022bayarea",
+          "key_binding_scope": "machine",
+          "pubkey": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+        },
+        "permissions": [
+          "fs:read",
+          "net:none"
+        ],
+        "entrypoint": "skill.md"
+      },
+      "signature_ed25519_hex": "a5659ce7127726e811502e0fce94a48727b0bcceb7b878ba26bb2f72665c692d0cced53371aa4a606470ba192643429f44978a845abb3e81e4099d6543439305"
+    },
+    "expectedDecision": "PASS_SIGNATURE",
+    "expectedAuditArtifact": {
+      "kind": "canonicalization_check",
+      "note": "The manifest is valid in both cases by construction; what this vector separates is a conforming canonicalizer from a non-conforming one."
+    }
+  }
+}
