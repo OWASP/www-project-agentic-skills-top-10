@@ -139,7 +139,7 @@ find . -name "*.md" -exec stat -f "%Sm %N" {} \; | sort -r
 
 ## Resources
 
-- [OWASP Project Handbook](https://owasp.org/www-pdf-archive/OWASP_Project_Handbook.pdf)
+- [OWASP Project Handbook](https://owasp.org/project-handbook)
 - [Jekyll Documentation](https://jekyllrb.com/docs/)
 - [GitHub Community Guidelines](https://docs.github.com/en/github/site-policy/github-community-guidelines)
-- [OWASP Brand Guidelines](https://owasp.org/www-policy/operational/brand)
+- [OWASP Brand Guidelines](https://policy.owasp.org/operational/branding.html)

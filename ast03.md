@@ -87,7 +87,7 @@ A skill receives external input — user data, retrieved memory, or another tool
 ## References
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
-- [Snyk: 280+ Leaky Skills](https://snyk.io/blog/280-leaky-skills-openclaw-clawhub-exposing-api-keys-pii/)
+- [Snyk: 280+ Leaky Skills](https://snyk.io/blog/openclaw-skills-credential-leaks-research/)
 - [Cisco State of AI Security 2026](https://blogs.cisco.com/ai/cisco-state-of-ai-security-2026-report)
 - [Atta et al. — Logic-layer Prompt Control Injection (LPCI): A Novel Security Vulnerability Class in Agentic Systems (arXiv:2507.10457)](https://arxiv.org/abs/2507.10457)
 

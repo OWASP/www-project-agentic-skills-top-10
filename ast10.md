@@ -145,7 +145,7 @@ changelog:
 
 - [Snyk ToxicSkills](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
 - [Snyk: toxicskills-goof](https://github.com/snyk-labs/toxicskills-goof)
-- [OWASP MCP Top 10](https://owasp.org/www-project-model-context-protocol-top-10/)
+- [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
 
 ---
 
