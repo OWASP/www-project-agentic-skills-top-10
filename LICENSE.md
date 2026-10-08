@@ -6,4 +6,4 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 
 This project follows the standard OWASP licensing model. All contributions to this project must be licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
 
-For more information about OWASP licensing, please visit: https://owasp.org/www-community/licenses/
+For more information about OWASP licensing, please visit: https://policy.owasp.org/operational/projects.html
