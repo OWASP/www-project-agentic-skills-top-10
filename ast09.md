@@ -121,7 +121,7 @@ Every skill execution produces two records, linked by a content-derived identifi
 
 ### EU AI Act Article 12 Relevance
 
-Article 12 (enforcement August 2, 2026) requires high-risk AI systems to maintain logs enabling post-hoc verification of system operation. Bilateral receipts with independent verifiability satisfy this requirement in a way that operator-controlled logs do not: a regulator or auditor can verify the receipt without access to the operator's infrastructure.
+Article 12 requires high-risk AI systems to maintain logs enabling post-hoc verification of system operation. Bilateral receipts with independent verifiability satisfy this requirement in a way that operator-controlled logs do not: a regulator or auditor can verify the receipt without access to the operator's infrastructure. Article 12 applies to high-risk systems: Regulation (EU) 2026/1744 (Digital Omnibus on AI, OJ 24 July 2026) moved their application date to 2 December 2027 for Annex III systems and 2 August 2028 for Annex I systems.
 
 
 *Last updated: June 2026*
