@@ -12,6 +12,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [Ironheights](https://github.com/Frank-Masciopinto/ironheights)| Apache-2.0 | AST01, AST02, AST03, AST04, AST05, AST07, AST08, AST09 | TypeScript |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
@@ -59,6 +60,50 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 ### Framework Integration
 
 Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typical integration requires approximately 20 lines of code per framework.
+
+---
+
+## Ironheights
+
+**Description:** Local-first, open-source scanner and integrity monitor for OpenClaw agent skills. Reads `SKILL.md` and bundled files as data (never executes them), applies fixed detection rules, and compares skill and agent files against a locally saved baseline.
+
+**License:** Apache-2.0  
+**Repository:** [https://github.com/Frank-Masciopinto/ironheights](https://github.com/Frank-Masciopinto/ironheights)  
+**Install:** `npx ironheights scan ./path/to/skill` (or `npm install -g ironheights`)  
+**Dependencies:** 4 runtime (commander, yaml, zod, picomatch); Node.js 20+
+
+### AST Risks Addressed
+
+**AST01 — Malicious Skills:** Rules for remote content piped into an interpreter, external prerequisite installs, possible exfiltration, credential-path reads, hard-coded secrets, persistence mechanisms, and bundled executables or archives. An optional signed advisory feed matches known-bad skill names, file hashes, and indicator hosts.
+
+**AST02 — Supply Chain Compromise:** `fetch` and `safe-install` download a ClawHub skill to a staging directory, scan it before it is copied into the skills directory, and refuse redirects, absolute paths, `..`, and symlinks. Skills with a `block` or `incomplete` verdict are not installed.
+
+**AST03 — Over-Privileged Skills:** Flags privilege or OS-protection bypass, suspicious filesystem access, MCP servers given a broad filesystem root, and (via `audit-config`) dangerous tool permissions in the OpenClaw config.
+
+**AST04 — Insecure Metadata:** Checks skill metadata for problems and scans `SKILL.md` prose for instruction override, hidden content, and attempts to weaken agent safeguards.
+
+**AST05 — Untrusted External Instructions:** Flags remote or self-updating instructions, undeclared network destinations, and MCP servers launched from a remote command.
+
+**AST07 — Update Drift:** `baseline create` records hashes of skill and agent files; `verify` reports modified, new, and removed skill files and changes to watched agent files. Suspicious skills can be moved aside with `quarantine` and restored later.
+
+**AST08 — Poor Scanning:** Deterministic static rules across instruction and code layers, with an optional local or OpenAI-compatible LLM review that is advisory only and requires explicit consent. Ships a `bench` command and a reproducible test corpus so detection results can be checked.
+
+**AST09 — No Governance:** SARIF, JSON, Markdown, and HTML output; documented exit codes and `--fail-on <severity>` for CI gates; a `coexist` check for running alongside other installed scanners.
+
+### Risks Not Addressed
+
+**AST06 — Weak Isolation:** Out of scope. It is a pre-install and integrity scanner, not a sandbox, and does not isolate running skills.  
+**AST10 — Cross-Platform Reuse:** Partial only. Rules target OpenClaw/ClawHub skill layouts; other skill formats may scan but are not the primary target.
+
+### Known Limitations
+
+- Static, rule-based detection can be evaded by novel obfuscation; a clean result is reported as "absence of findings is not proof of safety".
+- Baselines are local to one machine and only detect drift after a baseline has been created.
+- Young project with limited real-world adoption so far; rule coverage is still growing.
+
+### Framework Integration
+
+CLI for OpenClaw skill directories and ClawHub skills (`scan`, `fetch`, `safe-install`, `--all` for configured skill directories). No telemetry and no network calls unless a network command or flag is used. Emits SARIF for GitHub Code Scanning and exit codes for CI pipelines; also published as a ClawHub skill.
 
 ---
 
