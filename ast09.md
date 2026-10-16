@@ -104,6 +104,7 @@ Every skill execution produces two records, linked by a content-derived identifi
 - `policy_version`: the governance policy in effect at decision time
 - `decision`: `ALLOW`, `DENY`, or `ESCALATE`
 - `timestamp_ms`: epoch milliseconds (integer)
+- `signature`: over the canonical field set
 
 **Outcome receipt** — produced after execution:
 - `attempt_id`: same as admission receipt
@@ -114,6 +115,8 @@ Every skill execution produces two records, linked by a content-derived identifi
 ### Key Properties
 
 **Denied-before-dispatch carries equal audit weight**: a DENY decision with no execution should produce an admission receipt. Absence of an outcome receipt for a given `attempt_id` proves the action was blocked.
+
+**Both receipts are signed**: an unsigned admission receipt can be written, edited or dropped after the fact by whoever operates the log, so a DENY recorded only there evidences nothing the operator could not have produced later. Sign the admission receipt the same way as the outcome receipt, and keep it where its existence can be shown independently of the operator (for example an append-only transparency log or an RFC 3161 timestamp); otherwise the absence of an outcome receipt shows ordering, not that the action was blocked.
 
 **`attempt_id` is mandatory in both records**: without it, an auditor cannot confirm the admitted action and the executed action were the same.
 
