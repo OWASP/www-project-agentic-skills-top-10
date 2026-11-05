@@ -524,6 +524,7 @@ changelog:
 - **Air Security: The Story of Skills** (Jun 22, 2026) — Researcher-built malicious skill reached 26,000+ agents via a trusted marketplace and social media; every scanner cleared it.
 - **Air Security: The Circus of Skills** (Jun 24, 2026) — 142,836 skills scanned for untrusted external instruction sources; 17,822 (12.4%, 6.7M installs) affected.
 - **Air Security: SkillJacking** (Jul 2, 2026) — 925 skills resting on instantly hijackable dependencies (~134K agents); top skills.sh video-generation skill taken over via a deleted GitHub account.
+- **AgentCraft: We reviewed 783 new Claude Code skills; 317 didn't make our directory** (Nov 6, 2026) — Directory-side review of 783 skills from GitHub repos with 100+ stars; 317 dropped (40%) in eight groups, 25 of them deliberate scanner test fixtures; a second single-model pass flipped 9 of 266 previously accepted skills. https://agentcraft.dev/en/blog/claude-code-skills-review-2026-11/
 
 ### Industry Reports
 
