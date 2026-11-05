@@ -646,6 +646,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 - **SecurityScorecard** (Feb 2026) — 135,000+ OpenClaw instances publicly exposed; 53,000+ correlated with prior breach activity.
 - **Snyk: 280+ Leaky Skills** (Feb 5, 2026) — API key and PII exposure across ClawHub. https://snyk.io/blog/
 - **Snyk: Why Your Skill Scanner Is Just False Security** (Feb 11, 2026) — Pattern-matching scanner limitations. https://snyk.io/blog/skill-scanner-false-security/
+- **AgentCraft: We reviewed 783 new Claude Code skills; 317 didn't make our directory** (Nov 6, 2026) — Directory-side review of 783 skills from GitHub repos with 100+ stars; 317 dropped (40%) in eight groups, 25 of them deliberate scanner test fixtures; a second single-model pass flipped 9 of 266 previously accepted skills. https://agentcraft.dev/en/blog/claude-code-skills-review-2026-11/
 
 ### Industry Reports
 
