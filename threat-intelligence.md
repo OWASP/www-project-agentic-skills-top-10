@@ -372,14 +372,13 @@ function updateActors(data) {
 ## Recent Security Research
 
 ### ATR Wild Ecosystem Scan Dataset (April 2026)
-- **Scope**: 101,280 skills / MCP definitions scanned across 5 public registries (OpenClaw, ClawHub, Skills.sh, Hermes, MCP Registry)
-- **Key Finding**: 1,434 flagged files (1,507 rule matches: 1,210 critical, 282 high, 15 medium)
-- **Coordinated Activity**: 552 of the flagged files belong to 3 coordinated threat-actor accounts
-- **Confirmed Malware**: a separate manual campaign analysis confirmed 751 skills as malicious
+- **Scope**: 101,280 skills / MCP definitions scanned across 5 public registries (OpenClaw, ClawHub, Skills.sh, Hermes, MCP Registry), April 2026 snapshot, ATR engine v2.0.0 (113 rules)
+- **Key Finding**: 1,434 flagged files (1,507 rule matches: 1,210 critical, 282 high, 15 medium); 1,376 of the flagged files are from OpenClaw
+- **Coordinated Activity**: 552 of the flagged files belong to 2 publisher accounts
+- **Caveat**: these are pattern-rule flags, not individually confirmed verdicts; no precision estimate is attached to this scan
 - **Source Material** (externally hosted, independently inspectable; no payload strings redistributed):
   - [Findings CSV](https://github.com/Agent-Threat-Rule/agent-threat-rules/blob/main/docs/research/wild-scan-findings-2026-04.csv) — registry, rule id, category, severity per flagged file
   - [Methodology](https://github.com/Agent-Threat-Rule/agent-threat-rules/blob/main/docs/research/wild-scan-findings-2026-04-methodology.md) — scan scope, engine snapshot, severity breakdown, reproduction notes
-  - [Campaign analysis](https://github.com/Agent-Threat-Rule/agent-threat-rules/blob/main/docs/research/96k-scan-751-malware-article.md) — the manual confirmation layered on the flagged set
 
 ### Snyk ToxicSkills Report (March 2026)
 - **Key Finding**: 37.1% of skills contain security flaws
