@@ -12,6 +12,7 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 | Tool                                                                               | License | AST Risks Addressed                             | Language |
 | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------- | -------- |
 | [AgentMint](https://github.com/aniketh-maddipati/agentmint-python)| MIT     | AST01, AST02, AST03, AST04, AST07, AST08, AST09 | Python   |
+| [Cleat](https://github.com/baulintech/cleat)| MIT | AST05, AST07 | JavaScript (Node.js) |
 | [Nobulex](https://github.com/arian-gogani/nobulex)| MIT     | AST03, AST04, AST07, AST09                       | Python, TypeScript |
 | [SkilLock](https://github.com/skills-lock/skil-lock)| Apache-2.0 | AST03, AST04, AST07, AST08, AST09, AST10 | Go   |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector)| Apache-2.0 | AST01, AST02, AST03, AST04, AST08, AST09, AST10 | Python   |
@@ -59,6 +60,45 @@ Submit a PR adding your tool using the template at the bottom of this page. All 
 ### Framework Integration
 
 Integrates via hooks with CrewAI, OpenAI Agents SDK, Google ADK, and MCP. Typical integration requires approximately 20 lines of code per framework.
+
+---
+
+## Cleat
+
+**Description:** Inventories everything an agent skill reaches outside itself (URLs, remote scripts, package installs, and references hidden in HTML comments, base64 or invisible Unicode), fetches that content read-only through a guarded fetcher, and records SHA-256 fingerprints of the skill's files and of the remote content in a lockfile. A later `verify` run reports any drift against that baseline. Cleat never runs the skill it checks.
+
+**License:** MIT  
+**Repository:** [https://github.com/baulintech/cleat](https://github.com/baulintech/cleat)  
+**Install:** `npx skills add https://github.com/baulintech/cleat --skill cleat` (or run the CLI directly: `node skills/cleat/scripts/cleat.mjs scan|lock|verify <skill-dir>`)  
+**Dependencies:** 0 (Node.js 18+ standard library only)
+
+### AST Risks Addressed
+
+**AST05 — Untrusted External Instructions:** Extracts every external reference a skill contains, including ones in HTML comments, base64 blobs, Unicode tag characters and zero-width characters, and classifies each by use (instructions the agent will follow, code that will run, data the skill sends out). It fetches the referenced content read-only and hashes the normalised text, so a remote file that changes after review is reported as drift on the next `verify`. This is the tool's primary function. Per Cleat's survey of 355 public skills from 20 repositories, 43% act on outside content, and none of the 1,406 external links found were pinned to a version or hash.
+
+**AST07 — Update Drift:** `lock` records SHA-256 fingerprints of every file in the skill and of each fetched remote resource; `verify` compares against that baseline, reports added, removed and changed items, and exits non-zero for use as a CI gate.
+
+### Risks Not Addressed
+
+**AST01 — Malicious Skills:** Partial. Deterministic red-flag rules flag pipe-to-shell installs, reverse shells, credential and environment harvesting and similar patterns in the skill and in fetched content, but there is no intent classification.  
+**AST02 — Supply Chain Compromise:** Partial. Flags packages a skill installs or runs without a pinned version (e.g. `npx`, `pip install`) and detects tampered or added files on update; does not verify registry provenance or signatures.  
+**AST03 — Over-Privileged Skills:** Not addressed. Does not compare declared permissions with behaviour.  
+**AST04 — Insecure Metadata:** Not addressed. Does not validate manifests or frontmatter.  
+**AST06 — Weak Isolation:** Not addressed. Provides no runtime sandbox.  
+**AST08 — Poor Scanning:** Partial. Covers external references in places scanners often skip (comments, encoded and invisible text); detection is regex and parse based, with no semantic analysis.  
+**AST09 — No Governance:** Partial. The committed lockfile is a human-readable inventory of what each approved skill depends on, and `--json` output plus exit codes support CI gating; no SARIF output yet.  
+**AST10 — Cross-Platform Reuse:** Partial. Works on the shared SKILL.md format regardless of agent, but does not define or validate a universal format.
+
+### Known Limitations
+
+- Static extraction: URLs built at runtime, or fetched by obfuscated code paths, can be missed.
+- A server can serve different content to Cleat than to the agent (by user agent, IP or time), so a matching fingerprint shows what Cleat received, not necessarily what the agent will receive.
+- Fetches are capped in size and time; content beyond the cap is not inspected. Binary downloads are fingerprinted but their behaviour is not analysed.
+- Detects change against an approved baseline; the protection depends on that baseline being reviewed when first locked.
+
+### Framework Integration
+
+Ships as an agent skill (SKILL.md) for Claude Code and other agents that support the format, installed with the `skills` CLI, and as a standalone Node.js CLI (`scan`, `lock`, `verify`) for CI pipelines. The fetcher checks resolved addresses at connect time, re-validates every redirect and blocks private and local addresses.
 
 ---
 
