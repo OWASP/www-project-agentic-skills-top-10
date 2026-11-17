@@ -1,0 +1,128 @@
+{
+  "vectorId": "ast09-replay-stale-admission",
+  "astControl": "AST09",
+  "threatScenario": "An ALLOW admission that was valid for exactly one dispatch is presented again after its one-shot freshness challenge has been consumed. The record is byte-for-byte unchanged, so its content-derived identifier still recomputes; only a gate that checks current freshness and replay state rejects it.",
+  "request": {
+    "action_type": "file.write",
+    "scope": "path:/data/exports/report-2026.csv",
+    "presented_admission": {
+      "action_ref": "364835f22186149a0cf78513342d903150a80906288d669ee0690387d2f498c6",
+      "agent_id": "agent:example:fixture-0001",
+      "action_type": "file.write",
+      "scope": "path:/data/exports/report-2026.csv",
+      "timestamp_ms": 1751600100500,
+      "policy_version": "governance-policy-2.1.0",
+      "decision": "ALLOW"
+    }
+  },
+  "authorityContext": {
+    "policy_version": "governance-policy-2.1.0",
+    "delegated": false,
+    "freshness": {
+      "mechanism": "verifier-issued one-shot challenge nonce with a bounded validity window",
+      "challenge_id": "challenge-fixture-0001",
+      "issued_at_ms": 1751600100000,
+      "first_use_at_ms": 1751600100500,
+      "consumed_at_ms": 1751600100500,
+      "expires_at_ms": 1751600160000
+    }
+  },
+  "expectedEnforcementPoint": "pre-dispatch admission gate (freshness and replay check)",
+  "expectedDecision": "DENY",
+  "expectedReasonCode": "REPLAY_OR_STALE",
+  "expectedAuditArtifact": {
+    "kind": "gate_decision",
+    "preimage_fields": [
+      "agent_id",
+      "action_type",
+      "scope",
+      "policy_version",
+      "timestamp_ms"
+    ],
+    "record": {
+      "action_ref": "364835f22186149a0cf78513342d903150a80906288d669ee0690387d2f498c6",
+      "agent_id": "agent:example:fixture-0001",
+      "action_type": "file.write",
+      "scope": "path:/data/exports/report-2026.csv",
+      "timestamp_ms": 1751600100500,
+      "policy_version": "governance-policy-2.1.0",
+      "decision": "ALLOW"
+    },
+    "integrity_check": {
+      "result": "PASS",
+      "detail": "action_ref recomputes from the unchanged content preimage; no field was altered between first use and replay."
+    },
+    "freshness_check": {
+      "result": "FAIL_REPLAY_OR_STALE",
+      "challenge_id": "challenge-fixture-0001",
+      "presented_at_ms": 1751600106000,
+      "detail": "The challenge was consumed at timestamp_ms 1751600100500. A consumed challenge authorizes at most one dispatch, so the record is rejected even though it is unexpired and integrity-valid."
+    },
+    "outcome_record_expected": false,
+    "property": "An ALLOW admission MUST be bound to freshness state controlled by the relying enforcement point. Integrity checks answer whether a record was altered; they do not answer whether this authorization is live and unused now."
+  },
+  "safeCase": {
+    "request": {
+      "action_type": "file.write",
+      "scope": "path:/data/exports/report-2026.csv",
+      "presented_admission": {
+        "action_ref": "5d68b3c74245deb74a1816a0dbd8bd3ef55669aca8166bcd89e170a72484341e",
+        "agent_id": "agent:example:fixture-0001",
+        "action_type": "file.write",
+        "scope": "path:/data/exports/report-2026.csv",
+        "timestamp_ms": 1751600110200,
+        "policy_version": "governance-policy-2.1.0",
+        "decision": "ALLOW"
+      }
+    },
+    "authorityContext": {
+      "policy_version": "governance-policy-2.1.0",
+      "delegated": false,
+      "freshness": {
+        "mechanism": "verifier-issued one-shot challenge nonce with a bounded validity window",
+        "challenge_id": "challenge-fixture-0002",
+        "issued_at_ms": 1751600110000,
+        "consumed_at_ms": null,
+        "expires_at_ms": 1751600170000
+      }
+    },
+    "expectedDecision": "ALLOW",
+    "expectedAuditArtifact": {
+      "kind": "gate_decision",
+      "preimage_fields": [
+        "agent_id",
+        "action_type",
+        "scope",
+        "policy_version",
+        "timestamp_ms"
+      ],
+      "record": {
+        "action_ref": "5d68b3c74245deb74a1816a0dbd8bd3ef55669aca8166bcd89e170a72484341e",
+        "agent_id": "agent:example:fixture-0001",
+        "action_type": "file.write",
+        "scope": "path:/data/exports/report-2026.csv",
+        "timestamp_ms": 1751600110200,
+        "policy_version": "governance-policy-2.1.0",
+        "decision": "ALLOW"
+      },
+      "integrity_check": {
+        "result": "PASS",
+        "detail": "action_ref recomputes from the content preimage."
+      },
+      "freshness_check": {
+        "result": "PASS",
+        "challenge_id": "challenge-fixture-0002",
+        "presented_at_ms": 1751600110200,
+        "detail": "A fresh, unconsumed, unexpired challenge is bound to this admission."
+      },
+      "outcome_record_expected": true,
+      "property": "The same requested action, freshly admitted under a new challenge, produces a new content-derived identifier and is allowed once."
+    }
+  },
+  "claimBoundary": "This vector demonstrates that the admission gate rejects a replayed or stale admission. It does not prove that the original policy decision was correct, and it does not prove that an external side effect did or did not occur.",
+  "notes": [
+    "Freshness state is issued and consumed by the relying enforcement point, not by the skill. Field names are profile-specific; the property is that replay status is checkable and enforced.",
+    "timestamp_ms is audit metadata and part of the action_ref preimage, but a timestamp alone does not establish freshness. This replay occurs inside the validity window, so rejection comes from consumption state rather than expiry.",
+    "The admission record is unchanged between first use and replay, and carries no signature because AST09 documents a signature only on the outcome receipt."
+  ]
+}
