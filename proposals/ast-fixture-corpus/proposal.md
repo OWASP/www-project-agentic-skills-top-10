@@ -47,8 +47,8 @@ cross-implementation divergence observed in this pattern.
 
 ## Illustrative vectors
 
-Two AST09 vectors accompany this file. All identifiers in them recompute
-under the Python `rfc8785` reference implementation.
+The AST09 vectors accompanying this file all recompute under the Python
+`rfc8785` reference implementation.
 
 1. `vector-ast09-deny-network-egress.json`: a skill attempts egress to a
    host outside its allowlist. Expected: DENY at the pre-dispatch admission
@@ -59,6 +59,23 @@ under the Python `rfc8785` reference implementation.
 2. `vector-ast09-outcome-pairing-integrity.json`: a runtime presents an
    outcome record whose identifier matches no admission record, a stitched
    pair. Expected: pairing fails. Safe case: a matching pair verifies.
+
+3. `vector-ast09-replay-stale-admission.json`: a valid ALLOW admission is
+   replayed after its one-shot freshness challenge is consumed. Expected: DENY
+   at the pre-dispatch gate with reason `REPLAY_OR_STALE`, even though the
+   record is unchanged and its `action_ref` recomputes. Safe case: the same
+   action is freshly admitted under a new challenge and allowed once.
+   `verify-replay-vector.py --selftest` replays that history and shows that an
+   integrity-only gate would allow the replay, so the fixture discriminates
+   record integrity from authorization freshness.
+
+The replay vector declares a five-field preimage that includes `policy_version`,
+so its identifier is bound to the policy in effect at decision time. Run it with:
+
+```bash
+python3 proposals/ast-fixture-corpus/verify-replay-vector.py
+python3 proposals/ast-fixture-corpus/verify-replay-vector.py --selftest
+```
 
 ## Out of scope
 
