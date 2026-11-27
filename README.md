@@ -7,7 +7,7 @@
 
 > **Security Risks and Mitigations for AI Agent Skills**
 >
-> Covering OpenClaw (SKILL.md YAML), Claude Code (skill.json), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
+> Covering OpenClaw (SKILL.md YAML), Claude Code (SKILL.md), Cursor/Codex (manifest.json), and VS Code (package.json) ecosystems.
 
 ## Quick Links
 
@@ -325,7 +325,7 @@ Most production agent deployments today satisfy all three conditions.
 | Platform | Skill Format | Primary Risk File |
 |----------|-------------|-------------------|
 | OpenClaw | `SKILL.md` (YAML frontmatter + Markdown) | `SKILL.md`, `SOUL.md`, `MEMORY.md` |
-| Claude Code | `skill.json` / `YAML` + `scripts/` | `.claude/settings.json`, hooks config |
+| Claude Code | `SKILL.md` (YAML frontmatter + Markdown) + `scripts/` | `.claude/settings.json`, hooks config |
 | Cursor / Codex | `manifest.json` + handler scripts | `manifest.json`, tool configs |
 | VS Code | `package.json` + extensions | `package.json`, `extension.ts` |
 
@@ -591,7 +591,7 @@ AST10 fills the gap between protocol-layer and model-layer security — a gap th
 
 - Agent skills across all major platforms:
   - **OpenClaw**: `SKILL.md` (YAML frontmatter + Markdown), `SOUL.md`, `MEMORY.md`
-  - **Claude Code**: `skill.json` / YAML + `scripts/`, `.claude/settings.json`, hooks
+  - **Claude Code**: `SKILL.md` (YAML frontmatter + Markdown) + `scripts/`, `.claude/settings.json`, hooks
   - **Cursor / Codex**: `manifest.json` + handler scripts
   - **VS Code**: `package.json` + extension contributions
 - All 10 risks: AST01 (Malicious Skills) through AST10 (Cross-Platform Reuse)
