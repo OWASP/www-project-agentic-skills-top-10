@@ -16,8 +16,8 @@ This guide provides a detailed comparison of the major AI agent skill platforms 
 
 | Feature | OpenClaw | Claude Code | Cursor | VS Code |
 |---------|----------|------------|--------|---------|
-| **Release Date** | Q1 2025 | Q4 2024 | Q2 2025 | 2019 (Skills: 2024) |
-| **Skill Format** | SKILL.md (YAML) | skill.json | manifest.json | package.json |
+| **Release Date** | Q1 2025 | Q1 2025 (Skills: Q4 2025) | Q2 2025 | 2019 (Skills: 2024) |
+| **Skill Format** | SKILL.md (YAML) | SKILL.md (YAML) | manifest.json | package.json |
 | **Security Model** | Permission-based | Capability-based | Manifest-based | Workspace trust |
 | **Code Signing** | ed25519 | RSA-2048 | ECDSA | Code signing |
 | **Sandboxing** | Container-based | Process-based | Native-based | Extension isolation |
@@ -83,7 +83,7 @@ Anthropic's Claude Code platform integrates skills directly into the Claude AI a
 **Strengths**:
 - ✅ Direct integration with Claude AI
 - ✅ Large user base from Claude adoption
-- ✅ Simple skill.json format
+- ✅ Simple SKILL.md format
 - ✅ Good documentation and examples
 - ✅ Regular security updates
 
@@ -112,7 +112,7 @@ Anthropic's Claude Code platform integrates skills directly into the Claude AI a
 
 **Getting Started**:
 1. Create Anthropic account
-2. Write skill.json with capability list
+2. Create SKILL.md file
 3. Implement tool functions
 4. Test with Claude
 5. Submit to marketplace
@@ -312,27 +312,7 @@ permissions:
 
 ### OpenClaw → Claude Code
 
-```python
-# Convert SKILL.md to skill.json
-import json
-import yaml
-
-with open('SKILL.md') as f:
-    content = f.read()
-    
-# Extract frontmatter
-frontmatter = yaml.safe_load(content.split('---')[1])
-
-skill_json = {
-    'name': frontmatter['name'],
-    'version': frontmatter['version'],
-    'permissions': convert_permissions(frontmatter.get('permissions', [])),
-    'tools': build_tools_from_instructions(content)
-}
-
-with open('skill.json', 'w') as f:
-    json.dump(skill_json, f, indent=2)
-```
+No format conversion is needed: both platforms use the same `SKILL.md` layout (YAML frontmatter with `name` and `description`, followed by Markdown instructions). Copy the skill folder into `.claude/skills/` (project) or `~/.claude/skills/` (personal), then review any platform-specific frontmatter fields and the tool names the instructions rely on.
 
 ### VS Code → Cursor
 
